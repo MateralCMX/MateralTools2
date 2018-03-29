@@ -52,5 +52,11 @@
     <Folder Include="Content\" />
     <Folder Include="Model\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">
+      <Project>{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}</Project>
+      <Name>MateralTools.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

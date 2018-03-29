@@ -1,6 +1,9 @@
-﻿using System;
+﻿using MateralTools.Base;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +24,30 @@ namespace MateralTools.MVerify.Manager
                 resM = inputStr == string.Empty;
             }
             return resM;
+        }
+        /// <summary>
+        /// 获得描述
+        /// </summary>
+        /// <param name="inputObj">枚举对象</param>
+        /// <returns>描述</returns>
+        public static string GetDescription(this object inputObj)
+        {
+            string name = string.Empty;
+            Type objType = inputObj.GetType();
+            FieldInfo fieldInfo = objType.GetField(inputObj.ToString());
+            if (fieldInfo != null)
+            {
+                object[] attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                foreach (DescriptionAttribute attr in attrs)
+                {
+                    name = attr.Description;
+                }
+            }
+            else
+            {
+                throw new MException("需要特性DescriptionAttribute");
+            }
+            return name;
         }
     }
 }

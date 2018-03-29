@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}</ProjectGuid>
+    <ProjectGuid>{85676BDE-74E1-4015-943B-0F08583E0845}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MateralTools.Base</RootNamespace>
-    <AssemblyName>MateralTools.Base</AssemblyName>
+    <RootNamespace>MateralTools.MCache</RootNamespace>
+    <AssemblyName>MateralTools.MCache</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,15 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MEnum\Model\MEnumException.cs" />
-    <Compile Include="Base\Model\MException.cs" />
-    <Compile Include="MEnum\Manager\EnumManager.cs" />
-    <Compile Include="MEnum\Model\SexEnum.cs" />
-    <Compile Include="MEnum\Model\TimeTypeEnum.cs" />
+    <Compile Include="Manager\BaseCacheManager.cs" />
+    <Compile Include="Manager\CacheManager.cs" />
+    <Compile Include="Manager\WebCacheManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\" />
+    <Folder Include="Data\" />
+    <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">
+      <Project>{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}</Project>
+      <Name>MateralTools.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
