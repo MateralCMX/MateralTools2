@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2011
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.UI.WinForm", "MateralTools.UI.WinForm\MateralTools.UI.WinForm.csproj", "{0F52599A-64D0-486B-B080-636B0C753FFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.UI.Web", "MateralTools.UI.Web\MateralTools.UI.Web.csproj", "{162F803D-66ED-4EFE-9693-5F87969590D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.API", "MateralTools.API\MateralTools.API.csproj", "{3CD2203E-9988-41F6-93F5-16AC2A668D8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.Base", "MateralTools.Base\MateralTools.Base.csproj", "{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MVerify", "MateralTools.MVerify\MateralTools.MVerify.csproj", "{14DD5ACD-EF69-4C3E-9282-38E415C58A16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MWebLib", "MateralTools.MWebLib\MateralTools.MWebLib.csproj", "{ABA6B061-1D1E-4017-A248-31708F3F2360}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F52599A-64D0-486B-B080-636B0C753FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F52599A-64D0-486B-B080-636B0C753FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F52599A-64D0-486B-B080-636B0C753FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F52599A-64D0-486B-B080-636B0C753FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162F803D-66ED-4EFE-9693-5F87969590D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162F803D-66ED-4EFE-9693-5F87969590D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162F803D-66ED-4EFE-9693-5F87969590D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162F803D-66ED-4EFE-9693-5F87969590D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14DD5ACD-EF69-4C3E-9282-38E415C58A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14DD5ACD-EF69-4C3E-9282-38E415C58A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14DD5ACD-EF69-4C3E-9282-38E415C58A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14DD5ACD-EF69-4C3E-9282-38E415C58A16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA6B061-1D1E-4017-A248-31708F3F2360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA6B061-1D1E-4017-A248-31708F3F2360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA6B061-1D1E-4017-A248-31708F3F2360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA6B061-1D1E-4017-A248-31708F3F2360}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE9653B5-B36A-4E7F-BC50-E36E84C62896}
+	EndGlobalSection
+EndGlobal
