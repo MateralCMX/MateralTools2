@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager\HttpWebManager.cs" />
     <Compile Include="Model\MethodTypeEnum.cs" />
+    <Compile Include="Model\MHttpWebException.cs" />
+    <Compile Include="Model\ParamTypeEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +53,6 @@
   <ItemGroup>
     <Folder Include="Content\" />
     <Folder Include="Data\" />
-    <Folder Include="Manager\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">

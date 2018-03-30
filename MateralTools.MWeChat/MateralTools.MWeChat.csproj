@@ -43,8 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager\WeChatPay\HttpManager.cs" />
+    <Compile Include="Manager\WeChatPay\RQCodePayManager.cs" />
     <Compile Include="Manager\WeChatManager.cs" />
+    <Compile Include="Manager\WeChatPay\WeChatPayManager.cs" />
     <Compile Include="Manager\WeChatWorkManager.cs" />
+    <Compile Include="Model\MWeChatException.cs" />
+    <Compile Include="Model\WeChatPay\RQCodePayModeEnum.cs" />
+    <Compile Include="Model\WeChatPay\WeChatPayConfigModel.cs" />
+    <Compile Include="Model\WeChatPay\WeChatPayDataModel.cs" />
     <Compile Include="Model\WeChatWork\WeChatWorkUserInfoModel.cs" />
     <Compile Include="Model\WeChatWork\WeChatWorkAccessTokenModel.cs" />
     <Compile Include="Model\WeChatWork\WeChatWorkJsapiTicketModel.cs" />
@@ -68,6 +75,29 @@
       <Project>{85676BDE-74E1-4015-943B-0F08583E0845}</Project>
       <Name>MateralTools.MCache</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj">
+      <Project>{2465BA22-EE52-4DCE-8F20-2FFA5F8961FF}</Project>
+      <Name>MateralTools.MConvert</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MEncryption\MateralTools.MEncryption.csproj">
+      <Project>{DF6CE095-FB17-43E4-B616-682B38C9DAC0}</Project>
+      <Name>MateralTools.MEncryption</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MHttpWeb\MateralTools.MHttpWeb.csproj">
+      <Project>{33CA164E-F263-4AE7-92E0-03B12459A580}</Project>
+      <Name>MateralTools.MHttpWeb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MImage\MateralTools.MImage.csproj">
+      <Project>{8486401B-3FF5-4884-AC23-DAB8C35DFB03}</Project>
+      <Name>MateralTools.MImage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj">
+      <Project>{14DD5ACD-EF69-4C3E-9282-38E415C58A16}</Project>
+      <Name>MateralTools.MVerify</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

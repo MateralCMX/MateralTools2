@@ -12,7 +12,7 @@ namespace MateralTools.MConvert
         /// </summary>
         /// <param name="jsonStr">Json字符串</param>
         /// <returns>转换后的对象</returns>
-        public static object MJsonStrToObject(this string jsonStr)
+        public static object MJsonToObject(this string jsonStr)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace MateralTools.MConvert
         /// <typeparam name="T">目标对象类型</typeparam>
         /// <param name="jsonStr">Json字符串</param>
         /// <returns>转换后的对象</returns>
-        public static T MJsonStrToObject<T>(this string jsonStr)
+        public static T MJsonToObject<T>(this string jsonStr)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace MateralTools.MConvert
         /// <param name="InputStr">二进制字符串</param>
         /// <param name="digit">位数</param>
         /// <returns>文本</returns>
-        public static string MBinaryStrToStr(this string InputStr, int digit = 8)
+        public static string MBinaryToStr(this string InputStr, int digit = 8)
         {
             StringBuilder resStr = new StringBuilder();
             int numOfBytes = InputStr.Length / digit;

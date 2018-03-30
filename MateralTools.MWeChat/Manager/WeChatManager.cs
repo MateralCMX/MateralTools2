@@ -1,4 +1,6 @@
 ﻿using MateralTools.MCache;
+using MateralTools.MConvert;
+using MateralTools.MHttpWeb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,8 +81,8 @@ namespace MateralTools.MWeChat
                 if (!string.IsNullOrEmpty(APPID) && !string.IsNullOrEmpty(AppSecret))
                 {
                     string url = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", APPID, AppSecret);
-                    string resStr = HttpWebManager.SendRequest(url, "", MethodType.Get, ParamType.Text, Encoding.UTF8);
-                    tokenM = ConvertManager.JsonToModel<WeChatTokenModel>(resStr);
+                    string resStr = HttpWebManager.SendRequest(url, "", MethodTypeEnum.GET, ParamTypeEnum.Text, Encoding.UTF8);
+                    tokenM = resStr.MJsonToObject<WeChatTokenModel>();
                     WebCacheManager.Set(ServiceTokenKey1, tokenM, DateTimeOffset.Now.AddSeconds(tokenM.expires_in - 60));
                 }
             }
@@ -92,9 +94,9 @@ namespace MateralTools.MWeChat
         /// <param name="wxMenuM">微信菜单模型</param>
         public void SetWeChatMenu(WeChatMenuModel wxMenuM)
         {
-            string jsonStr = ConvertManager.ModelToJson(wxMenuM);
+            string jsonStr = wxMenuM.MToJson();
             string url = string.Format("https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}", GetWeChatToken().access_token);
-            string resStr = HttpWebManager.SendRequest(url, jsonStr, MethodType.Post, ParamType.Json, Encoding.UTF8);
+            string resStr = HttpWebManager.SendRequest(url, jsonStr, MethodTypeEnum.POST, ParamTypeEnum.Json, Encoding.UTF8);
 
         }
     }

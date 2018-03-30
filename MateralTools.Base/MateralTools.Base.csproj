@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Manager\CommonManager.cs" />
     <Compile Include="MEnum\Model\MEnumException.cs" />
     <Compile Include="Base\Model\MException.cs" />
     <Compile Include="MEnum\Manager\EnumManager.cs" />
     <Compile Include="MEnum\Model\SexEnum.cs" />
     <Compile Include="MEnum\Model\TimeTypeEnum.cs" />
+    <Compile Include="MSystemInfo\Manager\MSystemInfoManager.cs" />
     <Compile Include="MTable\ColumnModelAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -43,6 +43,7 @@
     <Compile Include="Data\RegexData.cs" />
     <Compile Include="Manager\ObjectExtended.cs" />
     <Compile Include="Manager\StringExtended.cs" />
+    <Compile Include="Model\MVerifyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">

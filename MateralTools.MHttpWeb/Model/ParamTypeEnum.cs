@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace MateralTools.MHttpWeb
 {
-    public enum MethodTypeEnum
+    /// <summary>
+    /// 参数类型
+    /// </summary>
+    public enum ParamTypeEnum
     {
         /// <summary>
-        /// Get方式
+        /// 文本
         /// </summary>
-        GET = 0,
+        Text = 0,
         /// <summary>
-        /// Post方式
+        /// 窗体
         /// </summary>
-        POST = 1
+        Form = 1,
+        /// <summary>
+        /// Json
+        /// </summary>
+        Json = 2
     }
 }

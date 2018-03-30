@@ -1,6 +1,5 @@
 ﻿using MateralTools.MCache;
 using MateralTools.MConvert;
-using MateralTools.MEncryption;
 using MateralTools.MHttpWeb;
 using MateralTools.MImage;
 using System;
@@ -71,9 +70,11 @@ namespace MateralTools.MWeChat
         {
             WeChatWorkAccessTokenModel tokenM = WebCacheManager.Get<WeChatWorkAccessTokenModel>(AccessTokenKey);
 
-            tokenM = new WeChatWorkAccessTokenModel();
-            tokenM.access_token = "9-B9hxkFc3j8L_fFo7wYoxGX6RcOyQ0G8XZwrz1zrTo4-UKJVHJW66LXnVxKiwCCShgPhLWYa4SCgu1g6SCs1c9rnS2uRIGeHETP1rvgE9mYa6G5ZGCS4p8nIEyvtAbfyrzM1iG5nyrHFGFU-OSflxfH5s7b-GvEjcTPim4O-pCslYZzDbeMu-9yQukIwCOD7G_9ngSbGyIArc8eZoKqqg";
-            tokenM.expires_in = 7200;
+            tokenM = new WeChatWorkAccessTokenModel
+            {
+                access_token = "9-B9hxkFc3j8L_fFo7wYoxGX6RcOyQ0G8XZwrz1zrTo4-UKJVHJW66LXnVxKiwCCShgPhLWYa4SCgu1g6SCs1c9rnS2uRIGeHETP1rvgE9mYa6G5ZGCS4p8nIEyvtAbfyrzM1iG5nyrHFGFU-OSflxfH5s7b-GvEjcTPim4O-pCslYZzDbeMu-9yQukIwCOD7G_9ngSbGyIArc8eZoKqqg",
+                expires_in = 7200
+            };
             WebCacheManager.Set(AccessTokenKey, tokenM, DateTimeOffset.Now.AddSeconds(tokenM.expires_in - 60));
 
             if (tokenM == null)
@@ -81,8 +82,8 @@ namespace MateralTools.MWeChat
                 if (!string.IsNullOrEmpty(CorpID) && !string.IsNullOrEmpty(AppSecret))
                 {
                     string url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}", CorpID, AppSecret);
-                    string resStr = HttpWebManager.SendRequest(url, "", MethodType.Get, ParamType.Text, Encoding.UTF8);
-                    tokenM = ConvertManager.JsonToModel<WeChatWorkAccessTokenModel>(resStr);
+                    string resStr = HttpWebManager.SendRequest(url, "", MethodTypeEnum.GET, ParamTypeEnum.Text, Encoding.UTF8);
+                    tokenM = resStr.MJsonToObject<WeChatWorkAccessTokenModel>();
                     WebCacheManager.Set(AccessTokenKey, tokenM, DateTimeOffset.Now.AddSeconds(tokenM.expires_in - 60));
                 }
             }
@@ -96,8 +97,8 @@ namespace MateralTools.MWeChat
         {
             WeChatWorkAccessTokenModel tokenM = GetAccessToken();
             string url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={0}&code={1}", tokenM.access_token, userCode);
-            string resStr = HttpWebManager.SendRequest(url, "", MethodType.Get, ParamType.Text, Encoding.UTF8);
-            WeChatWorkUserInfoModel userInfo = ConvertManager.JsonToModel<WeChatWorkUserInfoModel>(resStr);
+            string resStr = HttpWebManager.SendRequest(url, "", MethodTypeEnum.POST, ParamTypeEnum.Text, Encoding.UTF8);
+            WeChatWorkUserInfoModel userInfo = resStr.MJsonToObject<WeChatWorkUserInfoModel>();
             return userInfo;
         }
         /// <summary>
@@ -118,8 +119,8 @@ namespace MateralTools.MWeChat
                 {
                     WeChatWorkAccessTokenModel tokenM = GetAccessToken();
                     string url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token={0}", tokenM.access_token);
-                    string resStr = HttpWebManager.SendRequest(url, "", MethodType.Get, ParamType.Text, Encoding.UTF8);
-                    jsapiTicketM = ConvertManager.JsonToModel<WeChatWorkJsapiTicketModel>(resStr);
+                    string resStr = HttpWebManager.SendRequest(url, "", MethodTypeEnum.POST, ParamTypeEnum.Text, Encoding.UTF8);
+                    jsapiTicketM = resStr.MJsonToObject<WeChatWorkJsapiTicketModel>();
                     WebCacheManager.Set(JsapiTicketKey, jsapiTicketM, DateTimeOffset.Now.AddSeconds(tokenM.expires_in - 60));
                 }
             }
@@ -160,11 +161,13 @@ namespace MateralTools.MWeChat
         /// <returns>签名字符串</returns>
         public string GetSignature(long timestamp, string url, string noceStr, string jsapiTicket)
         {
-            Hashtable hs = new Hashtable();
-            hs.Add("noncestr", noceStr);
-            hs.Add("jsapi_ticket", jsapiTicket);
-            hs.Add("timestamp", timestamp);
-            hs.Add("url", url);
+            Hashtable hs = new Hashtable
+            {
+                { "noncestr", noceStr },
+                { "jsapi_ticket", jsapiTicket },
+                { "timestamp", timestamp },
+                { "url", url }
+            };
             ArrayList keys = new ArrayList(hs.Keys); keys.Sort();
             string string1 = string.Empty;
             foreach (string key in keys)
