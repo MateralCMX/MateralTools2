@@ -1,13 +1,9 @@
 ﻿using MateralTools.Base;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MateralTools.MVerify.Manager
+namespace MateralTools.MVerify
 {
     public static class ObjectExtended
     {
@@ -16,7 +12,7 @@ namespace MateralTools.MVerify.Manager
         /// </summary>
         /// <param name="inputObj">输入对象</param>
         /// <returns>验证结果</returns>
-        public static bool IsNullOrEmptyStr(this object inputObj)
+        public static bool MIsNullOrEmptyStr(this object inputObj)
         {
             bool resM = inputObj == null;
             if (!resM && inputObj is string inputStr)
@@ -30,7 +26,7 @@ namespace MateralTools.MVerify.Manager
         /// </summary>
         /// <param name="inputObj">枚举对象</param>
         /// <returns>描述</returns>
-        public static string GetDescription(this object inputObj)
+        public static string MGetDescription(this object inputObj)
         {
             string name = string.Empty;
             Type objType = inputObj.GetType();

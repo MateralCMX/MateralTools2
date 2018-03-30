@@ -1,10 +1,9 @@
-﻿using MateralTools.MVerify.Data;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace MateralTools.MVerify.Manager
+namespace MateralTools.MVerify
 {
     /// <summary>
     /// 字符串扩展类
@@ -16,7 +15,7 @@ namespace MateralTools.MVerify.Manager
         /// </summary>
         /// <param name="inputStr">要验证的字符串</param>
         /// <returns>验证结果</returns>
-        public static bool IsNullOrEmpty(this string inputStr)
+        public static bool MIsNullOrEmpty(this string inputStr)
         {
             return string.IsNullOrEmpty(inputStr);
         }
@@ -26,10 +25,10 @@ namespace MateralTools.MVerify.Manager
         /// <param name="InputStr">要验证的字符串</param>
         /// <param name="REGStr">验证正则表达式</param>
         /// <returns>验证结果</returns>
-        public static bool VerifyRegex(this string InputStr, string REGStr)
+        public static bool MVerifyRegex(this string InputStr, string REGStr)
         {
-            bool resM = REGStr.IsNullOrEmpty();
-            if (!resM && !InputStr.IsNullOrEmpty())
+            bool resM = REGStr.MIsNullOrEmpty();
+            if (!resM && !InputStr.MIsNullOrEmpty())
             {
                 resM = Regex.IsMatch(InputStr, REGStr);
             }
@@ -42,10 +41,10 @@ namespace MateralTools.MVerify.Manager
         /// <param name="REGStr">验证正则表达式</param>
         /// <param name="IsPerfect">完全匹配</param>
         /// <returns>验证结果</returns>
-        public static bool VerifyRegex(this string InputStr, string REGStr, bool IsPerfect)
+        public static bool MVerifyRegex(this string InputStr, string REGStr, bool IsPerfect)
         {
-            REGStr = IsPerfect ? GetPerfectRegStr(REGStr) : REGStr;
-            return InputStr.VerifyRegex(REGStr);
+            REGStr = IsPerfect ? MGetPerfectRegStr(REGStr) : REGStr;
+            return InputStr.MVerifyRegex(REGStr);
         }
         /// <summary>
         /// 获得所有匹配的字符串
@@ -53,10 +52,10 @@ namespace MateralTools.MVerify.Manager
         /// <param name="InputStr">要验证的字符串</param>
         /// <param name="REGStr">验证正则表达式</param>
         /// <returns></returns>
-        public static MatchCollection GetVerifyRegex(this string InputStr, string REGStr)
+        public static MatchCollection MGetVerifyRegex(this string InputStr, string REGStr)
         {
             MatchCollection resM = null;
-            if (!InputStr.IsNullOrEmpty() && !REGStr.IsNullOrEmpty())
+            if (!InputStr.MIsNullOrEmpty() && !REGStr.MIsNullOrEmpty())
             {
                 resM = Regex.Matches(InputStr, REGStr);
             }
@@ -69,17 +68,17 @@ namespace MateralTools.MVerify.Manager
         /// <param name="REGStr">验证正则表达式</param>
         /// <param name="IsPerfect">完全匹配</param>
         /// <returns></returns>
-        public static MatchCollection GetVerifyRegex(this string InputStr, string REGStr, bool IsPerfect)
+        public static MatchCollection MGetVerifyRegex(this string InputStr, string REGStr, bool IsPerfect)
         {
-            REGStr = IsPerfect ? GetPerfectRegStr(REGStr) : REGStr;
-            return InputStr.GetVerifyRegex(REGStr);
+            REGStr = IsPerfect ? MGetPerfectRegStr(REGStr) : REGStr;
+            return InputStr.MGetVerifyRegex(REGStr);
         }
         /// <summary>
         /// 获得完全匹配的正则表达式
         /// </summary>
         /// <param name="ResStr">部分匹配的正则表达式</param>
         /// <returns>完全匹配的正则表达式</returns>
-        public static string GetPerfectRegStr(string ResStr)
+        public static string MGetPerfectRegStr(string ResStr)
         {
             int Length = ResStr.Length;
             if (Length > 0)
@@ -102,7 +101,7 @@ namespace MateralTools.MVerify.Manager
         /// </summary>
         /// <param name="ResStr">部分匹配的正则表达式</param>
         /// <returns>完全匹配的正则表达式</returns>
-        public static string GetNoPerfectRegStr(string ResStr)
+        public static string MGetNoPerfectRegStr(string ResStr)
         {
             int Length = ResStr.Length;
             if (Length > 0)
@@ -129,9 +128,9 @@ namespace MateralTools.MVerify.Manager
         /// true是IPv4地址(无端口号)
         /// false不是IPv4地址(无端口号)
         /// </returns>
-        public static bool IsIPv4(this string InputStr)
+        public static bool MIsIPv4(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_IPv4, true);
+            return InputStr.MVerifyRegex(RegexData.REG_IPv4, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的IPv4地址(无端口号)
@@ -140,9 +139,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的IPv4地址(无端口号)
         /// </returns>
-        public static MatchCollection GetIPv4InStr(this string InputStr)
+        public static MatchCollection MGetIPv4InStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_IPv4, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_IPv4, false);
         }
         /// <summary>
         /// 验证输入字符串是否为IPv4地址(带端口号)
@@ -152,9 +151,9 @@ namespace MateralTools.MVerify.Manager
         /// true是IPv4地址(带端口号)
         /// false不是IPv4地址(带端口号)
         /// </returns>
-        public static bool IsIPv4AndPort(this string InputStr)
+        public static bool MIsIPv4AndPort(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_IPv4_Port, true);
+            return InputStr.MVerifyRegex(RegexData.REG_IPv4_Port, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的IPv4地址(带端口号)
@@ -163,9 +162,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的IPv4地址(带端口号)
         /// </returns>
-        public static MatchCollection GetIPv4AndPortInStr(this string InputStr)
+        public static MatchCollection MGetIPv4AndPortInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_IPv4_Port, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_IPv4_Port, false);
         }
         /// <summary>
         /// 验证输入字符串是否为邮箱
@@ -175,9 +174,9 @@ namespace MateralTools.MVerify.Manager
         /// true是邮箱
         /// false不是邮箱
         /// </returns>
-        public static bool IsEMail(this string InputStr)
+        public static bool MIsEMail(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_EMail, true);
+            return InputStr.MVerifyRegex(RegexData.REG_EMail, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的邮箱
@@ -186,9 +185,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的邮箱
         /// </returns>
-        public static MatchCollection GetEMailInStr(this string InputStr)
+        public static MatchCollection MGetEMailInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_EMail, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_EMail, false);
         }
         /// <summary>
         /// 验证输入字符串是否为实数
@@ -198,9 +197,9 @@ namespace MateralTools.MVerify.Manager
         /// true是实数
         /// false不是实数
         /// </returns>
-        public static bool IsNumber(this string InputStr)
+        public static bool MIsNumber(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Number, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Number, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的实数
@@ -209,9 +208,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的实数
         /// </returns>
-        public static MatchCollection GetNumberInStr(this string InputStr)
+        public static MatchCollection MGetNumberInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Number, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Number, false);
         }
         /// <summary>
         /// 验证输入字符串是否为正实数
@@ -221,9 +220,9 @@ namespace MateralTools.MVerify.Manager
         /// true是正实数
         /// false不是正实数
         /// </returns>
-        public static bool IsNumberPositive(this string InputStr)
+        public static bool MIsNumberPositive(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Number_Positive, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Number_Positive, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的正实数
@@ -232,9 +231,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的正实数
         /// </returns>
-        public static MatchCollection GetNumberPositiveInStr(this string InputStr)
+        public static MatchCollection MGetNumberPositiveInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Number_Positive, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Number_Positive, false);
         }
         /// <summary>
         /// 验证输入字符串是否为负实数
@@ -244,9 +243,9 @@ namespace MateralTools.MVerify.Manager
         /// true是负实数
         /// false不是负实数
         /// </returns>
-        public static bool IsNumberNegative(this string InputStr)
+        public static bool MIsNumberNegative(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Number_Negative, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Number_Negative, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的负实数
@@ -255,9 +254,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的负实数
         /// </returns>
-        public static MatchCollection GetNumberNegativeInStr(this string InputStr)
+        public static MatchCollection MGetNumberNegativeInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Number_Negative, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Number_Negative, false);
         }
         /// <summary>
         /// 验证输入字符串是否为整数
@@ -267,9 +266,9 @@ namespace MateralTools.MVerify.Manager
         /// true是整数
         /// false不是整数
         /// </returns>
-        public static bool IsInteger(this string InputStr)
+        public static bool MIsInteger(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Integer, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Integer, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的整数
@@ -278,9 +277,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的整数
         /// </returns>
-        public static MatchCollection GetIntegerInStr(this string InputStr)
+        public static MatchCollection MGetIntegerInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Integer, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Integer, false);
         }
         /// <summary>
         /// 验证输入字符串是否为正整数
@@ -290,9 +289,9 @@ namespace MateralTools.MVerify.Manager
         /// true是正整数
         /// false不是正整数
         /// </returns>
-        public static bool IsIntegerPositive(this string InputStr)
+        public static bool MIsIntegerPositive(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Integer_Positive, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Integer_Positive, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的正整数
@@ -301,9 +300,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的正整数
         /// </returns>
-        public static MatchCollection GetIntegerPositiveInStr(this string InputStr)
+        public static MatchCollection MGetIntegerPositiveInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Integer_Positive, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Integer_Positive, false);
         }
         /// <summary>
         /// 验证输入字符串是否为负整数
@@ -313,9 +312,9 @@ namespace MateralTools.MVerify.Manager
         /// true是负整数
         /// false不是负整数
         /// </returns>
-        public static bool IsIntegerNegative(this string InputStr)
+        public static bool MIsIntegerNegative(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Integer_Negative, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Integer_Negative, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的负整数
@@ -324,9 +323,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的负整数
         /// </returns>
-        public static MatchCollection GetIntegerNegativeInStr(this string InputStr)
+        public static MatchCollection MGetIntegerNegativeInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Integer_Negative, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Integer_Negative, false);
         }
         /// <summary>
         /// 验证输入字符串是否为URL地址
@@ -336,9 +335,9 @@ namespace MateralTools.MVerify.Manager
         /// true是URL地址
         /// false不是URL地址
         /// </returns>
-        public static bool IsURL(this string InputStr)
+        public static bool MIsURL(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_URL, true);
+            return InputStr.MVerifyRegex(RegexData.REG_URL, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的URL地址
@@ -347,9 +346,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的URL地址
         /// </returns>
-        public static MatchCollection GetURLInStr(this string InputStr)
+        public static MatchCollection MGetURLInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_URL, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_URL, false);
         }
         /// <summary>
         /// 验证输入字符串是否为相对路径
@@ -359,9 +358,9 @@ namespace MateralTools.MVerify.Manager
         /// true是相对路径
         /// false不是相对路径
         /// </returns>
-        public static bool IsRelativePath(this string InputStr)
+        public static bool MIsRelativePath(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_RelativePath, true);
+            return InputStr.MVerifyRegex(RegexData.REG_RelativePath, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的相对路径
@@ -370,9 +369,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的相对路径
         /// </returns>
-        public static MatchCollection GetRelativePathInStr(this string InputStr)
+        public static MatchCollection MGetRelativePathInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_RelativePath, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_RelativePath, false);
         }
         /// <summary>
         /// 验证输入字符串是否为文件名
@@ -382,9 +381,9 @@ namespace MateralTools.MVerify.Manager
         /// true是文件名
         /// false不是文件名
         /// </returns>
-        public static bool IsFileName(this string InputStr)
+        public static bool MIsFileName(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_FileName, true);
+            return InputStr.MVerifyRegex(RegexData.REG_FileName, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的文件名
@@ -393,9 +392,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的文件名
         /// </returns>
-        public static MatchCollection GetFileNameInStr(this string InputStr)
+        public static MatchCollection MGetFileNameInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_FileName, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_FileName, false);
         }
         /// <summary>
         /// 验证输入字符串是否为手机号码
@@ -405,9 +404,9 @@ namespace MateralTools.MVerify.Manager
         /// true是手机号码
         /// false不是手机号码
         /// </returns>
-        public static bool IsPhoneNumber(this string InputStr)
+        public static bool MIsPhoneNumber(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_PhoneNumber, true);
+            return InputStr.MVerifyRegex(RegexData.REG_PhoneNumber, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的手机号码
@@ -416,9 +415,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的手机号码
         /// </returns>
-        public static MatchCollection GetPhoneNumberInStr(this string InputStr)
+        public static MatchCollection MGetPhoneNumberInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_PhoneNumber, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_PhoneNumber, false);
         }
         /// <summary>
         /// 验证输入字符串是否为日期
@@ -429,10 +428,10 @@ namespace MateralTools.MVerify.Manager
         /// true是日期
         /// false不是日期
         /// </returns>
-        public static bool IsDate(this string InputStr, string Delimiter = "-/.")
+        public static bool MIsDate(this string InputStr, string Delimiter = "-/.")
         {
             bool resM = false;
-            if (InputStr.VerifyRegex(RegexData.REG_Date(Delimiter), true))
+            if (InputStr.MVerifyRegex(RegexData.REG_Date(Delimiter), true))
             {
                 char[] Delimiters = Delimiter.ToCharArray();
                 string[] dateStr = new string[3];
@@ -476,9 +475,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的日期
         /// </returns>
-        public static MatchCollection GetDateInStr(this string InputStr, string Delimiter = "-/.")
+        public static MatchCollection MGetDateInStr(this string InputStr, string Delimiter = "-/.")
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Date(Delimiter), false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Date(Delimiter), false);
         }
         /// <summary>
         /// 验证输入字符串是否为时间
@@ -488,9 +487,9 @@ namespace MateralTools.MVerify.Manager
         /// true是时间
         /// false不是时间
         /// </returns>
-        public static bool IsTime(this string InputStr)
+        public static bool MIsTime(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Time, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Time, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的时间
@@ -499,9 +498,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的时间
         /// </returns>
-        public static MatchCollection GetTimeInStr(this string InputStr)
+        public static MatchCollection MGetTimeInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Time, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Time, false);
         }
         /// <summary>
         /// 验证输入字符串是否为日期和时间
@@ -512,9 +511,9 @@ namespace MateralTools.MVerify.Manager
         /// true是日期和时间
         /// false不是日期和时间
         /// </returns>
-        public static bool IsDateTime(this string InputStr, string Delimiter = "-/.")
+        public static bool MIsDateTime(this string InputStr, string Delimiter = "-/.")
         {
-            return InputStr.VerifyRegex(RegexData.REG_DateTime(Delimiter), true);
+            return InputStr.MVerifyRegex(RegexData.REG_DateTime(Delimiter), true);
         }
         /// <summary>
         /// 获取输入字符串中所有的日期和时间
@@ -524,9 +523,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的日期和时间
         /// </returns>
-        public static MatchCollection GetDateTimeInStr(this string InputStr, string Delimiter = "-/.")
+        public static MatchCollection MGetDateTimeInStr(this string InputStr, string Delimiter = "-/.")
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_DateTime(Delimiter), false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_DateTime(Delimiter), false);
         }
         /// <summary>
         /// 验证输入字符串是否为字母
@@ -536,9 +535,9 @@ namespace MateralTools.MVerify.Manager
         /// true是字母
         /// false不是字母
         /// </returns>
-        public static bool IsLetter(this string InputStr)
+        public static bool MIsLetter(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Letter, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Letter, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的字母
@@ -547,9 +546,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的字母
         /// </returns>
-        public static MatchCollection GetLetterInStr(this string InputStr)
+        public static MatchCollection MGetLetterInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Letter, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Letter, false);
         }
         /// <summary>
         /// 验证输入字符串是否为字母或数字
@@ -559,9 +558,9 @@ namespace MateralTools.MVerify.Manager
         /// true是字母或数字
         /// false不是字母或数字
         /// </returns>
-        public static bool IsLetterOrNumber(this string InputStr)
+        public static bool MIsLetterOrNumber(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Letter_Number, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Letter_Number, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的字母或数字
@@ -570,9 +569,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的字母或数字
         /// </returns>
-        public static MatchCollection GetLetterOrNumberInStr(this string InputStr)
+        public static MatchCollection MGetLetterOrNumberInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Letter_Number, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Letter_Number, false);
         }
         /// <summary>
         /// 验证输入字符串是否为小写字母
@@ -582,9 +581,9 @@ namespace MateralTools.MVerify.Manager
         /// true是字母
         /// false不是字母
         /// </returns>
-        public static bool IsLowerLetterr(this string InputStr)
+        public static bool MIsLowerLetterr(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_LowerLetter, true);
+            return InputStr.MVerifyRegex(RegexData.REG_LowerLetter, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的小写字母
@@ -593,9 +592,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的字母
         /// </returns>
-        public static MatchCollection GetLowerLetterInStr(this string InputStr)
+        public static MatchCollection MGetLowerLetterInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_LowerLetter, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_LowerLetter, false);
         }
         /// <summary>
         /// 验证输入字符串是否为小写字母或数字
@@ -605,9 +604,9 @@ namespace MateralTools.MVerify.Manager
         /// true是字母
         /// false不是字母
         /// </returns>
-        public static bool IsLowerLetterrOrNumber(this string InputStr)
+        public static bool MIsLowerLetterrOrNumber(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_LowerLetter_Number, true);
+            return InputStr.MVerifyRegex(RegexData.REG_LowerLetter_Number, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的小写字母或数字
@@ -616,9 +615,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的字母
         /// </returns>
-        public static MatchCollection GetLowerLetterOrNumberInStr(this string InputStr)
+        public static MatchCollection MGetLowerLetterOrNumberInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_LowerLetter_Number, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_LowerLetter_Number, false);
         }
         /// <summary>
         /// 验证输入字符串是否为大写字母
@@ -628,9 +627,9 @@ namespace MateralTools.MVerify.Manager
         /// true是字母
         /// false不是字母
         /// </returns>
-        public static bool IsUpperLetterr(this string InputStr)
+        public static bool MIsUpperLetterr(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_UpperLetter, true);
+            return InputStr.MVerifyRegex(RegexData.REG_UpperLetter, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的大写字母
@@ -639,9 +638,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的字母
         /// </returns>
-        public static MatchCollection GetUpperLetterInStr(this string InputStr)
+        public static MatchCollection MGetUpperLetterInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_UpperLetter, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_UpperLetter, false);
         }
         /// <summary>
         /// 验证输入字符串是否为大写字母或数字
@@ -651,9 +650,9 @@ namespace MateralTools.MVerify.Manager
         /// true是字母
         /// false不是字母
         /// </returns>
-        public static bool IsUpperLetterrOrNumber(this string InputStr)
+        public static bool MIsUpperLetterrOrNumber(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_UpperLetter_Number, true);
+            return InputStr.MVerifyRegex(RegexData.REG_UpperLetter_Number, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的大写字母或数字
@@ -662,9 +661,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的字母
         /// </returns>
-        public static MatchCollection GetUpperLetterOrNumberInStr(this string InputStr)
+        public static MatchCollection MGetUpperLetterOrNumberInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_UpperLetter_Number, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_UpperLetter_Number, false);
         }
         /// <summary>
         /// 验证输入字符串是否为中文
@@ -674,9 +673,9 @@ namespace MateralTools.MVerify.Manager
         /// true是中文
         /// false不是中文
         /// </returns>
-        public static bool IsChinese(this string InputStr)
+        public static bool MIsChinese(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Chinese, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Chinese, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的中文
@@ -685,9 +684,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的中文或数字
         /// </returns>
-        public static MatchCollection GetChineseInStr(this string InputStr)
+        public static MatchCollection MGetChineseInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Chinese, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Chinese, false);
         }
         /// <summary>
         /// 验证输入字符串是否为中文或字母或数字
@@ -697,9 +696,9 @@ namespace MateralTools.MVerify.Manager
         /// true是中文或字母或数字
         /// false不是中文或字母或数字
         /// </returns>
-        public static bool IsChineseOrLetterOrNumber(this string InputStr)
+        public static bool MIsChineseOrLetterOrNumber(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Chinese_Letter_Number, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Chinese_Letter_Number, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的中文或字母或数字
@@ -708,9 +707,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的中文或字母或数字
         /// </returns>
-        public static MatchCollection GetChineseOrLetterOrNumberInStr(this string InputStr)
+        public static MatchCollection MGetChineseOrLetterOrNumberInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Chinese_Letter_Number, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Chinese_Letter_Number, false);
         }
         /// <summary>
         /// 验证输入字符串是否为日文
@@ -720,9 +719,9 @@ namespace MateralTools.MVerify.Manager
         /// true是日文
         /// false不是日文
         /// </returns>
-        public static bool IsJapanese(this string InputStr)
+        public static bool MIsJapanese(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Japanese, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Japanese, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的日文
@@ -731,9 +730,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的日文或数字
         /// </returns>
-        public static MatchCollection GetJapaneseInStr(this string InputStr)
+        public static MatchCollection MGetJapaneseInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Japanese, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Japanese, false);
         }
         /// <summary>
         /// 验证输入字符串是否为日文或字母或数字
@@ -743,9 +742,9 @@ namespace MateralTools.MVerify.Manager
         /// true是日文或字母或数字
         /// false不是日文或字母或数字
         /// </returns>
-        public static bool IsJapaneseOrLetterOrNumber(this string InputStr)
+        public static bool MIsJapaneseOrLetterOrNumber(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_Japanese_Letter_Number, true);
+            return InputStr.MVerifyRegex(RegexData.REG_Japanese_Letter_Number, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的日文或字母或数字
@@ -754,9 +753,32 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的日文或字母或数字
         /// </returns>
-        public static MatchCollection GetJapaneseOrLetterOrNumberInStr(this string InputStr)
+        public static MatchCollection MGetJapaneseOrLetterOrNumberInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_Japanese_Letter_Number, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_Japanese_Letter_Number, false);
+        }
+        /// <summary>
+        /// 验证输入字符串是否为十六进制数字
+        /// </summary>
+        /// <param name="InputStr">输入的字符串</param>
+        /// <returns>
+        /// true是十六进制数字
+        /// false不是十六进制数字
+        /// </returns>
+        public static bool MIsHexNumber(this string InputStr)
+        {
+            return InputStr.MVerifyRegex(RegexData.REG_HEX_Number, true);
+        }
+        /// <summary>
+        /// 获取输入字符串中所有的十六进制数字
+        /// </summary>
+        /// <param name="InputStr">输入的字符串</param>
+        /// <returns>
+        /// 字符串中所有的十六进制数字
+        /// </returns>
+        public static MatchCollection MGetHexNumberInStr(this string InputStr)
+        {
+            return InputStr.MGetVerifyRegex(RegexData.REG_HEX_Number, false);
         }
         #endregion
         #region 复杂验证
@@ -769,31 +791,31 @@ namespace MateralTools.MVerify.Manager
         /// true是(中国)身份证
         /// false不是(中国)身份证
         /// </returns>
-        public static bool IsIDCardForChina(this string InputStr, bool Accurate = false)
+        public static bool MIsIDCardForChina(this string InputStr, bool Accurate = false)
         {
             bool resM = false;
-            if (!InputStr.IsNullOrEmpty())
+            if (!InputStr.MIsNullOrEmpty())
             {
                 if (InputStr.Length == 18)
                 {
                     if (Accurate)
                     {
-                        return CheckIDCard18(InputStr);
+                        return MCheckIDCard18(InputStr);
                     }
                     else
                     {
-                        return IsIDCard18ForChina(InputStr);
+                        return MIsIDCard18ForChina(InputStr);
                     }
                 }
                 else if (InputStr.Length == 15)
                 {
                     if (Accurate)
                     {
-                        return CheckIDCard15(InputStr);
+                        return MCheckIDCard15(InputStr);
                     }
                     else
                     {
-                        return IsIDCard15ForChina(InputStr);
+                        return MIsIDCard15ForChina(InputStr);
                     }
                 }
             }
@@ -807,9 +829,9 @@ namespace MateralTools.MVerify.Manager
         /// true是(中国)身份证18位
         /// false不是(中国)身份证18位
         /// </returns>
-        public static bool IsIDCard18ForChina(this string InputStr)
+        public static bool MIsIDCard18ForChina(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_IDCard_18_China, true);
+            return InputStr.MVerifyRegex(RegexData.REG_IDCard_18_China, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的(中国)身份证18位
@@ -818,9 +840,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的(中国)身份证18位
         /// </returns>
-        public static MatchCollection GetIDCard18ForChinaInStr(this string InputStr)
+        public static MatchCollection MGetIDCard18ForChinaInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_IDCard_18_China, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_IDCard_18_China, false);
         }
         /// <summary>
         /// 验证输入字符串是否为(中国)身份证15位
@@ -830,9 +852,9 @@ namespace MateralTools.MVerify.Manager
         /// true是(中国)身份证15位
         /// false不是(中国)身份证15位
         /// </returns>
-        public static bool IsIDCard15ForChina(this string InputStr)
+        public static bool MIsIDCard15ForChina(this string InputStr)
         {
-            return InputStr.VerifyRegex(RegexData.REG_IDCard_15_China, true);
+            return InputStr.MVerifyRegex(RegexData.REG_IDCard_15_China, true);
         }
         /// <summary>
         /// 获取输入字符串中所有的(中国)身份证15位
@@ -841,9 +863,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的(中国)身份证15位
         /// </returns>
-        public static MatchCollection GetIDCard15ForChinaInStr(this string InputStr)
+        public static MatchCollection MGetIDCard15ForChinaInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_IDCard_15_China, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_IDCard_15_China, false);
         }
         /// <summary>  
         /// 18位身份证号码验证  
@@ -853,7 +875,7 @@ namespace MateralTools.MVerify.Manager
         ///     true验证成功
         ///     false验证失败
         /// </returns>
-        private static bool CheckIDCard18(this string InputStr)
+        private static bool MCheckIDCard18(this string InputStr)
         {
             long n = 0;
             if (long.TryParse(InputStr.Remove(17), out n) == false
@@ -896,7 +918,7 @@ namespace MateralTools.MVerify.Manager
         ///     true验证成功
         ///     false验证失败
         /// </returns> 
-        private static bool CheckIDCard15(this string InputStr)
+        private static bool MCheckIDCard15(this string InputStr)
         {
             long n = 0;
             if (long.TryParse(InputStr, out n) == false || n < Math.Pow(10, 14))
@@ -925,10 +947,10 @@ namespace MateralTools.MVerify.Manager
         /// true是磁盘根目录
         /// false不是磁盘根目录
         /// </returns>
-        public static bool IsDiskPath(this string InputStr, bool IsReal = false)
+        public static bool MIsDiskPath(this string InputStr, bool IsReal = false)
         {
             bool IsOk = false;
-            if (InputStr.VerifyRegex(RegexData.REG_DiskPath, true))
+            if (InputStr.MVerifyRegex(RegexData.REG_DiskPath, true))
             {
                 if (IsReal)
                 {
@@ -964,9 +986,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的磁盘根目录
         /// </returns>
-        public static MatchCollection GetDiskPathInStr(this string InputStr)
+        public static MatchCollection MGetDiskPathInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_DiskPath, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_DiskPath, false);
         }
         /// <summary>
         /// 验证输入字符串是否为绝对路径
@@ -977,10 +999,10 @@ namespace MateralTools.MVerify.Manager
         /// true是绝对路径
         /// false不是绝对路径
         /// </returns>
-        public static bool IsAbsolutePath(this string InputStr, bool IsReal = false)
+        public static bool MIsAbsolutePath(this string InputStr, bool IsReal = false)
         {
             bool IsOK = false;
-            if (InputStr.VerifyRegex(RegexData.REG_AbsolutePath, true))
+            if (InputStr.MVerifyRegex(RegexData.REG_AbsolutePath, true))
             {
                 int Length = InputStr.Length;
                 string DiskPath;
@@ -992,7 +1014,7 @@ namespace MateralTools.MVerify.Manager
                 {
                     DiskPath = InputStr;
                 }
-                IsOK = IsDiskPath(DiskPath, IsReal);
+                IsOK = MIsDiskPath(DiskPath, IsReal);
             }
             return IsOK;
         }
@@ -1003,9 +1025,9 @@ namespace MateralTools.MVerify.Manager
         /// <returns>
         /// 字符串中所有的绝对路径
         /// </returns>
-        public static MatchCollection GetAbsolutePathInStr(this string InputStr)
+        public static MatchCollection MGetAbsolutePathInStr(this string InputStr)
         {
-            return InputStr.GetVerifyRegex(RegexData.REG_AbsolutePath, false);
+            return InputStr.MGetVerifyRegex(RegexData.REG_AbsolutePath, false);
         }
         #endregion
     }

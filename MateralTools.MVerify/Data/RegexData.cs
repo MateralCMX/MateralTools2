@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MateralTools.MVerify.Data
+﻿namespace MateralTools.MVerify
 {
     /// <summary>
     /// 正则表达式数据类
@@ -160,5 +154,9 @@ namespace MateralTools.MVerify.Data
         /// 日文正则表达式
         /// </summary>
         public const string REG_Japanese_Letter_Number = @"[\u0800-\u9fa5a-zA-Z0-9]+";
+        /// <summary>
+        /// 16进制字符串
+        /// </summary>
+        public const string REG_HEX_Number = @"[\dA-Fa-f]+";
     }
 }
