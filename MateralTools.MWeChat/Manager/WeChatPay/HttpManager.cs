@@ -12,6 +12,9 @@ using System.Web;
 
 namespace MateralTools.MWeChat.WeChatPay
 {
+    /// <summary>
+    /// 微信支付Http管理器
+    /// </summary>
     public class WeChatPayHttpManager
     {
         /// <summary>
@@ -33,6 +36,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="url">url地址</param>
         /// <param name="isUseCert">是否使用证书</param>
         /// <param name="timeout">超时时间</param>
+        /// <param name="config">微信支付配置对象</param>
         /// <returns>请求返回数据</returns>
         public static string Post(string xml, string url, bool isUseCert, int timeout,WeChatPayConfigModel config)
         {

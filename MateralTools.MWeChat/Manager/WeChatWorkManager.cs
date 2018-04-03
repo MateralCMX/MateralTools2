@@ -60,7 +60,13 @@ namespace MateralTools.MWeChat
         /// JsapiTicket
         /// </summary>
         private string _jsapiTicketKey = "MATERAWECHATJSAPITICKETKEY";
+        /// <summary>
+        /// AccessTokenKey
+        /// </summary>
         public string AccessTokenKey { get => _accessTokenKey; set => _accessTokenKey = value; }
+        /// <summary>
+        /// JsapiTicketKey
+        /// </summary>
         public string JsapiTicketKey { get => _jsapiTicketKey; set => _jsapiTicketKey = value; }
         /// <summary>
         /// 获取AccessToken
@@ -179,12 +185,14 @@ namespace MateralTools.MWeChat
                 }
             }
             string1 = string1.TrimEnd('&');
+#pragma warning disable IDE0618 // 命名样式
             return FormsAuthentication.HashPasswordForStoringInConfigFile(string1, "SHA1").ToLower();
+#pragma warning restore IDE0618 // 命名样式
         }
         /// <summary>
         /// 下载微信服务器上的图片
         /// </summary>
-        /// <param name="serverImages">服务器图片</param>
+        /// <param name="serverImage">服务器图片</param>
         /// <returns>图片</returns>
         public Image DownloadImage(string serverImage)
         {
@@ -203,7 +211,7 @@ namespace MateralTools.MWeChat
         /// <summary>
         /// 下载微信服务器上的图片
         /// </summary>
-        /// <param name="serverImages">服务器图片</param>
+        /// <param name="serverImage">服务器图片</param>
         /// <param name="savePath">保存路径</param>
         /// <returns>图片</returns>
         public void DownloadImage(string serverImage, string savePath)

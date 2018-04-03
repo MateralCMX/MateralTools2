@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MateralTools.Base
 {
+    /// <summary>
+    /// 共用管理类
+    /// </summary>
     public class CommonManager
     {
         /// <summary>

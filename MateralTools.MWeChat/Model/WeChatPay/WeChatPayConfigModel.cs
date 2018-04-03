@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace MateralTools.MWeChat.WeChatPay
 {
+    /// <summary>
+    /// 微信支付配置模型
+    /// </summary>
     public class WeChatPayConfigModel
     {
         #region 基本信息配置
@@ -76,7 +79,7 @@ namespace MateralTools.MWeChat.WeChatPay
             {
                 if (_ip.MIsNullOrEmpty())
                 {
-                    List<string> IPV4List = MSystemInfoManager.GetLocalIPv4();
+                    List<string> IPV4List = SystemInfoManager.GetLocalIPv4();
                     return IPV4List.Count > 0 ? IPV4List[0] : "127.0.0.1";
                 }
                 else
@@ -96,13 +99,5 @@ namespace MateralTools.MWeChat.WeChatPay
         /// </summary>
         public int REPORT_LEVENL { get; set; }
         #endregion
-        ////=======【代理服务器设置】===================================
-        ///* 默认IP和端口号分别为0.0.0.0和0，此时不开启代理（如有需要才设置）
-        //*/
-        //public string PROXY_URL { get; set; }
-        ////=======【日志级别】===================================
-        ///* 日志等级，0.不输出日志；1.只输出错误信息; 2.输出错误和正常信息; 3.输出错误信息、正常信息和调试信息
-        //*/
-        //public int LOG_LEVENL { get; set; }
     }
 }

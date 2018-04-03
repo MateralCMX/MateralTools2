@@ -7,12 +7,14 @@ using System.Xml;
 
 namespace MateralTools.MWeChat.WeChatPay
 {
+    /// <summary>
+    /// 微信支付数据模型
+    /// </summary>
     public class WeChatPayDataModel
     {
         /// <summary>
         /// 构造方法
         /// </summary>
-        /// <param name="configM">配置对象</param>
         public WeChatPayDataModel()
         {
             Data = new SortedDictionary<string, object>();

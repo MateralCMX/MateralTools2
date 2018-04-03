@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace MateralTools.MWeChat.WeChatPay
 {
+    /// <summary>
+    /// 微信支付管理器
+    /// </summary>
     public class WeChatPayManager
     {
         /// <summary>
@@ -424,7 +427,7 @@ namespace MateralTools.MWeChat.WeChatPay
             {
                 Report(data);
             }
-            catch (MWeChatException ex)
+            catch (MWeChatException)
             {
                 //不做任何处理
             }

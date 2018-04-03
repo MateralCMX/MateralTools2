@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace MateralTools.MWeChat
 {
 #pragma warning disable IDE1006 // 命名样式
+    /// <summary>
+    /// 微信企业号JSSDK配置模型
+    /// </summary>
     public class WeChatWorkJSSDKConfigModel
     {
         /// <summary>

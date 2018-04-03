@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.UI.WinForm", "MateralTools.UI.WinForm\MateralTools.UI.WinForm.csproj", "{0F52599A-64D0-486B-B080-636B0C753FFD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.UI.Web", "MateralTools.UI.Web\MateralTools.UI.Web.csproj", "{162F803D-66ED-4EFE-9693-5F87969590D4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.API", "MateralTools.API\MateralTools.API.csproj", "{3CD2203E-9988-41F6-93F5-16AC2A668D8D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.Base", "MateralTools.Base\MateralTools.Base.csproj", "{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MVerify", "MateralTools.MVerify\MateralTools.MVerify.csproj", "{14DD5ACD-EF69-4C3E-9282-38E415C58A16}"
@@ -31,24 +25,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.BaseTests", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MEncryption", "MateralTools.MEncryption\MateralTools.MEncryption.csproj", "{DF6CE095-FB17-43E4-B616-682B38C9DAC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI", "Materal.UI\Materal.UI.csproj", "{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI.WinForm", "Materal.UI.WinForm\Materal.UI.WinForm.csproj", "{8833902E-60EE-44FF-B44C-12F4D5EE8B03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MResult", "MateralTools.MResult\MateralTools.MResult.csproj", "{C74C9B23-8592-4E03-AC39-E1595EA67FE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UITests", "Materal.UITests\Materal.UITests.csproj", "{56FDD1C0-331F-4999-BD2F-4CA5200AF6B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MAlipay", "MateralTools.MAlipay\MateralTools.MAlipay.csproj", "{5A637DD4-0F9D-436B-AD9B-1E1167496C53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F52599A-64D0-486B-B080-636B0C753FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F52599A-64D0-486B-B080-636B0C753FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F52599A-64D0-486B-B080-636B0C753FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F52599A-64D0-486B-B080-636B0C753FFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{162F803D-66ED-4EFE-9693-5F87969590D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{162F803D-66ED-4EFE-9693-5F87969590D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{162F803D-66ED-4EFE-9693-5F87969590D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{162F803D-66ED-4EFE-9693-5F87969590D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CD2203E-9988-41F6-93F5-16AC2A668D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,6 +85,26 @@ Global
 		{DF6CE095-FB17-43E4-B616-682B38C9DAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF6CE095-FB17-43E4-B616-682B38C9DAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF6CE095-FB17-43E4-B616-682B38C9DAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8833902E-60EE-44FF-B44C-12F4D5EE8B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8833902E-60EE-44FF-B44C-12F4D5EE8B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8833902E-60EE-44FF-B44C-12F4D5EE8B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8833902E-60EE-44FF-B44C-12F4D5EE8B03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C74C9B23-8592-4E03-AC39-E1595EA67FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C74C9B23-8592-4E03-AC39-E1595EA67FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C74C9B23-8592-4E03-AC39-E1595EA67FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C74C9B23-8592-4E03-AC39-E1595EA67FE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56FDD1C0-331F-4999-BD2F-4CA5200AF6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56FDD1C0-331F-4999-BD2F-4CA5200AF6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56FDD1C0-331F-4999-BD2F-4CA5200AF6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56FDD1C0-331F-4999-BD2F-4CA5200AF6B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A637DD4-0F9D-436B-AD9B-1E1167496C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A637DD4-0F9D-436B-AD9B-1E1167496C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A637DD4-0F9D-436B-AD9B-1E1167496C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A637DD4-0F9D-436B-AD9B-1E1167496C53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MateralTools.MWeChat
 {
+    /// <summary>
+    /// 微信且油耗用户模型
+    /// </summary>
     public class WeChatWorkUserInfoModel
     {
 #pragma warning disable IDE1006 // 命名样式

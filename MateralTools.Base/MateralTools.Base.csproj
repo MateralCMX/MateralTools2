@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\MateralTools.Base.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,12 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Manager\CommonManager.cs" />
+    <Compile Include="MEnum\Manager\EnumExtended.cs" />
     <Compile Include="MEnum\Model\MEnumException.cs" />
     <Compile Include="Base\Model\MException.cs" />
     <Compile Include="MEnum\Manager\EnumManager.cs" />
     <Compile Include="MEnum\Model\SexEnum.cs" />
     <Compile Include="MEnum\Model\TimeTypeEnum.cs" />
-    <Compile Include="MSystemInfo\Manager\MSystemInfoManager.cs" />
+    <Compile Include="MIO\Manger\IOManager.cs" />
+    <Compile Include="MSystemInfo\Manager\SystemInfoManager.cs" />
     <Compile Include="MTable\ColumnModelAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

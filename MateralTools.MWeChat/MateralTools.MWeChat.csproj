@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\MateralTools.MWeChat.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,7 @@
     <Compile Include="Model\WeChatPay\RQCodePayModeEnum.cs" />
     <Compile Include="Model\WeChatPay\WeChatPayConfigModel.cs" />
     <Compile Include="Model\WeChatPay\WeChatPayDataModel.cs" />
+    <Compile Include="Model\WeChatPay\WeChatPayProductModel.cs" />
     <Compile Include="Model\WeChatWork\WeChatWorkUserInfoModel.cs" />
     <Compile Include="Model\WeChatWork\WeChatWorkAccessTokenModel.cs" />
     <Compile Include="Model\WeChatWork\WeChatWorkJsapiTicketModel.cs" />
@@ -59,12 +61,6 @@
     <Compile Include="Model\WeChat\WeChatMenuModel.cs" />
     <Compile Include="Model\WeChat\WeChatTokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tencent\Cryptography.cs" />
-    <Compile Include="Tencent\Sample.cs" />
-    <Compile Include="Tencent\WXBizMsgCrypt.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Tencent\Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">

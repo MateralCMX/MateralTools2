@@ -17,6 +17,9 @@ namespace MateralTools.MWeChat
         /// </summary>
         public WeChatMenuButtonModel[] button { get; set; }
     }
+    /// <summary>
+    /// 微信菜单按钮模型
+    /// </summary>
     public class WeChatMenuButtonModel
     {
         /// <summary>
