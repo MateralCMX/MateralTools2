@@ -6,8 +6,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MateralTools.Base
+namespace MateralTools.Base.MSystemInfo
 {
+    /// <summary>
+    /// 系统信息管理器
+    /// </summary>
     public class SystemInfoManager
     {
         /// <summary>

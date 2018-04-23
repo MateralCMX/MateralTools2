@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LitJSON, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LitJson.0.12.0\lib\net45\LitJSON.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -44,22 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Manager\WeChatPay\HttpManager.cs" />
+    <Compile Include="Manager\WeChatHttpManager.cs" />
+    <Compile Include="Manager\WeChatPay\JsAPIPayManager.cs" />
     <Compile Include="Manager\WeChatPay\RQCodePayManager.cs" />
-    <Compile Include="Manager\WeChatManager.cs" />
     <Compile Include="Manager\WeChatPay\WeChatPayManager.cs" />
-    <Compile Include="Manager\WeChatWorkManager.cs" />
+    <Compile Include="Manager\WXSS\WXSSManager.cs" />
     <Compile Include="Model\MWeChatException.cs" />
     <Compile Include="Model\WeChatPay\RQCodePayModeEnum.cs" />
-    <Compile Include="Model\WeChatPay\WeChatPayConfigModel.cs" />
-    <Compile Include="Model\WeChatPay\WeChatPayDataModel.cs" />
-    <Compile Include="Model\WeChatPay\WeChatPayProductModel.cs" />
-    <Compile Include="Model\WeChatWork\WeChatWorkUserInfoModel.cs" />
-    <Compile Include="Model\WeChatWork\WeChatWorkAccessTokenModel.cs" />
-    <Compile Include="Model\WeChatWork\WeChatWorkJsapiTicketModel.cs" />
-    <Compile Include="Model\WeChatWork\WeChatWorkJSSDKConfigModel.cs" />
-    <Compile Include="Model\WeChat\WeChatMenuModel.cs" />
-    <Compile Include="Model\WeChat\WeChatTokenModel.cs" />
+    <Compile Include="Model\WeChatConfigModel.cs" />
+    <Compile Include="Model\WeChatDataModel.cs" />
+    <Compile Include="Model\WeChatPay\WeChatPayOrderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +91,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\WXSS\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

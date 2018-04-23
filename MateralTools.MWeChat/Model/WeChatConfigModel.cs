@@ -1,17 +1,13 @@
-﻿using MateralTools.Base;
+﻿using MateralTools.Base.MSystemInfo;
 using MateralTools.MVerify;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MateralTools.MWeChat.WeChatPay
+namespace MateralTools.MWeChat
 {
     /// <summary>
     /// 微信支付配置模型
     /// </summary>
-    public class WeChatPayConfigModel
+    public class WeChatConfigModel
     {
         #region 基本信息配置
         /// <summary>

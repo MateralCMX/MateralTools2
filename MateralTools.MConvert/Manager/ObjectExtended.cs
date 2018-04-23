@@ -10,6 +10,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MateralTools.MConvert
 {
+    /// <summary>
+    /// Object扩展
+    /// </summary>
     public static class ObjectExtended
     {
         /// <summary>
@@ -123,29 +126,21 @@ namespace MateralTools.MConvert
         /// 获得默认对象
         /// </summary>
         /// <param name="obj">要设置的对象</param>
-        public static void MSetDefultObject(this object obj)
+        /// <param name="type">要设置的类型</param>
+        /// <returns>默认对象</returns>
+        public static object MGetDefultObject(this object obj, Type type)
         {
-            obj = null;
-            Type TType = obj.GetType();
-            ConstructorInfo[] cis = TType.GetConstructors();
-            bool isOk = false;
-            if (cis.Length > 0)
-            {
-                foreach (ConstructorInfo ci in cis)
-                {
-                    ParameterInfo[] pis = ci.GetParameters();
-                    if (pis.Length == 0)
-                    {
-                        obj = ci.Invoke(new object[0]);
-                        isOk = true;
-                        break;
-                    }
-                }
-            }
-            if (!isOk)
-            {
-                throw new MConvertException("没有可用构造方法，需要一个无参数的构造方法");
-            }
+            return ConvertManager.GetDefultObject(type);
+        }
+        /// <summary>
+        /// 获得默认对象
+        /// </summary>
+        /// <typeparam name="T">要设置的类型</typeparam>
+        /// <param name="obj">要设置的对象</param>
+        /// <returns>默认对象</returns>
+        public static T MGetDefultObject<T>(this object obj)
+        {
+            return ConvertManager.GetDefultObject<T>();
         }
         /// <summary>
         /// 对象转换为Josn
@@ -165,15 +160,18 @@ namespace MateralTools.MConvert
         /// <returns>复制的对象</returns>
         public static void MCopyProperties<T>(this object sourceM, T targetM)
         {
-            PropertyInfo tempProp;
-            PropertyInfo[] T1Props = sourceM.GetType().GetProperties();
-            PropertyInfo[] T2Props = typeof(T).GetProperties();
-            foreach (PropertyInfo prop in T1Props)
+            if (sourceM != null)
             {
-                tempProp = T2Props.Where(m => m.Name == prop.Name).FirstOrDefault();
-                if (tempProp != null)
+                PropertyInfo tempProp;
+                PropertyInfo[] T1Props = sourceM.GetType().GetProperties();
+                PropertyInfo[] T2Props = typeof(T).GetProperties();
+                foreach (PropertyInfo prop in T1Props)
                 {
-                    tempProp.SetValue(targetM, prop.GetValue(sourceM, null), null);
+                    tempProp = T2Props.Where(m => m.Name == prop.Name).FirstOrDefault();
+                    if (tempProp != null)
+                    {
+                        tempProp.SetValue(targetM, prop.GetValue(sourceM, null), null);
+                    }
                 }
             }
         }
@@ -185,10 +183,13 @@ namespace MateralTools.MConvert
         /// <returns>复制的对象</returns>
         public static T MCopyProperties<T>(this object sourceM)
         {
-            T targetM = default(T);
-            targetM.MSetDefultObject();
-            sourceM.MCopyProperties(targetM);
-            return targetM;
+            if (sourceM != null)
+            {
+                T targetM = ConvertManager.GetDefultObject<T>();
+                sourceM.MCopyProperties(targetM);
+                return targetM;
+            }
+            return default(T);
         }
         /// <summary>
         /// 将对象转换为byte数组

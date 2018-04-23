@@ -13,8 +13,7 @@ namespace MateralTools.MConvert
         /// <returns>目标对象</returns>
         public static T MToObj<T>(this DataRow dr)
         {
-            object Model = null;
-            Model.MSetDefultObject();
+            T Model = ConvertManager.GetDefultObject<T>();
             if (Model != null)
             {
                 Model.MSetValueByDataRow(dr);
@@ -29,8 +28,7 @@ namespace MateralTools.MConvert
         /// <returns>目标对象</returns>
         public static T MToObjByColumnModelAttribute<T>(this DataRow dr)
         {
-            object Model = null;
-            Model.MSetDefultObject();
+            T Model = ConvertManager.GetDefultObject<T>();
             if (Model != null)
             {
                 Model.MSetValueByColumnModelAttribute(dr);

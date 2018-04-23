@@ -93,9 +93,9 @@ namespace MateralTools.MAlipay
                 //订单总金额
                 total_amount = aoM.TotalPrice.ToString(),
                 //参与优惠计算的金额
-                discountable_amount = aoM.DiscounPrice > 0 ? aoM.DiscounPrice.ToString() : string.Empty,
+                discountable_amount = aoM.DiscounPrice.ToString(),
                 //不参与优惠计算的金额
-                undiscountable_amount = aoM.UnDiscounPrice > 0 ? aoM.UnDiscounPrice.ToString() : string.Empty,
+                undiscountable_amount = aoM.UnDiscounPrice.ToString(),
                 //订单名称
                 subject = aoM.Name,
                 //自定义超时时间

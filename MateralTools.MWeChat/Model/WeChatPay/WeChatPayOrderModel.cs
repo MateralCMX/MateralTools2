@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace MateralTools.MWeChat.WeChatPay
 {
     /// <summary>
-    /// 微信支付商品模型
+    /// 微信支付订单模型
     /// </summary>
-    public class WeChatPayProductModel
+    public class WeChatPayOrderModel
     {
         /// <summary>
-        /// 商品ID
+        /// 订单ID
         /// </summary>
         public string ID { get; set; }
         /// <summary>

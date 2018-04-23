@@ -16,14 +16,14 @@ namespace MateralTools.MWeChat.WeChatPay
         /// 构造方法
         /// </summary>
         /// <param name="configM"></param>
-        public WeChatPayManager(WeChatPayConfigModel configM)
+        public WeChatPayManager(WeChatConfigModel configM)
         {
             _config = configM;
         }
         /// <summary>
         /// 配置文件
         /// </summary>
-        WeChatPayConfigModel _config;
+        protected WeChatConfigModel _config;
         /// <summary>
         /// 提交被扫支付API
         /// 收银员使用扫码设备读取微信用户刷卡授权码以后，二维码或条码信息传送至商户收银台，
@@ -33,7 +33,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">超时时间</param>
         /// <returns>成功时返回调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel Micropay(WeChatPayDataModel inputObj, int timeOut = 10)
+        public WeChatDataModel Micropay(WeChatDataModel inputObj, int timeOut = 10)
         {
             string url = "https://api.mch.weixin.qq.com/pay/micropay";
             //检测必填参数
@@ -60,11 +60,11 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
             var start = DateTime.Now;//请求开始时间
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口以提交数据到API
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口以提交数据到API
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
             //将xml格式的结果转换为对象以返回
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             ReportCostTime(url, timeCost, result);//测速上报
             return result;
@@ -76,7 +76,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">超时时间</param>
         /// <returns>成功时返回订单查询结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel OrderQuery(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel OrderQuery(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/orderquery";
             //检测必填参数
@@ -90,11 +90,11 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
             var start = DateTime.Now;
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口提交数据
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口提交数据
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
             //将xml格式的数据转化为对象以返回
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             ReportCostTime(url, timeCost, result);//测速上报
             return result;
@@ -106,7 +106,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel Reverse(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel Reverse(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/secapi/pay/reverse";
             //检测必填参数
@@ -123,12 +123,12 @@ namespace MateralTools.MWeChat.WeChatPay
 
             var start = DateTime.Now;//请求开始时间
 
-            string response = WeChatPayHttpManager.Post(xml, url, true, timeOut, _config);
+            string response = WeChatHttpManager.Post(xml, url, true, timeOut, _config);
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);
 
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
 
             ReportCostTime(url, timeCost, result);//测速上报
@@ -142,7 +142,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel Refund(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel Refund(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
             //检测必填参数
@@ -172,11 +172,11 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
             var start = DateTime.Now;
-            string response = WeChatPayHttpManager.Post(xml, url, true, timeOut, _config);//调用HTTP通信接口提交数据到API
+            string response = WeChatHttpManager.Post(xml, url, true, timeOut, _config);//调用HTTP通信接口提交数据到API
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
             //将xml格式的结果转换为对象以返回
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             ReportCostTime(url, timeCost, result);//测速上报
             return result;
@@ -190,7 +190,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel RefundQuery(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel RefundQuery(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/refundquery";
             //检测必填参数
@@ -205,11 +205,11 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
             var start = DateTime.Now;//请求开始时间
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口以提交数据到API
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口以提交数据到API
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
             //将xml格式的结果转换为对象以返回
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             ReportCostTime(url, timeCost, result);//测速上报
             return result;
@@ -221,7 +221,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel DownloadBill(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel DownloadBill(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/downloadbill";
             //检测必填参数
@@ -234,8 +234,8 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("nonce_str", CommonManager.GetRandomStrByGUID(32));//随机字符串
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口以提交数据到API
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);//调用HTTP通信接口以提交数据到API
+            WeChatDataModel result = new WeChatDataModel();
             //若接口调用失败会返回xml格式的结果
             if (response.Substring(0, 5) == "<xml>")
             {
@@ -257,7 +257,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel ShortUrl(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel ShortUrl(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/tools/shorturl";
             //检测必填参数
@@ -271,10 +271,10 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
             var start = DateTime.Now;//请求开始时间
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             ReportCostTime(url, timeCost, result);//测速上报
             return result;
@@ -286,7 +286,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel UnifiedOrder(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel UnifiedOrder(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
             //检测必填参数
@@ -328,10 +328,10 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));
             string xml = inputObj.ToXml();
             var start = DateTime.Now;
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             ReportCostTime(url, timeCost, result);//测速上报
             return result;
@@ -343,7 +343,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel CloseOrder(WeChatPayDataModel inputObj, int timeOut = 6)
+        public WeChatDataModel CloseOrder(WeChatDataModel inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/closeorder";
             //检测必填参数
@@ -357,10 +357,10 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
             var start = DateTime.Now;//请求开始时间
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             ReportCostTime(url, timeCost, result);//测速上报
             return result;
@@ -371,7 +371,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="interface_url">接口URL</param>
         /// <param name="timeCost">接口耗时</param>
         /// <param name="inputObj">inputObj参数数组</param>
-        private void ReportCostTime(string interface_url, int timeCost, WeChatPayDataModel inputObj)
+        private void ReportCostTime(string interface_url, int timeCost, WeChatDataModel inputObj)
         {
             //如果不需要进行上报
             if (_config.REPORT_LEVENL == 0)
@@ -385,7 +385,7 @@ namespace MateralTools.MWeChat.WeChatPay
                 return;
             }
             //上报逻辑
-            WeChatPayDataModel data = new WeChatPayDataModel();
+            WeChatDataModel data = new WeChatDataModel();
             data.SetValue("interface_url", interface_url);
             data.SetValue("execute_time_", timeCost);
             //返回状态码
@@ -439,7 +439,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeOut">测速上报接口超时时间</param>
         /// <returns>成功时返回API调用结果，其他抛异常</returns>
         /// <exception cref="MWeChatException"></exception>
-        public WeChatPayDataModel Report(WeChatPayDataModel inputObj, int timeOut = 1)
+        public WeChatDataModel Report(WeChatDataModel inputObj, int timeOut = 1)
         {
             string url = "https://api.mch.weixin.qq.com/payitil/report";
             //检测必填参数
@@ -470,8 +470,8 @@ namespace MateralTools.MWeChat.WeChatPay
             inputObj.SetValue("nonce_str", CommonManager.GetRandomStrByGUID(32));//随机字符串
             inputObj.SetValue("sign", inputObj.MakeSign(_config.KEY));//签名
             string xml = inputObj.ToXml();
-            string response = WeChatPayHttpManager.Post(xml, url, false, timeOut, _config);
-            WeChatPayDataModel result = new WeChatPayDataModel();
+            string response = WeChatHttpManager.Post(xml, url, false, timeOut, _config);
+            WeChatDataModel result = new WeChatDataModel();
             result.FromXml(response, _config.KEY);
             return result;
         }

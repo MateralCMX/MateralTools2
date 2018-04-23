@@ -12,17 +12,17 @@ namespace MateralTools.MAlipay
     public class AlipayProductModel
     {
         /// <summary>
-        /// 订单编号
+        /// 商品编号
         /// </summary>
         public string ID { get; set; }
         /// <summary>
-        /// 订单名称
+        /// 商品名称
         /// </summary>
         public string Name { get; set; }
         /// <summary>
         /// 单价
         /// </summary>
-        public int Price { get; set; }
+        public string Price { get; set; }
         /// <summary>
         /// 数量
         /// </summary>

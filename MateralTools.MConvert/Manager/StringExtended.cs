@@ -35,8 +35,7 @@ namespace MateralTools.MConvert
         {
             try
             {
-                T model = default(T);
-                model.MSetDefultObject();
+                T model = ConvertManager.GetDefultObject<T>();
                 JsonConvert.PopulateObject(jsonStr, model);
                 return model;
             }

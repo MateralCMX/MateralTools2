@@ -5,17 +5,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 
-namespace MateralTools.MWeChat.WeChatPay
+namespace MateralTools.MWeChat
 {
     /// <summary>
-    /// 微信支付数据模型
+    /// 微信支数据模型
     /// </summary>
-    public class WeChatPayDataModel
+    public class WeChatDataModel
     {
         /// <summary>
         /// 构造方法
         /// </summary>
-        public WeChatPayDataModel()
+        public WeChatDataModel()
         {
             Data = new SortedDictionary<string, object>();
         }

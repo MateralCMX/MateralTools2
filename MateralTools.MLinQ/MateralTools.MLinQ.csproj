@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2465BA22-EE52-4DCE-8F20-2FFA5F8961FF}</ProjectGuid>
+    <ProjectGuid>{AB5BC91C-AAC0-47C0-A68C-689C7FEE81CF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MateralTools.MConvert</RootNamespace>
-    <AssemblyName>MateralTools.MConvert</AssemblyName>
+    <RootNamespace>MateralTools.MLinQ</RootNamespace>
+    <AssemblyName>MateralTools.MLinQ</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -20,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\MateralTools.MConvert.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,35 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Manager\ByteExtended.cs" />
-    <Compile Include="Manager\ConvertManager.cs" />
-    <Compile Include="Manager\DataTableExtended.cs" />
-    <Compile Include="Manager\ListExtended.cs" />
-    <Compile Include="Manager\ObjectExtended.cs" />
-    <Compile Include="Manager\StringExtended.cs" />
-    <Compile Include="Manager\TypeExtended.cs" />
-    <Compile Include="Model\MConvertException.cs" />
+    <Compile Include="Manager\LinQExtended.cs" />
+    <Compile Include="Model\MLinQException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\" />
-    <Folder Include="Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">
       <Project>{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}</Project>
       <Name>MateralTools.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj">
-      <Project>{14DD5ACD-EF69-4C3E-9282-38E415C58A16}</Project>
-      <Name>MateralTools.MVerify</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

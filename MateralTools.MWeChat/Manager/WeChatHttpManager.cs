@@ -10,12 +10,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace MateralTools.MWeChat.WeChatPay
+namespace MateralTools.MWeChat
 {
     /// <summary>
-    /// 微信支付Http管理器
+    /// 微信Http管理器
     /// </summary>
-    public class WeChatPayHttpManager
+    public class WeChatHttpManager
     {
         /// <summary>
         /// 确认返回
@@ -38,7 +38,7 @@ namespace MateralTools.MWeChat.WeChatPay
         /// <param name="timeout">超时时间</param>
         /// <param name="config">微信支付配置对象</param>
         /// <returns>请求返回数据</returns>
-        public static string Post(string xml, string url, bool isUseCert, int timeout,WeChatPayConfigModel config)
+        public static string Post(string xml, string url, bool isUseCert, int timeout, WeChatConfigModel config)
         {
             GC.Collect();
             string result = "";

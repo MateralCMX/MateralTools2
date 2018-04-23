@@ -30,15 +30,15 @@ namespace MateralTools.MAlipay
         /// <summary>
         /// 总金额
         /// </summary>
-        public int TotalPrice { get; set; }
+        public string TotalPrice { get; set; }
         /// <summary>
         /// 优惠金额
         /// </summary>
-        public int DiscounPrice { get; set; }
+        public string DiscounPrice { get; set; }
         /// <summary>
         /// 不参与优惠的金额
         /// </summary>
-        public int UnDiscounPrice { get; set; }
+        public string UnDiscounPrice { get; set; }
         /// <summary>
         /// 操作员ID
         /// </summary>

@@ -195,7 +195,7 @@ namespace Com.Alipay
                 return payResult;
 
             }
-            catch
+            catch(Exception ex)
             {
                 payResult.response = null;
                 return payResult;
