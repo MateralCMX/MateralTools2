@@ -9,10 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\m-Reset\m-Reset.js" />
-    <Content Remove="wwwroot\m-Reset\m-Reset.js.map" />
-    <Content Remove="wwwroot\m-Tools\m-tools.js" />
-    <Content Remove="wwwroot\m-Tools\m-tools.js.map" />
+    <Content Remove="m-Reset\m-Reset.js" />
+    <Content Remove="m-Reset\m-Reset.js.map" />
+    <Content Remove="m-Tools\m-tools.js" />
+    <Content Remove="m-Tools\m-tools.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="m-Reset\m-Reset.css" />
+    <Content Include="m-Reset\m-Reset.ts" />
+    <Content Include="m-Tools\m-Tools.ts" />
   </ItemGroup>
 
   <ItemGroup>
