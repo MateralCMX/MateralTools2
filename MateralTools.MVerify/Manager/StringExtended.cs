@@ -877,8 +877,7 @@ namespace MateralTools.MVerify
         /// </returns>
         private static bool MCheckIDCard18(this string InputStr)
         {
-            long n = 0;
-            if (long.TryParse(InputStr.Remove(17), out n) == false
+            if (long.TryParse(InputStr.Remove(17), out long n) == false
                 || n < Math.Pow(10, 16) || long.TryParse(InputStr.Replace('x', '0').Replace('X', '0'), out n) == false)
             {
                 return false;//数字验证  
@@ -920,8 +919,7 @@ namespace MateralTools.MVerify
         /// </returns> 
         private static bool MCheckIDCard15(this string InputStr)
         {
-            long n = 0;
-            if (long.TryParse(InputStr, out n) == false || n < Math.Pow(10, 14))
+            if (long.TryParse(InputStr, out long n) == false || n < Math.Pow(10, 14))
             {
                 return false;//数字验证  
             }

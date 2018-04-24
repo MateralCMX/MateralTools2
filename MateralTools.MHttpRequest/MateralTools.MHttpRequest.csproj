@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\" />
+    <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
+    <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
+  </ItemGroup>
+
+</Project>

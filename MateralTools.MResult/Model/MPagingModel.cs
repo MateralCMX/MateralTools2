@@ -5,7 +5,7 @@ namespace MateralTools.MResult
     /// <summary>
     /// 分页模型
     /// </summary>
-    public class MPagingModel
+    public class MPageModel
     {
         /// <summary>
         /// 查询页面
@@ -36,13 +36,16 @@ namespace MateralTools.MResult
         /// 数据总数
         /// </summary>
         public long DataCount { get; set; }
-        public MPagingModel() { }
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        public MPageModel() { }
         /// <summary>
         /// 构造方法
         /// </summary>
         /// <param name="pagingIndex">当前页数</param>
         /// <param name="pagingSize">每页显示数量</param>
-        public MPagingModel(int pagingIndex,int pagingSize)
+        public MPageModel(int pagingIndex,int pagingSize)
         {
             if (pagingIndex > 0)
             {
@@ -66,12 +69,12 @@ namespace MateralTools.MResult
     /// 分页数据模型
     /// </summary>
     /// <typeparam name="T">数据类型</typeparam>
-    public class MPagingData<T>
+    public class MPageData<T>
     {
         /// <summary>
         /// 分页信息
         /// </summary>
-        public MPagingModel PageInfo { get; set; }
+        public MPageModel PageInfo { get; set; }
         /// <summary>
         /// 数据信息
         /// </summary>

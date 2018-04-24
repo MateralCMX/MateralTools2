@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MateralTools.MVerify;
+using QRCoder;
+using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using MateralTools.MVerify;
-using ThoughtWorks.QRCode.Codec;
 
 namespace MateralTools.MEncryption
 {
@@ -38,7 +35,7 @@ namespace MateralTools.MEncryption
                 }
                 return sb.ToString();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new MEncryptionException("获取文件MD5值错误", e);
             }
@@ -202,19 +199,26 @@ namespace MateralTools.MEncryption
         /// 获得二维码
         /// </summary>
         /// <param name="InputStr">需要加密的字符串</param>
-        /// <returns>二维码图片181px*181px</returns>
-        public static Bitmap QRCodeEncode(string InputStr)
+        /// <param name="pixelsPerModule">每个模块的像素</param>
+        /// <param name="darkColor">暗色</param>
+        /// <param name="lightColor">亮色</param>
+        /// <param name="icon">图标</param>
+        /// <returns>二维码图片</returns>
+        public static Bitmap QRCodeEncode(string InputStr, int pixelsPerModule = 20, Color? darkColor = null, Color? lightColor = null, Bitmap icon = null)
         {
-            QRCodeEncoder qRCodeEncoder = new QRCodeEncoder();
-            //设置二维码编码格式  
-            qRCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
-            //设置编码测量度  
-            qRCodeEncoder.QRCodeScale = InputStr.Length;
-            //设置编码版本  
-            qRCodeEncoder.QRCodeVersion = 0;
-            //设置错误校验  
-            qRCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
-            return qRCodeEncoder.Encode(InputStr, Encoding.UTF8);
+            if (darkColor == null)
+            {
+                darkColor = Color.Black;
+            }
+            if (lightColor == null)
+            {
+                lightColor = Color.White;
+            }
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(InputStr, QRCodeGenerator.ECCLevel.H);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(pixelsPerModule, darkColor.Value, lightColor.Value, icon);
+            return qrCodeImage;
         }
         #endregion
         #region 栅栏加密法
