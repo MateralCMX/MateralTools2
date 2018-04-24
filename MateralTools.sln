@@ -15,19 +15,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MEncryption", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MHttpRequest", "MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj", "{09A7C909-F8EA-466C-93BF-E0AE3068E900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.CoreToolsTest", "Materal.CoreToolsTest\Materal.CoreToolsTest.csproj", "{E1EBFA54-E63E-4803-BF3E-3BBD8815E96B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Materal.CoreToolsTest", "Materal.CoreToolsTest\Materal.CoreToolsTest.csproj", "{E1EBFA54-E63E-4803-BF3E-3BBD8815E96B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.ToolsTest", "Materal.ToolsTest\Materal.ToolsTest.csproj", "{D6DC78F1-041C-49F6-9365-178D5713491F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MLinQ", "MateralTools.MLinQ\MateralTools.MLinQ.csproj", "{9A6BFDA7-78DC-445B-8094-C0E73E69A4FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MLinQ", "MateralTools.MLinQ\MateralTools.MLinQ.csproj", "{9A6BFDA7-78DC-445B-8094-C0E73E69A4FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MResult", "MateralTools.MResult\MateralTools.MResult.csproj", "{D21857FD-E588-49C4-AB9C-085F9B2C3AD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MResult", "MateralTools.MResult\MateralTools.MResult.csproj", "{D21857FD-E588-49C4-AB9C-085F9B2C3AD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MWebLib", "MateralTools.MWebLib\MateralTools.MWebLib.csproj", "{175059F4-2885-4BCD-B1E6-7110B6D9E84F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MWebLib", "MateralTools.MWebLib\MateralTools.MWebLib.csproj", "{175059F4-2885-4BCD-B1E6-7110B6D9E84F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI", "Materal.UI\Materal.UI.csproj", "{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI.WinForm", "Materal.UI.WinForm\Materal.UI.WinForm.csproj", "{8833902E-60EE-44FF-B44C-12F4D5EE8B03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MWeChat", "MateralTools.MWeChat\MateralTools.MWeChat.csproj", "{EDB2BD74-3A63-401A-B43A-22742BD1B08D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{8833902E-60EE-44FF-B44C-12F4D5EE8B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8833902E-60EE-44FF-B44C-12F4D5EE8B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8833902E-60EE-44FF-B44C-12F4D5EE8B03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDB2BD74-3A63-401A-B43A-22742BD1B08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB2BD74-3A63-401A-B43A-22742BD1B08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB2BD74-3A63-401A-B43A-22742BD1B08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB2BD74-3A63-401A-B43A-22742BD1B08D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

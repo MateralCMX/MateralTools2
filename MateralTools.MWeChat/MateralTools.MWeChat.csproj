@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\WXSS\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LitJson" Version="0.12.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
+    <ProjectReference Include="..\MateralTools.MEncryption\MateralTools.MEncryption.csproj" />
+    <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
+  </ItemGroup>
+
+</Project>
