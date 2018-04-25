@@ -29,7 +29,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI", "Materal.UI\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI.WinForm", "Materal.UI.WinForm\Materal.UI.WinForm.csproj", "{8833902E-60EE-44FF-B44C-12F4D5EE8B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MWeChat", "MateralTools.MWeChat\MateralTools.MWeChat.csproj", "{EDB2BD74-3A63-401A-B43A-22742BD1B08D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MWeChat", "MateralTools.MWeChat\MateralTools.MWeChat.csproj", "{EDB2BD74-3A63-401A-B43A-22742BD1B08D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MAlipay", "MateralTools.MAlipay\MateralTools.MAlipay.csproj", "{070DDF3D-5583-48CC-B29B-3EE1802F296E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{EDB2BD74-3A63-401A-B43A-22742BD1B08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDB2BD74-3A63-401A-B43A-22742BD1B08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDB2BD74-3A63-401A-B43A-22742BD1B08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070DDF3D-5583-48CC-B29B-3EE1802F296E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070DDF3D-5583-48CC-B29B-3EE1802F296E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070DDF3D-5583-48CC-B29B-3EE1802F296E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070DDF3D-5583-48CC-B29B-3EE1802F296E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
