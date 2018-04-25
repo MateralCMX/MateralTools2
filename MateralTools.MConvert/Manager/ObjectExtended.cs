@@ -1,4 +1,4 @@
-﻿using MateralTools.Base.MTable;
+﻿using MateralTools.MData;
 using Newtonsoft.Json;
 using System;
 using System.Data;
@@ -99,12 +99,12 @@ namespace MateralTools.MConvert
             PropertyInfo[] subProps;
             foreach (PropertyInfo prop in props)
             {
-                ColumnModelAttribute cma = null;
+                DataTableColumnModelAttributeAttribute cma = null;
                 foreach (Attribute attr in Attribute.GetCustomAttributes(prop))
                 {
-                    if (attr.GetType() == typeof(ColumnModelAttribute))
+                    if (attr.GetType() == typeof(DataTableColumnModelAttributeAttribute))
                     {
-                        cma = attr as ColumnModelAttribute;
+                        cma = attr as DataTableColumnModelAttributeAttribute;
                         if (!(dr[cma.DBColumnName] is System.DBNull) && dr[cma.DBColumnName].GetType().Name == prop.PropertyType.Name)
                         {
                             prop.SetValue(obj, dr[cma.DBColumnName], null);

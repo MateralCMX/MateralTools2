@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MateralTools.Base.MEnum
+namespace MateralTools.MEnum
 {
     public static class EnumManager
     {

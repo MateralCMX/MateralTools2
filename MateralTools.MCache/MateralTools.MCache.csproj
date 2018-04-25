@@ -10,11 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Content\" />
-    <Folder Include="Data\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
     <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
   </ItemGroup>

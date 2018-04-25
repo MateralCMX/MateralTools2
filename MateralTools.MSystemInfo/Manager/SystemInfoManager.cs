@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace MateralTools.Base.MSystemInfo
+namespace MateralTools.MSystemInfo
 {
     /// <summary>
     /// 系统信息管理器

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MateralTools.Base.MEnum
+namespace MateralTools.MEnum
 {
     /// <summary>
     /// M枚举异常

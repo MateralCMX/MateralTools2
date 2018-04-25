@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Content\" />
-    <Folder Include="Data\" />
-    <Folder Include="Manager\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
     <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace MateralTools.Base.MEnum
+namespace MateralTools.MEnum
 {
     public static class EnumExtended
     {

@@ -16,6 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="m-Reset\m-Reset.js" />
+    <None Remove="m-Reset\m-Reset.js.map" />
+    <None Remove="m-Tools\m-tools.js" />
+    <None Remove="m-Tools\m-tools.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="m-Reset\m-Reset.css" />
     <Content Include="m-Reset\m-Reset.ts" />
     <Content Include="m-Tools\m-Tools.ts" />
