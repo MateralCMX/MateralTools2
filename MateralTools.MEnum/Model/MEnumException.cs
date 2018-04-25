@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MateralTools.Base;
+using System;
 
 namespace MateralTools.MEnum
 {

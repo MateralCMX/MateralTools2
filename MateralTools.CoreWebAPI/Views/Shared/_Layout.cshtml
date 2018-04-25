@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MateralTools</title>
+    <environment include="Development">
+        <link href="~/Lib/Bootstrap/bootstrap.css" rel="stylesheet" />
+        <link href="~/Css/site.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/Css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/Lib/Bootstrap/bootstrap.min.css" asp-append-version="false" />
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            MateralTools
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">
+                        关于
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="swagger" target="_blank">
+                        API文档
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        下拉菜单
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">选项一</a>
+                        <a class="dropdown-item" href="#">选项二</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">其他选项</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button">
+                    搜索
+                </button>
+            </form>
+        </div>
+    </nav>
+    <div class="SubPage">
+        @RenderBody()
+    </div>
+    <footer>
+        <p>&copy; 2018 - MateralTools.CoreWebAPI</p>
+    </footer>
+    <environment include="Development">
+        <script src="~/Lib/JQuery/jquery-3.3.1.js"></script>
+        <script src="~/Lib/Bootstrap/bootstrap.js"></script>
+        <script src="~/Script/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/Lib/JQuery/jquery-3.3.1.min.js" asp-append-version="false"></script>
+        <script src="~/Lib/Bootstrap/bootstrap.min.js" asp-append-version="false"></script>
+        <script src="~/Script/site.js" asp-append-version="false"></script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

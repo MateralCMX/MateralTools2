@@ -54,6 +54,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIControl\ExportNugetPackageFileControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIControl\ExportNugetPackageFileControl.Designer.cs">
+      <DependentUpon>ExportNugetPackageFileControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIControl\ExportProjectFileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -78,6 +84,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UIControl\ExportNugetPackageFileControl.resx">
+      <DependentUpon>ExportNugetPackageFileControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIControl\ExportProjectFileControl.resx">
       <DependentUpon>ExportProjectFileControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,11 +112,11 @@
       <Name>Materal.UI</Name>
     </ProjectReference>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">
-      <Project>{242e1ddf-5a5b-4f96-8ae2-bb0c0bfea52d}</Project>
+      <Project>{aa9119f1-86b8-4374-8b75-6478d1d48805}</Project>
       <Name>MateralTools.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj">
-      <Project>{14dd5acd-ef69-4c3e-9282-38e415c58a16}</Project>
+      <Project>{c464d9b0-9ec0-4ea5-a9a4-98d318cc85cc}</Project>
       <Name>MateralTools.MVerify</Name>
     </ProjectReference>
   </ItemGroup>

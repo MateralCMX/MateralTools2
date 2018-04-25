@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Materal</Authors>
+    <Product>MateralTools</Product>
+    <Description>这是Materal工具库的Web帮助库
+GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

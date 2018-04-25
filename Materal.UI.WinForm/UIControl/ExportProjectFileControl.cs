@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MateralTools.MVerify;
+﻿using MateralTools.MVerify;
+using System;
 using System.IO;
-using System.Reflection;
-using MateralTools.Base;
+using System.Windows.Forms;
 
 namespace Materal.UI.WinForm.UIControl
 {
@@ -160,8 +151,8 @@ namespace Materal.UI.WinForm.UIControl
         private void BtnExport_Click(object sender, EventArgs e)
         {
             _epfMa.IsOpenExplorer = checkOpenExplorer.Checked;
-            _epfMa.CodePath = _codePath;
-            _epfMa.ExportCodeFile(_targetPath);
+            _epfMa.FilePath = _codePath;
+            _epfMa.ExportFile(_targetPath);
         }
         /// <summary>
         /// 重置按钮单机事件

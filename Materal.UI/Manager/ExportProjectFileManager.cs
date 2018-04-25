@@ -1,4 +1,4 @@
-﻿using MateralTools.Base.MIO;
+﻿using MateralTools.MIO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,58 +9,19 @@ using System.Threading.Tasks;
 namespace Materal.UI
 {
     /// <summary>
-    /// 导出项目文件成功委托
-    /// </summary>
-    public delegate void ExportProjectFileDelegate();
-    /// <summary>
     /// 导出项目文件管理器
     /// </summary>
-    public class ExportProjectFileManager
+    public class ExportProjectFileManager: ExportFileManager
     {
-        /// <summary>
-        /// 导出成功后事件
-        /// </summary>
-        public ExportProjectFileDelegate ExportSuccess;
-        /// <summary>
-        /// 导出失败后事件
-        /// </summary>
-        public ExportProjectFileDelegate ExportFail;
-        /// <summary>
-        /// 导出完成后是否打开资源管理器
-        /// </summary>
-        public bool IsOpenExplorer { get; set; }
-        /// <summary>
-        /// 代码路径
-        /// </summary>
-        public string CodePath { get; set; }
         /// <summary>
         /// 排除文件夹名称
         /// </summary>
         public string[] ExcludeDirectoryName { get; set; }
         /// <summary>
-        /// 项目名称
+        /// 导出文件
         /// </summary>
-        public string ProjectName { get; set; }
-        /// <summary>
-        /// 导出前初始化
-        /// </summary>
-        /// <param name="targetPath"></param>
-        private void ExportInit(string targetPath)
-        {
-            if (Directory.Exists(targetPath))
-            {
-                IOManager.DeleteDirectory(targetPath);
-            }
-            else
-            {
-                Directory.CreateDirectory(targetPath);
-            }
-        }
-        /// <summary>
-        /// 导出代码文件
-        /// </summary>
-        /// <param name="targetPath"></param>
-        public void ExportCodeFile(string targetPath)
+        /// <param name="targetPath">目标路径</param>
+        public override void ExportFile(string targetPath)
         {
             try
             {
@@ -68,7 +29,7 @@ namespace Materal.UI
                 DirectoryInfo di = null;
                 string newDirectoryName = string.Empty;
                 string[] subNames = null;
-                string[] names = Directory.GetDirectories(CodePath);
+                string[] names = Directory.GetDirectories(FilePath);
                 foreach (string name in names)
                 {
                     di = new DirectoryInfo(name);

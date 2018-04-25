@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using MateralTools.Base.MEnum;
+using MateralTools.MEnum;
 using MateralTools.MConvert;
 
 namespace MateralTools.MResult

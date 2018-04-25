@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manager\ExportFileManager.cs" />
+    <Compile Include="Manager\ExportNugetPackageFileManager.cs" />
     <Compile Include="Manager\ExportProjectFileManager.cs" />
     <Compile Include="Manager\NotesXMLFileMergeManager.cs" />
     <Compile Include="Model\MUIException.cs" />
@@ -47,8 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj">
-      <Project>{242E1DDF-5A5B-4F96-8AE2-BB0C0BFEA52D}</Project>
+      <Project>{AA9119F1-86B8-4374-8B75-6478D1D48805}</Project>
       <Name>MateralTools.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MIO\MateralTools.MIO.csproj">
+      <Project>{dfab0e55-3457-49d5-a111-28bbcf769ab9}</Project>
+      <Name>MateralTools.MIO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

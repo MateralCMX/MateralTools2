@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <Authors>Materal</Authors>
+    <Product>MateralTools</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>这是MateralTools的HTTP请求工具库
+GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
+    <Copyright>©Materal</Copyright>
+    <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,11 +2,20 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <Authors>Materal</Authors>
+    <Product>MateralTools</Product>
+    <Description>这是MateralTools的返回类型工具库
+GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl />
+    <Copyright>©Materal</Copyright>
+    <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
     <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
+    <ProjectReference Include="..\MateralTools.MEnum\MateralTools.MEnum.csproj" />
   </ItemGroup>
 
 </Project>

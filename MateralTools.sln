@@ -45,7 +45,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MSystemInfo", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MIO", "MateralTools.MIO\MateralTools.MIO.csproj", "{DFAB0E55-3457-49D5-A111-28BBCF769AB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MEnum", "MateralTools.MEnum\MateralTools.MEnum.csproj", "{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MEnum", "MateralTools.MEnum\MateralTools.MEnum.csproj", "{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.CoreWebAPI", "MateralTools.CoreWebAPI\MateralTools.CoreWebAPI.csproj", "{0B098617-1DF8-4939-970C-382D16B6F8A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,10 @@ Global
 		{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

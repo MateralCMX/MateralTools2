@@ -1,4 +1,4 @@
-﻿using MateralTools.Base.MSystemInfo;
+﻿using MateralTools.MSystemInfo;
 using MateralTools.MVerify;
 using System.Collections.Generic;
 
