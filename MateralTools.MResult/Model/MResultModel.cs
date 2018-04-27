@@ -4,7 +4,6 @@ using MateralTools.MConvert;
 
 namespace MateralTools.MResult
 {
-
     /// <summary>
     /// 返回对象类型
     /// </summary>
@@ -181,12 +180,12 @@ namespace MateralTools.MResult
     /// 携带分页数据的返回对象
     /// </summary>
     /// <typeparam name="T">保存数据类型</typeparam>
-    public class MResultPagingModel<T> : MResultModel<T>
+    public class MResultPageModel<T> : MResultModel<T>
     {
         /// <summary>
         /// 分页信息
         /// </summary>
-        private MPageModel _pagingInfo;
+        private MPageModel _pageInfo;
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -194,19 +193,19 @@ namespace MateralTools.MResult
         /// <param name="data">返回数据对象</param>
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
-        public MResultPagingModel(MResultType resultType, T data, MPageModel pagingM, string message = "") : base(resultType, data, message)
+        public MResultPageModel(MResultType resultType, T data, MPageModel pagingM, string message = "") : base(resultType, data, message)
         {
-            _pagingInfo = pagingM;
+            _pageInfo = pagingM;
         }
 
         /// <summary>
         /// 分页信息
         /// </summary>
-        public MPageModel PagingInfo
+        public MPageModel PageInfo
         {
             get
             {
-                return _pagingInfo;
+                return _pageInfo;
             }
         }
         /// <summary>
@@ -216,9 +215,9 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
         /// <returns>成功返回对象</returns>
-        public static MResultPagingModel<T> GetSuccessResultM(T data, MPageModel pagingM, string message = "")
+        public static MResultPageModel<T> GetSuccessResultM(T data, MPageModel pagingM, string message = "")
         {
-            return new MResultPagingModel<T>(MResultType.Success, data, pagingM, message);
+            return new MResultPageModel<T>(MResultType.Success, data, pagingM, message);
         }
         /// <summary>
         /// 获得一个成功返回对象
@@ -226,13 +225,13 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>成功返回对象</returns>
-        public static MResultPagingModel<T> GetSuccessResultM(MPageData<T> pagingM, string message = "")
+        public static MResultPageModel<T> GetSuccessResultM(MPageData<T> pagingM, string message = "")
         {
             if (pagingM == null)
             {
                 pagingM = new MPageData<T>();
             }
-            return new MResultPagingModel<T>(MResultType.Success, pagingM.Data, pagingM.PageInfo, message);
+            return new MResultPageModel<T>(MResultType.Success, pagingM.Data, pagingM.PageInfo, message);
         }
         /// <summary>
         /// 获得一个失败返回对象
@@ -241,9 +240,9 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
         /// <returns>失败返回对象</returns>
-        public static MResultPagingModel<T> GetFailResultM(T data = default(T), MPageModel pagingM = null, string message = "")
+        public static MResultPageModel<T> GetFailResultM(T data = default(T), MPageModel pagingM = null, string message = "")
         {
-            return new MResultPagingModel<T>(MResultType.Fail, data, pagingM, message);
+            return new MResultPageModel<T>(MResultType.Fail, data, pagingM, message);
         }
         /// <summary>
         /// 获得一个失败返回对象
@@ -251,13 +250,13 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>失败返回对象</returns>
-        public static MResultPagingModel<T> GetFailResultM(MPageData<T> pagingM = null, string message = "")
+        public static MResultPageModel<T> GetFailResultM(MPageData<T> pagingM = null, string message = "")
         {
             if (pagingM == null)
             {
                 pagingM = new MPageData<T>();
             }
-            return new MResultPagingModel<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
+            return new MResultPageModel<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
         }
         /// <summary>
         /// 获得一个错误返回对象
@@ -266,9 +265,9 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
         /// <returns>错误返回对象</returns>
-        public static MResultPagingModel<T> GetErrorResultM(T data = default(T), MPageModel pagingM = null, string message = "")
+        public static MResultPageModel<T> GetErrorResultM(T data = default(T), MPageModel pagingM = null, string message = "")
         {
-            return new MResultPagingModel<T>(MResultType.Error, data, pagingM, message);
+            return new MResultPageModel<T>(MResultType.Error, data, pagingM, message);
         }
         /// <summary>
         /// 获得一个错误返回对象
@@ -276,13 +275,13 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>错误返回对象</returns>
-        public static MResultPagingModel<T> GetErrorResultM(MPageData<T> pagingM = null, string message = "")
+        public static MResultPageModel<T> GetErrorResultM(MPageData<T> pagingM = null, string message = "")
         {
             if (pagingM == null)
             {
                 pagingM = new MPageData<T>();
             }
-            return new MResultPagingModel<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
+            return new MResultPageModel<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
         }
     }
 }

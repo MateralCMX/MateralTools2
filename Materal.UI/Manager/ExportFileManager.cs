@@ -38,7 +38,7 @@ namespace Materal.UI
         /// 导出前初始化
         /// </summary>
         /// <param name="targetPath"></param>
-        protected void ExportInit(string targetPath)
+        protected virtual void ExportInit(string targetPath)
         {
             if (Directory.Exists(targetPath))
             {

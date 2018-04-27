@@ -26,7 +26,14 @@ namespace Materal.UI
                 {
                     if (fi.Name.Contains(ProjectName))
                     {
-                        fi.CopyTo(targetPath + fi.Name, true);
+                        if (fi.FullName.Contains("Debug"))
+                        {
+                            fi.CopyTo(targetPath + "\\Debug\\" + fi.Name, true);
+                        }
+                        else
+                        {
+                            fi.CopyTo(targetPath + "\\Release\\" + fi.Name, true);
+                        }
                     }
                 }
                 subDis = di.GetDirectories();
@@ -37,16 +44,21 @@ namespace Materal.UI
             }
         }
         /// <summary>
+        /// 导出前初始化
+        /// </summary>
+        /// <param name="targetPath"></param>
+        protected override void ExportInit(string targetPath)
+        {
+            base.ExportInit(targetPath);
+            Directory.CreateDirectory(targetPath + "\\Debug");
+            Directory.CreateDirectory(targetPath + "\\Release");
+        }
+        /// <summary>
         /// 导出文件
         /// </summary>
         /// <param name="targetPath">目标路径</param>
         public override void ExportFile(string targetPath)
         {
-            char lastChar = targetPath[targetPath.Length - 1];
-            if (lastChar != '\\')
-            {
-                targetPath += "\\";
-            }
             try
             {
                 ExportInit(targetPath);

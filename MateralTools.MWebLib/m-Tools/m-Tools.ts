@@ -1202,12 +1202,12 @@ namespace MateralTools {
          * @param time 持续时间
          * @param timeType 单位(默认s[秒])
          */
-        public static SetCookie(key: string, value: any, isJson: boolean = true, timeValue: number = 60, timeType: TimeType = TimeType.Minutes) {
+        public static SetCookie(key: string, value: any, isJson: boolean = true, timeValue: number = 60, timeType: TimeType = TimeType.Minutes, path: string="/") {
             if (isJson) {
-                document.cookie = key + "=" + JsonManager.JSONStringify(value) + ";max-age=" + this.GetTime(timeValue, timeType);
+                document.cookie = key + "=" + JsonManager.JSONStringify(value) + ";max-age=" + this.GetTime(timeValue, timeType) + ";path=" + path;
             }
             else {
-                document.cookie = key + "=" + value + ";max-age=" + this.GetTime(timeValue, timeType);
+                document.cookie = key + "=" + value + ";max-age=" + this.GetTime(timeValue, timeType) + ";path=" + path;
             }
         }
         /**

@@ -1,67 +1,14 @@
-﻿.SubPage{
-    
-}
-/*.nav-right-dropdown {
-    left: -64px;
+﻿.nav-right > .dropdown > .dropdown-menu {
+    left: -78px;
 }
 
-.mainFrame {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 56px;
-    bottom: 0;
-    z-index: -1;
+.PageMain {
 }
 
-#mainFrame {
-    width: 100%;
-    height: 100%;
+.PageFooter {
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    background-color: #f8f9fa;
+    font-size: 14px;
 }
-
-.navbar-dark .navbar-nav .nav-link,
-a:not([href]):not([tabindex]) {
-    color: #fff;
-}
-
-a {
-    cursor: pointer;
-}
-
-    a:not([href]):not([tabindex]).dropdown-item {
-        color: #000;
-    }
-
-@media (max-width: 992px) {
-    .nav-right-dropdown {
-        left: 0;
-    }
-}*/
-
-/*body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
-
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-#qrCode {
-    margin: 15px;
-}
-
-@media screen and (max-width: 767px) {
-    .carousel-caption {
-        display: none;
-    }
-}*/

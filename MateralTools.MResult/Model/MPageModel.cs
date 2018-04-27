@@ -10,25 +10,25 @@ namespace MateralTools.MResult
         /// <summary>
         /// 查询页面
         /// </summary>
-        public int PagingIndex { get; set; }
+        public int PageIndex { get; set; }
         /// <summary>
         /// 每页显示数量
         /// </summary>
-        public int PagingSize { get; set; }
+        public int PageSize { get; set; }
         /// <summary>
         /// 总页数
         /// </summary>
-        public long PagingCount
+        public long PageCount
         {
             get
             {
-                if (DataCount % PagingSize > 0)
+                if (DataCount % PageSize > 0)
                 {
-                    return DataCount / PagingSize + 1;
+                    return DataCount / PageSize + 1;
                 }
                 else
                 {
-                    return DataCount / PagingSize;
+                    return DataCount / PageSize;
                 }
             }
         }
@@ -51,8 +51,8 @@ namespace MateralTools.MResult
             {
                 if (pagingSize > 0)
                 {
-                    PagingIndex = pagingIndex;
-                    PagingSize = pagingSize;
+                    PageIndex = pagingIndex;
+                    PageSize = pagingSize;
                 }
                 else
                 {

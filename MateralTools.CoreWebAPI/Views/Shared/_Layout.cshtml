@@ -50,30 +50,36 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="button">
-                    搜索
-                </button>
-            </form>
+            <ul class="navbar-nav nav-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        用户
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">个人中心</a>
+                        <a class="dropdown-item" href="#">修改密码</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">安全退出</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
-    <div class="SubPage">
+    <div class="PageMain">
         @RenderBody()
     </div>
-    <footer>
-        <p>&copy; 2018 - MateralTools.CoreWebAPI</p>
+    <footer class="PageFooter">
+        &copy; 2018 - MateralTools.CoreWebAPI
     </footer>
     <environment include="Development">
         <script src="~/Lib/JQuery/jquery-3.3.1.js"></script>
         <script src="~/Lib/Bootstrap/bootstrap.js"></script>
-        <script src="~/Script/site.js" asp-append-version="true"></script>
+        <script src="~/Script/site.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/Lib/JQuery/jquery-3.3.1.min.js" asp-append-version="false"></script>
         <script src="~/Lib/Bootstrap/bootstrap.min.js" asp-append-version="false"></script>
-        <script src="~/Script/site.js" asp-append-version="false"></script>
+        <script src="~/Script/site.js" asp-append-version="true"></script>
     </environment>
-    @RenderSection("Scripts", required: false)
 </body>
 </html>
