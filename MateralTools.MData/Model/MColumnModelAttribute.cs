@@ -5,7 +5,7 @@ namespace MateralTools.MData
     /// <summary>
     /// 数据模型
     /// </summary>
-    public class DataTableColumnModelAttributeAttribute : Attribute
+    public class MColumnModelAttribute : Attribute
     {
         /// <summary>
         /// 构造函数
@@ -13,7 +13,7 @@ namespace MateralTools.MData
         /// <param name="ColumnName">列名</param>
         /// <param name="dbType">数据类型</param>
         /// <param name="IsAutoNumber">是否为自动编号</param>
-        public DataTableColumnModelAttributeAttribute(string ColumnName, string dbType = "varchar(200)", bool IsAutoNumber = false)
+        public MColumnModelAttribute(string ColumnName, string dbType = "varchar(200)", bool IsAutoNumber = false)
         {
             DBColumnName = ColumnName;
             AutoNumber = IsAutoNumber;

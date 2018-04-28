@@ -115,9 +115,69 @@
       <Project>{aa9119f1-86b8-4374-8b75-6478d1d48805}</Project>
       <Name>MateralTools.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MAlipay\MateralTools.MAlipay.csproj">
+      <Project>{070ddf3d-5583-48cc-b29b-3ee1802f296e}</Project>
+      <Name>MateralTools.MAlipay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MCache\MateralTools.MCache.csproj">
+      <Project>{4f5119cb-4420-4335-aa0b-6280e0fcd135}</Project>
+      <Name>MateralTools.MCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj">
+      <Project>{912a6667-a9cd-45b2-9e42-20712b2de080}</Project>
+      <Name>MateralTools.MConvert</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MData\MateralTools.MData.csproj">
+      <Project>{050b3300-9b55-4d1e-9cb8-c0079a118040}</Project>
+      <Name>MateralTools.MData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MEmail\MateralTools.MEmail.csproj">
+      <Project>{6d1938c4-e4ca-4a0c-889c-325fac8d0419}</Project>
+      <Name>MateralTools.MEmail</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MEncryption\MateralTools.MEncryption.csproj">
+      <Project>{bb97ea95-ba3f-407e-8669-10239028b891}</Project>
+      <Name>MateralTools.MEncryption</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MEnum\MateralTools.MEnum.csproj">
+      <Project>{c90a3775-91ed-4acb-a5e6-3abf3777a069}</Project>
+      <Name>MateralTools.MEnum</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj">
+      <Project>{09a7c909-f8ea-466c-93bf-e0ae3068e900}</Project>
+      <Name>MateralTools.MHttpRequest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MImage\MateralTools.MImage.csproj">
+      <Project>{bcc83e87-dc94-44e7-8207-0ca8f1c3c5b8}</Project>
+      <Name>MateralTools.MImage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MIO\MateralTools.MIO.csproj">
+      <Project>{dfab0e55-3457-49d5-a111-28bbcf769ab9}</Project>
+      <Name>MateralTools.MIO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MKeyWord\MateralTools.MKeyWord.csproj">
+      <Project>{9561d06a-82f4-493f-8552-9f7c0f00c160}</Project>
+      <Name>MateralTools.MKeyWord</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MLinQ\MateralTools.MLinQ.csproj">
+      <Project>{9a6bfda7-78dc-445b-8094-c0e73e69a4fc}</Project>
+      <Name>MateralTools.MLinQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MResult\MateralTools.MResult.csproj">
+      <Project>{d21857fd-e588-49c4-ab9c-085f9b2c3ad7}</Project>
+      <Name>MateralTools.MResult</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MSystemInfo\MateralTools.MSystemInfo.csproj">
+      <Project>{cbcf9510-5d38-47aa-8830-5979eb61be23}</Project>
+      <Name>MateralTools.MSystemInfo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj">
       <Project>{c464d9b0-9ec0-4ea5-a9a4-98d318cc85cc}</Project>
       <Name>MateralTools.MVerify</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MWeChat\MateralTools.MWeChat.csproj">
+      <Project>{edb2bd74-3a63-401a-b43a-22742bd1b08d}</Project>
+      <Name>MateralTools.MWeChat</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

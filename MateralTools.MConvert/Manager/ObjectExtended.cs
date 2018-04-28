@@ -99,12 +99,12 @@ namespace MateralTools.MConvert
             PropertyInfo[] subProps;
             foreach (PropertyInfo prop in props)
             {
-                DataTableColumnModelAttributeAttribute cma = null;
+                MColumnModelAttribute cma = null;
                 foreach (Attribute attr in Attribute.GetCustomAttributes(prop))
                 {
-                    if (attr.GetType() == typeof(DataTableColumnModelAttributeAttribute))
+                    if (attr.GetType() == typeof(MColumnModelAttribute))
                     {
-                        cma = attr as DataTableColumnModelAttributeAttribute;
+                        cma = attr as MColumnModelAttribute;
                         if (!(dr[cma.DBColumnName] is System.DBNull) && dr[cma.DBColumnName].GetType().Name == prop.PropertyType.Name)
                         {
                             prop.SetValue(obj, dr[cma.DBColumnName], null);
