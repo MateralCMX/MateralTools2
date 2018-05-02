@@ -8,6 +8,7 @@
 GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
