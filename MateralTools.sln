@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MLinQ", "Mater
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MResult", "MateralTools.MResult\MateralTools.MResult.csproj", "{D21857FD-E588-49C4-AB9C-085F9B2C3AD7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MWebLib", "MateralTools.MWebLib\MateralTools.MWebLib.csproj", "{175059F4-2885-4BCD-B1E6-7110B6D9E84F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI", "Materal.UI\Materal.UI.csproj", "{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Materal.UI.WinForm", "Materal.UI.WinForm\Materal.UI.WinForm.csproj", "{8833902E-60EE-44FF-B44C-12F4D5EE8B03}"
@@ -47,7 +45,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MIO", "Materal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MEnum", "MateralTools.MEnum\MateralTools.MEnum.csproj", "{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.CoreWebAPI", "MateralTools.CoreWebAPI\MateralTools.CoreWebAPI.csproj", "{0B098617-1DF8-4939-970C-382D16B6F8A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.CoreWebAPI", "MateralTools.CoreWebAPI\MateralTools.CoreWebAPI.csproj", "{0B098617-1DF8-4939-970C-382D16B6F8A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MWebLib", "MateralTools.MWebLib\MateralTools.MWebLib.csproj", "{0B7DBC1D-C238-4368-B3D3-DBABA925586A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,10 +95,6 @@ Global
 		{D21857FD-E588-49C4-AB9C-085F9B2C3AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D21857FD-E588-49C4-AB9C-085F9B2C3AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D21857FD-E588-49C4-AB9C-085F9B2C3AD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{175059F4-2885-4BCD-B1E6-7110B6D9E84F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{175059F4-2885-4BCD-B1E6-7110B6D9E84F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{175059F4-2885-4BCD-B1E6-7110B6D9E84F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{175059F4-2885-4BCD-B1E6-7110B6D9E84F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{799C45AC-1CE3-4B8F-BCC8-804200AA7C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -147,6 +143,10 @@ Global
 		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B7DBC1D-C238-4368-B3D3-DBABA925586A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7DBC1D-C238-4368-B3D3-DBABA925586A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7DBC1D-C238-4368-B3D3-DBABA925586A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7DBC1D-C238-4368-B3D3-DBABA925586A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

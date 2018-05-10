@@ -1,36 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 
 namespace MateralTools.CoreWebAPI
 {
+    /// <summary>
+    /// 程序入口
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
+        /// <summary>
+        /// 配置项
+        /// </summary>
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// 配置服务
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            #region 配置帮助文档
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "1.0",
-                    Title = "接口文档",
-                    Description = "接口文档描述",
+                    Title = "Materal .NET Core WEBAPI",
+                    Description = "MateralTools模板WEBAPI",
                     TermsOfService = "None",
                     Contact = new Contact { Name = "Materal", Email = "cloomcmx1554@hotmail.com", Url = "" }
                 });
@@ -38,10 +47,30 @@ namespace MateralTools.CoreWebAPI
                 var xmlPath = Path.Combine(basePath, "MateralTools.CoreWebAPI.xml");
                 c.IncludeXmlComments(xmlPath);
             });
-            services.AddMvc();
+            #endregion
+            #region 配置跨域
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.AllowAnyOrigin() //允许任何来源的主机访问
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();//指定处理cookie
+                });
+            });
+            #endregion
+            #region 配置MVC
+            services
+                .AddMvc(/*options => { options.Filters.Add(typeof(VerificationLoginAttribute)); }*/)
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            #endregion
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 配置程序
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -54,12 +83,11 @@ namespace MateralTools.CoreWebAPI
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            #region 配置帮助文档
             app.UseSwagger();
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Materal API V1.0");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "RTPay API V1.0");
             });
             app.UseMvc(routes =>
             {
@@ -67,6 +95,7 @@ namespace MateralTools.CoreWebAPI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            #endregion
         }
     }
 }
