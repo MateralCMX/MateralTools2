@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System;
 
-namespace MateralTools.MCache.Manager
+namespace MateralTools.MCache
 {
     /// <summary>
     /// 内存缓存管理器
