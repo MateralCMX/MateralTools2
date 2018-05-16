@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
@@ -12,16 +12,15 @@
   <ItemGroup>
     <Compile Remove="wwwroot\File\**" />
     <Compile Remove="wwwroot\Images\**" />
-    <Compile Remove="wwwroot\Script\**" />
     <Content Remove="wwwroot\File\**" />
     <Content Remove="wwwroot\Images\**" />
-    <Content Remove="wwwroot\Script\**" />
     <EmbeddedResource Remove="wwwroot\File\**" />
     <EmbeddedResource Remove="wwwroot\Images\**" />
-    <EmbeddedResource Remove="wwwroot\Script\**" />
     <None Remove="wwwroot\File\**" />
     <None Remove="wwwroot\Images\**" />
-    <None Remove="wwwroot\Script\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\Script\Home\Index.ts" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MateralTools.MWeChat" Version="1.0.0" />
@@ -86,6 +85,7 @@
     <TypeScriptCompile Include="wwwroot\Lib\m-Reset\m-Reset.ts" />
     <TypeScriptCompile Include="wwwroot\Lib\m-Tools\m-Tools.ts" />
     <TypeScriptCompile Include="wwwroot\Lib\Popper\Popper.d.ts" />
+    <TypeScriptCompile Include="wwwroot\Script\Home\Index.ts" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

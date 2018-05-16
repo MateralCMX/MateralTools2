@@ -33,17 +33,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 对象类型
         /// </summary>
-        private MResultType _resultType;
-        /// <summary>
-        /// 对象类型
-        /// </summary>
-        public MResultType ResultType
-        {
-            get
-            {
-                return _resultType;
-            }
-        }
+        public MResultType ResultType { get; private set; }
         /// <summary>
         /// 对象类型文本
         /// </summary>
@@ -51,23 +41,13 @@ namespace MateralTools.MResult
         {
             get
             {
-                return _resultType.GetDescription();
+                return ResultType.GetDescription();
             }
         }
         /// <summary>
         /// 返回消息
         /// </summary>
-        private string _message;
-        /// <summary>
-        /// 返回消息
-        /// </summary>
-        public string Message
-        {
-            get
-            {
-                return _message;
-            }
-        }
+        public string Message { get; private set; }
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -75,8 +55,8 @@ namespace MateralTools.MResult
         /// <param name="message">返回消息</param>
         public MResultModel(MResultType resultType, string message = "")
         {
-            _resultType = resultType;
-            _message = message;
+            ResultType = resultType;
+            Message = message;
         }
         /// <summary>
         /// 获得一个成功返回对象
@@ -121,10 +101,6 @@ namespace MateralTools.MResult
     public class MResultModel<T> : MResultModel
     {
         /// <summary>
-        /// 携带数据
-        /// </summary>
-        private T _data;
-        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="resultType">返回类型</param>
@@ -132,18 +108,12 @@ namespace MateralTools.MResult
         /// <param name="message">返回消息</param>
         public MResultModel(MResultType resultType, T data, string message = "") : base(resultType, message)
         {
-            _data = data;
+            Data = data;
         }
         /// <summary>
         /// 携带数据
         /// </summary>
-        public T Data
-        {
-            get
-            {
-                return _data;
-            }
-        }
+        public T Data { get; private set; }
 
         /// <summary>
         /// 获得一个成功返回对象
@@ -185,7 +155,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 分页信息
         /// </summary>
-        private MPageModel _pageInfo;
+        public MPageModel PageInfo { get; private set; }
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -195,19 +165,9 @@ namespace MateralTools.MResult
         /// <param name="message">返回消息</param>
         public MResultPageModel(MResultType resultType, T data, MPageModel pagingM, string message = "") : base(resultType, data, message)
         {
-            _pageInfo = pagingM;
+            PageInfo = pagingM;
         }
 
-        /// <summary>
-        /// 分页信息
-        /// </summary>
-        public MPageModel PageInfo
-        {
-            get
-            {
-                return _pageInfo;
-            }
-        }
         /// <summary>
         /// 获得一个成功返回对象
         /// </summary>
