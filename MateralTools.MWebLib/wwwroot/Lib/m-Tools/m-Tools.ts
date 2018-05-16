@@ -753,20 +753,20 @@ interface Math
      * @param max 最大值
      * @returns 随机数
      */
-    GetRandom(min: number, max: number): number;
+    MGetRandom(min: number, max: number): number;
     /**
      * 获取四边形的外接圆半径
      * @param length 长
      * @param width 宽
      * @param IsRound 是圆形
      */
-    GetCircumcircleRadius(length: number, width: number, IsRound: boolean): number;
+    MGetCircumcircleRadius(length: number, width: number, IsRound: boolean): number;
 }
-Math.GetRandom = function (min: number, max: number): number
+Math.MGetRandom = function (min: number, max: number): number
 {
     return Math.floor(Math.random() * max + min);
 };
-Math.GetCircumcircleRadius = function (length: number, width: number = length, IsRound: boolean = true): number
+Math.MGetCircumcircleRadius = function (length: number, width: number = length, IsRound: boolean = true): number
 {
     let max: number = Math.max(length, width);
     //正方形的对角线=边长^2*2

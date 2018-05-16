@@ -1,2 +1,6 @@
 ﻿[
+  {
+    "outputFile": "wwwroot/Lib/m-Reset/m-Reset.css",
+    "inputFile": "wwwroot/Lib/m-Reset/m-Reset.scss"
+  }
 ]

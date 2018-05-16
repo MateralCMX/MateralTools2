@@ -1,17 +1,13 @@
-﻿/// <reference path="../m-tools/m-tools.ts" />
+/// <reference path="../m-tools/m-tools.ts" />
 'use strict';
-window.addEventListener("load", function ()
-{
-    let ClientInfoM: MateralTools.ClientInfoModel = new MateralTools.ClientInfoModel();
+window.addEventListener("load", function () {
+    var ClientInfoM = new MateralTools.ClientInfoModel();
     //是IE时执行
-    if (ClientInfoM.BrowserInfoM.IE)
-    {
-        let IEVersion: number = parseFloat(ClientInfoM.BrowserInfoM.Version);
+    if (ClientInfoM.BrowserInfoM.IE) {
+        var IEVersion = parseFloat(ClientInfoM.BrowserInfoM.Version);
         //IE版本小于等于IE8
-        if (IEVersion <= 8)
-        {
-            if (document.createElement)
-            {
+        if (IEVersion <= 8) {
+            if (document.createElement) {
                 document.createElement("header");
                 document.createElement("main");
                 document.createElement("nav");
@@ -23,3 +19,4 @@ window.addEventListener("load", function ()
         }
     }
 });
+//# sourceMappingURL=m-Reset.js.map
