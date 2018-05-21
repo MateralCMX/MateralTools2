@@ -60,32 +60,32 @@ namespace MateralTools.MLinQ
         /// 不等于
         /// </summary>
         [Description("<>")]
-        ne,
+        NotEqual,
         /// <summary>
         /// 等于
         /// </summary>
         [Description("=")]
-        eq,
+        Equal,
         /// <summary>
         /// 大于
         /// </summary>
         [Description(">")]
-        gt,
+        GreaterThan,
         /// <summary>
         /// 小于
         /// </summary>
         [Description("<")]
-        lt,
+        LessThan,
         /// <summary>
         /// 大于等于
         /// </summary>
         [Description(">=")]
-        ge,
+        GreaterThanOrEqual,
         /// <summary>
         /// 小于等于
         /// </summary>
         [Description("<=")]
-        le,
+        LessThanOrEqual,
         /// <summary>
         /// 包含
         /// </summary>

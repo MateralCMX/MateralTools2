@@ -38,19 +38,19 @@ namespace MateralTools.MLinQ
             Expression be;
             switch (filter.Comparison)
             {
-                case ComparisonEnum.ne:
+                case ComparisonEnum.NotEqual:
                     be = Expression.NotEqual(left1, right1);
                     break;
-                case ComparisonEnum.gt:
+                case ComparisonEnum.GreaterThan:
                     be = Expression.GreaterThan(left1, right1);
                     break;
-                case ComparisonEnum.lt:
+                case ComparisonEnum.LessThan:
                     be = Expression.LessThan(left1, right1);
                     break;
-                case ComparisonEnum.ge:
+                case ComparisonEnum.GreaterThanOrEqual:
                     be = Expression.GreaterThanOrEqual(left1, right1);
                     break;
-                case ComparisonEnum.le:
+                case ComparisonEnum.LessThanOrEqual:
                     be = Expression.LessThanOrEqual(left1, right1);
                     break;
                 case ComparisonEnum.Contain:
@@ -65,7 +65,7 @@ namespace MateralTools.MLinQ
                         throw new ArgumentException("只有类型String可以使用Contain");
                     }
                     break;
-                case ComparisonEnum.eq:
+                case ComparisonEnum.Equal:
                 default:
                     be = Expression.Equal(left1, right1);
                     break;
