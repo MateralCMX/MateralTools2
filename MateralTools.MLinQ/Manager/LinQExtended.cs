@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace MateralTools.MLinQ
 {
+
     /// <summary>
     /// LinQ扩展
     /// </summary>
@@ -17,23 +18,47 @@ namespace MateralTools.MLinQ
         /// <param name="source">数据源</param>
         /// <param name="filters">过滤器信息</param>
         /// <returns>扩展后的数据源</returns>
-        public static IQueryable Where<T>(this IQueryable source, FilterInfo[] filters)
+        public static IQueryable<T> Where<T>(this IQueryable<T> source, FilterInfo<T>[] filters)
         {
-            foreach (FilterInfo filter in filters)
+            ParameterExpression param = Expression.Parameter(typeof(T), "f");
+            Expression be = null;
+            foreach (FilterInfo<T> filter in filters)
             {
-                source = source.Where<T>(filter);
+                if (be == null)
+                {
+                    be = GetWhere<T>(filter, param);
+                }
+                else
+                {
+                    switch (filter.Condition)
+                    {
+                        case ConditionEnum.Or:
+                            be = Expression.Or(be, GetWhere<T>(filter, param));
+                            break;
+                        case ConditionEnum.And:
+                        default:
+                            be = Expression.And(be, GetWhere<T>(filter, param));
+                            break;
+                    }
+                }
             }
-            return source;
+            Expression<Func<T, bool>> func = True<T>();
+            if (be != null)
+            {
+               func = Expression.Lambda<Func<T, bool>>(be, param);
+            }
+            return source.Where(func).AsQueryable();
         }
         /// <summary>
-        /// 条件扩展
+        /// 获得拼装条件
         /// </summary>
-        /// <param name="source">数据源</param>
-        /// <param name="filter">过滤器信息</param>
-        /// <returns>扩展后的数据源</returns>
-        public static IQueryable Where<T>(this IQueryable source, FilterInfo filter)
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filter"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        private static Expression GetWhere<T>(FilterInfo<T> filter, ParameterExpression param)
         {
-            MemberExpression left1 = Expression.Property(source.Expression, filter.PropertyInfo);
+            MemberExpression left1 = Expression.Property(param, filter.PropertyInfo);
             ConstantExpression right1 = Expression.Constant(filter.Value);
             Expression be;
             switch (filter.Comparison)
@@ -53,16 +78,17 @@ namespace MateralTools.MLinQ
                 case ComparisonEnum.LessThanOrEqual:
                     be = Expression.LessThanOrEqual(left1, right1);
                     break;
-                case ComparisonEnum.Contain:
-                    if (filter.PropertyInfo.PropertyType.GUID == typeof(string).GUID)
+                case ComparisonEnum.Contains:
+                    Type strType = typeof(String);
+                    if (filter.PropertyInfo.PropertyType.GUID == strType.GUID)
                     {
-                        MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-                        ConstantExpression someValue = Expression.Constant(filter.PropertyInfo, typeof(string));
+                        MethodInfo method = strType.GetMethod("Contains", new[] { strType });
+                        ConstantExpression someValue = Expression.Constant(filter.Value, strType);
                         be = Expression.Call(left1, method, someValue);
                     }
                     else
                     {
-                        throw new ArgumentException("只有类型String可以使用Contain");
+                        throw new ArgumentException("只有类型String可以使用Contains");
                     }
                     break;
                 case ComparisonEnum.Equal:
@@ -70,17 +96,7 @@ namespace MateralTools.MLinQ
                     be = Expression.Equal(left1, right1);
                     break;
             }
-            switch (filter.Condition)
-            {
-                case ConditionEnum.Or:
-                    Expression.Or(source.Expression, be);
-                    break;
-                case ConditionEnum.And:
-                default:
-                    Expression.And(source.Expression, be);
-                    break;
-            }
-            return source;
+            return be;
         }
         /// <summary>
         /// 初始化True条件
@@ -145,7 +161,7 @@ namespace MateralTools.MLinQ
         /// <param name="size">显示数量</param>
         /// <param name="startIndex">开始的页数</param>
         /// <returns></returns>
-        public static IEnumerable<T> Paging<T>(this IEnumerable<T> first, int index,int size,int startIndex = 1)
+        public static IEnumerable<T> Paging<T>(this IEnumerable<T> first, int index, int size, int startIndex = 1)
         {
             return first.Skip((index - startIndex) * size).Take(size);
         }

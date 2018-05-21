@@ -8,20 +8,28 @@ using System.Threading.Tasks;
 
 namespace MateralTools.MLinQ
 {
+
     /// <summary>
     /// 过滤器信息
     /// </summary>
-    public class FilterInfo
+    public class FilterInfo<T>
     {
         /// <summary>
         /// 构造方法
         /// </summary>
-        /// <param name="type">类型</param>
         /// <param name="piName">属性名称</param>
-        public FilterInfo(Type type, string piName)
+        public FilterInfo(string piName, object value, ComparisonEnum comparison = ComparisonEnum.Equal, ConditionEnum condition = ConditionEnum.And)
         {
-            PropertyInfo = type.GetProperty(piName);
-            if (PropertyInfo == null)
+            Type type = typeof(T);
+            PropertyInfo pi = type.GetProperty(piName);
+            if (pi != null)
+            {
+                PropertyInfo = pi;
+                Value = value;
+                Comparison = comparison;
+                Condition = condition;
+            }
+            else
             {
                 throw new ArgumentNullException($"类型{type.Name}上不存属性{piName}");
             }
@@ -30,9 +38,12 @@ namespace MateralTools.MLinQ
         /// 构造方法
         /// </summary>
         /// <param name="pi">属性</param>
-        public FilterInfo(PropertyInfo pi)
+        public FilterInfo(PropertyInfo pi, object value, ComparisonEnum comparison = ComparisonEnum.Equal, ConditionEnum condition = ConditionEnum.And)
         {
             PropertyInfo = pi;
+            Value = value;
+            Comparison = comparison;
+            Condition = condition;
         }
         /// <summary>
         /// 值
@@ -90,7 +101,7 @@ namespace MateralTools.MLinQ
         /// 包含
         /// </summary>
         [Description("Contain")]
-        Contain,
+        Contains,
     }
     /// <summary>
     /// 条件类型
