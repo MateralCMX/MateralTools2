@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace MateralTools.MEnum
 {
+    /// <summary>
+    /// 枚举扩展
+    /// </summary>
     public static class EnumExtended
     {
         /// <summary>

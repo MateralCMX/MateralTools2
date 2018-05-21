@@ -2,11 +2,86 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace MateralTools.MLinQ
 {
+    /// <summary>
+    /// LinQ扩展
+    /// </summary>
     public static class LinQExtended
     {
+        /// <summary>
+        /// 条件扩展
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="filters">过滤器信息</param>
+        /// <returns>扩展后的数据源</returns>
+        public static IQueryable Where(this IQueryable source, FilterInfo[] filters)
+        {
+            foreach (FilterInfo filter in filters)
+            {
+                source = source.Where(filter);
+            }
+            return source;
+        }
+        /// <summary>
+        /// 条件扩展
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="filter">过滤器信息</param>
+        /// <returns>扩展后的数据源</returns>
+        public static IQueryable Where(this IQueryable source, FilterInfo filter)
+        {
+            MemberExpression left1 = Expression.Property(source.Expression, filter.PropertyInfo);
+            ConstantExpression right1 = Expression.Constant(filter.Value);
+            Expression be;
+            switch (filter.Comparison)
+            {
+                case ComparisonEnum.ne:
+                    be = Expression.NotEqual(left1, right1);
+                    break;
+                case ComparisonEnum.gt:
+                    be = Expression.GreaterThan(left1, right1);
+                    break;
+                case ComparisonEnum.lt:
+                    be = Expression.LessThan(left1, right1);
+                    break;
+                case ComparisonEnum.ge:
+                    be = Expression.GreaterThanOrEqual(left1, right1);
+                    break;
+                case ComparisonEnum.le:
+                    be = Expression.LessThanOrEqual(left1, right1);
+                    break;
+                case ComparisonEnum.Contain:
+                    if (filter.PropertyInfo.PropertyType.GUID == typeof(string).GUID)
+                    {
+                        MethodInfo method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                        ConstantExpression someValue = Expression.Constant(filter.PropertyInfo, typeof(string));
+                        be = Expression.Call(left1, method, someValue);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("只有类型String可以使用Contain");
+                    }
+                    break;
+                case ComparisonEnum.eq:
+                default:
+                    be = Expression.Equal(left1, right1);
+                    break;
+            }
+            switch (filter.Condition)
+            {
+                case ConditionEnum.Or:
+                    Expression.Or(source.Expression, be);
+                    break;
+                case ConditionEnum.And:
+                default:
+                    Expression.And(source.Expression, be);
+                    break;
+            }
+            return source;
+        }
         /// <summary>
         /// 初始化True条件
         /// </summary>
@@ -16,7 +91,6 @@ namespace MateralTools.MLinQ
         {
             return f => true;
         }
-
         /// <summary>
         /// 初始化False条件
         /// </summary>
@@ -37,7 +111,7 @@ namespace MateralTools.MLinQ
         public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
             var map = first.Parameters.Select((f, i) => new { f, s = second.Parameters[i] }).ToDictionary(p => p.s, p => p.f);
-            var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
+            Expression secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
             return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
         }
         /// <summary>
@@ -89,17 +163,35 @@ namespace MateralTools.MLinQ
             return first.Skip((index - startIndex) * size).Take(size);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class ParameterRebinder : ExpressionVisitor
     {
         private readonly Dictionary<ParameterExpression, ParameterExpression> map;
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="map"></param>
         public ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map)
         {
             this.map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
         }
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="exp"></param>
+        /// <returns></returns>
         public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map, Expression exp)
         {
             return new ParameterRebinder(map).Visit(exp);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         protected override Expression VisitParameter(ParameterExpression p)
         {
             if (map.TryGetValue(p, out var replacement))

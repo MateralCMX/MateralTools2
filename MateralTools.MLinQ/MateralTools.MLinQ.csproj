@@ -9,6 +9,8 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
+    <Version>1.0.1</Version>
+    <PackageReleaseNotes>对LinQ进行Where扩展</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
@@ -21,6 +23,7 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
   </ItemGroup>
 
 </Project>

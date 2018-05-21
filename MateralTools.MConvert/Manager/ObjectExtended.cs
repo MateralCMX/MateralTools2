@@ -1,6 +1,7 @@
 ﻿using MateralTools.MData;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -16,10 +17,43 @@ namespace MateralTools.MConvert
     public static class ObjectExtended
     {
         /// <summary>
+        /// 可转换类型字典
+        /// </summary>
+        private static Dictionary<Type, Func<object, object>> dict = new Dictionary<Type, Func<object, object>>();
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        static ObjectExtended()
+        {
+            dict.Add(typeof(int), WrapValueConvert(Convert.ToInt32));
+            dict.Add(typeof(long), WrapValueConvert(Convert.ToInt64));
+            dict.Add(typeof(short), WrapValueConvert(Convert.ToInt16));
+            dict.Add(typeof(int?), WrapValueConvert(Convert.ToInt32));
+            dict.Add(typeof(double), WrapValueConvert(Convert.ToDouble));
+            dict.Add(typeof(float), WrapValueConvert(Convert.ToSingle));
+            dict.Add(typeof(Guid), f => new Guid(f.ToString()));
+            dict.Add(typeof(string), Convert.ToString);
+            dict.Add(typeof(DateTime), WrapValueConvert(Convert.ToDateTime));
+        }
+        /// <summary>
+        /// 写入值转换类型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static Func<object, object> WrapValueConvert<T>(Func<object, T> input) where T : struct
+        {
+            return i =>
+            {
+                if (i == null || i is DBNull) { return null; }
+                return input(i);
+            };
+        }
+        /// <summary>
         /// 对象转换为数据行
         /// </summary>
         /// <param name="obj">要转换的对象</param>
-        /// <param name="dt">数据行模版</param>
+        /// <param name="dr">数据行模版</param>
         /// <returns>数据行</returns>
         public static DataRow MToDataRow(this object obj, DataRow dr)
         {
@@ -51,7 +85,6 @@ namespace MateralTools.MConvert
         /// 对象转换为数据行
         /// </summary>
         /// <param name="obj">要转换的对象</param>
-        /// <param name="dt">数据行模版</param>
         /// <returns>数据行</returns>
         public static DataRow MToDataRow(this object obj)
         {
@@ -206,6 +239,69 @@ namespace MateralTools.MConvert
                 buff = ms.GetBuffer();
             }
             return buff;
+        }
+
+        /// <summary>
+        /// 判断是否提供到特定类型的转换
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="targetType"></param>
+        /// <returns></returns>
+        public static bool CanConvertTo(this object obj, Type targetType)
+        {
+            return dict.ContainsKey(targetType);
+        }
+        /// <summary>
+        /// 转换到特定类型
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static T ConvertTo<T>(this object obj)
+        {
+            return (T)ConvertTo(obj, typeof(T));
+        }
+        /// <summary>
+        /// 转换到特定类型
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="targetType"></param>
+        /// <returns></returns>
+        public static object ConvertTo(this object obj, Type targetType)
+        {
+            if (obj != null)
+            {
+                if (obj.GetType() == targetType || targetType.IsAssignableFrom(obj.GetType()))
+                {
+                    return obj;
+                }
+                else if (dict.ContainsKey(targetType))
+                {
+                    return dict[targetType](obj);
+                }
+                else
+                {
+                    try
+                    {
+                        return Convert.ChangeType(obj, targetType);
+                    }
+                    catch
+                    {
+                        throw new NotImplementedException("未实现到" + targetType.Name + "的转换");
+                    }
+                }
+            }
+            else
+            {
+                if (!targetType.IsValueType)
+                {
+                    return null;
+                }
+                else
+                {
+                    throw new ArgumentNullException("obj", "不能将null转换为" + targetType.Name);
+                }
+            }
         }
     }
 }
