@@ -17,7 +17,7 @@ namespace MateralTools.MLinQ
         /// <param name="source">数据源</param>
         /// <param name="filters">过滤器信息</param>
         /// <returns>扩展后的数据源</returns>
-        public static IQueryable Where(this IQueryable source, FilterInfo[] filters)
+        public static IQueryable Where<T>(this IQueryable source, FilterInfo[] filters)
         {
             foreach (FilterInfo filter in filters)
             {
@@ -31,7 +31,7 @@ namespace MateralTools.MLinQ
         /// <param name="source">数据源</param>
         /// <param name="filter">过滤器信息</param>
         /// <returns>扩展后的数据源</returns>
-        public static IQueryable Where(this IQueryable source, FilterInfo filter)
+        public static IQueryable Where<T>(this IQueryable source, FilterInfo filter)
         {
             MemberExpression left1 = Expression.Property(source.Expression, filter.PropertyInfo);
             ConstantExpression right1 = Expression.Constant(filter.Value);
