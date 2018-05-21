@@ -21,7 +21,7 @@ namespace MateralTools.MLinQ
         {
             foreach (FilterInfo filter in filters)
             {
-                source = source.Where(filter);
+                source = source.Where<T>(filter);
             }
             return source;
         }
