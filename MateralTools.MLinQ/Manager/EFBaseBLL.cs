@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MateralTools.MConvert;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -56,6 +57,7 @@ namespace MateralTools.MLinQ
             {
                 NotUpdateList.Add(pi.Name);
             }
+            _dal = _dal.MGetDefultObject<TDAL>();
         }
         /// <summary>
         /// 数据操作对象

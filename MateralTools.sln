@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.CoreWebAPI", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MWebLib", "MateralTools.MWebLib\MateralTools.MWebLib.csproj", "{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MLog", "MateralTools.MLog\MateralTools.MLog.csproj", "{CE67DDF5-B087-4CC4-BED7-28C603EF6017}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE67DDF5-B087-4CC4-BED7-28C603EF6017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE67DDF5-B087-4CC4-BED7-28C603EF6017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE67DDF5-B087-4CC4-BED7-28C603EF6017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE67DDF5-B087-4CC4-BED7-28C603EF6017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj" />
+    <ProjectReference Include="..\MateralTools.MLog\MateralTools.MLog.csproj" />
   </ItemGroup>
 
 </Project>
