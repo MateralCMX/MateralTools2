@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MateralTools.MLog
 {
-    interface IMLogBLL
+    public interface IMLogBLL
     {
         /// <summary>
         /// 写入异常日志

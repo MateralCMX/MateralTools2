@@ -10,11 +10,11 @@ namespace Materal.ToolsTest
         /// <summary>
         /// sqllitLog业务对象
         /// </summary>
-        private readonly MSQLiteLogBLL sqliteLogBLL;
+        private readonly IMLogBLL sqliteLogBLL;
         /// <summary>
         /// xml数据对象
         /// </summary>
-        private readonly MXMLLogBLL xmlLogBLL;
+        private readonly IMLogBLL xmlLogBLL;
         /// <summary>
         /// 构造方法
         /// </summary>

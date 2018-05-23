@@ -26,18 +26,18 @@ namespace MateralTools.MLinQ
             {
                 if (be == null)
                 {
-                    be = GetWhere<T>(filter, param);
+                    be = GetWhere(filter, param);
                 }
                 else
                 {
                     switch (filter.Condition)
                     {
                         case ConditionEnum.Or:
-                            be = Expression.Or(be, GetWhere<T>(filter, param));
+                            be = Expression.Or(be, GetWhere(filter, param));
                             break;
                         case ConditionEnum.And:
                         default:
-                            be = Expression.And(be, GetWhere<T>(filter, param));
+                            be = Expression.And(be, GetWhere(filter, param));
                             break;
                     }
                 }
