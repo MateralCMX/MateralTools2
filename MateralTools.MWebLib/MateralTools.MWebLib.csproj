@@ -23,7 +23,6 @@
     <Content Remove="wwwroot\Script\Home\Index.ts" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MateralTools.MWeChat" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
   </ItemGroup>
@@ -80,6 +79,10 @@
     <None Include="wwwroot\Lib\Popper\umd\popper.js.map" />
     <None Include="wwwroot\Lib\Popper\umd\popper.min.js" />
     <None Include="wwwroot\Lib\Popper\umd\popper.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
+    <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\Lib\m-Reset\m-Reset.ts" />
