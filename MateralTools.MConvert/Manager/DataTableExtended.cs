@@ -3,6 +3,9 @@ using System.Data;
 
 namespace MateralTools.MConvert
 {
+    /// <summary>
+    /// DataTable扩展
+    /// </summary>
     public static class DataTableExtended
     {
         /// <summary>
@@ -75,7 +78,7 @@ namespace MateralTools.MConvert
         /// 把数据集转换为List
         /// </summary>
         /// <typeparam name="T">要转换的类型</typeparam>
-        /// <param name="dt">数据集</param>
+        /// <param name="ds">数据集</param>
         /// <param name="IsColumnModelAttribut">是否按照Attribut转换</param>
         /// <returns>转换后的List</returns>
         public static List<List<T>> MToList<T>(this DataSet ds, bool IsColumnModelAttribut = false)

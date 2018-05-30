@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MateralTools.MEnum
 {
+    /// <summary>
+    /// 枚举管理类
+    /// </summary>
     public static class EnumManager
     {
         /// <summary>

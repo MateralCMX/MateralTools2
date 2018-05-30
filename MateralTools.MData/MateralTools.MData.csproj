@@ -21,4 +21,8 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <DocumentationFile>bin\Release\net461\MateralTools.MData.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Manager\" />
+  </ItemGroup>
+
 </Project>

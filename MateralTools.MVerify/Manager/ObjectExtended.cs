@@ -1,5 +1,8 @@
 ﻿namespace MateralTools.MVerify
 {
+    /// <summary>
+    /// Object扩展
+    /// </summary>
     public static class ObjectExtended
     {
         /// <summary>

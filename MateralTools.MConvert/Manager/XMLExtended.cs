@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace MateralTools.MConvert.Manager
+namespace MateralTools.MConvert
 {
     /// <summary>
     /// XML扩展

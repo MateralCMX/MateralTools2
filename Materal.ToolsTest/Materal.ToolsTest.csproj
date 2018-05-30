@@ -60,6 +60,10 @@
       <Project>{09A7C909-F8EA-466C-93BF-E0AE3068E900}</Project>
       <Name>MateralTools.MHttpRequest</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MateralTools.MLinQ\MateralTools.MLinQ.csproj">
+      <Project>{9a6bfda7-78dc-445b-8094-c0e73e69a4fc}</Project>
+      <Name>MateralTools.MLinQ</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MateralTools.MLog\MateralTools.MLog.csproj">
       <Project>{CE67DDF5-B087-4CC4-BED7-28C603EF6017}</Project>
       <Name>MateralTools.MLog</Name>

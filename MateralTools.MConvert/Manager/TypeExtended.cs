@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace MateralTools.MConvert
 {
+    /// <summary>
+    /// Type扩展
+    /// </summary>
     public static class TypeExtended
     {
         /// <summary>

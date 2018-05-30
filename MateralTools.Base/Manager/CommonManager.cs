@@ -119,5 +119,40 @@ namespace MateralTools.Base
                 throw new MException("长度必须大于0");
             }
         }
+        /// <summary>
+        /// 生成随机字符串
+        /// </summary>
+        /// <param name="length">长度</param>
+        /// <returns>随机字符串</returns>
+        /// <exception cref="MException"></exception>
+        public static string GetRandomStrByTick(int length)
+        {
+            if (length > 0)
+            {
+                int rep = 0;
+                string str = string.Empty;
+                long tick = DateTime.Now.Ticks + rep++;
+                Random random = new Random(((int)(((ulong)tick) & 0xffffffffL)) | ((int)(tick >> rep)));
+                for (int i = 0; i < length; i++)
+                {
+                    char ch;
+                    int num = random.Next();
+                    if ((num % 2) == 0)
+                    {
+                        ch = (char)(0x30 + ((ushort)(num % 10)));
+                    }
+                    else
+                    {
+                        ch = (char)(0x41 + ((ushort)(num % 0x1a)));
+                    }
+                    str = str + ch.ToString();
+                }
+                return str;
+            }
+            else
+            {
+                throw new MException("长度必须大于0");
+            }
+        }
     }
 }

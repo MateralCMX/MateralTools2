@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace MateralTools.Base
 {
+    /// <summary>
+    /// Object扩展
+    /// </summary>
     public static class ObjectExtended
     {
         /// <summary>

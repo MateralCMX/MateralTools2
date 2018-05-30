@@ -4,6 +4,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MateralTools.MConvert
 {
+    /// <summary>
+    /// Byte扩展
+    /// </summary>
     public static class ByteExtended
     {
         /// <summary>
