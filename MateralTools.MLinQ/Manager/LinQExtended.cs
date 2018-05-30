@@ -161,6 +161,19 @@ namespace MateralTools.MLinQ
         /// <param name="size">显示数量</param>
         /// <param name="startIndex">开始的页数</param>
         /// <returns></returns>
+        public static IAsyncEnumerable<T> Paging<T>(this IAsyncEnumerable<T> first, int index, int size, int startIndex = 1)
+        {
+            return first.Skip((index - startIndex) * size).Take(size);
+        }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="first">LinQ对象</param>
+        /// <param name="index">第几页</param>
+        /// <param name="size">显示数量</param>
+        /// <param name="startIndex">开始的页数</param>
+        /// <returns></returns>
         public static IEnumerable<T> Paging<T>(this IEnumerable<T> first, int index, int size, int startIndex = 1)
         {
             return first.Skip((index - startIndex) * size).Take(size);
