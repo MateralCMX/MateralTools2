@@ -88,6 +88,7 @@
             this.textCode.Size = new System.Drawing.Size(408, 21);
             this.textCode.TabIndex = 13;
             this.textCode.Click += new System.EventHandler(this.TextTargetOrCode_TextChanged);
+            this.textCode.TextChanged += new System.EventHandler(this.TextTargetOrCode_TextChanged);
             // 
             // label2
             // 
@@ -117,6 +118,7 @@
             this.textTarget.Size = new System.Drawing.Size(408, 21);
             this.textTarget.TabIndex = 10;
             this.textTarget.Click += new System.EventHandler(this.TextTargetOrCode_TextChanged);
+            this.textTarget.TextChanged += new System.EventHandler(this.TextTargetOrCode_TextChanged);
             // 
             // label1
             // 
