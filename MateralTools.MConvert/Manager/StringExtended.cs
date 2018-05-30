@@ -2,11 +2,24 @@
 using Newtonsoft.Json;
 using System;
 using System.Text;
+using System.Xml;
 
 namespace MateralTools.MConvert
 {
+    /// <summary>
+    /// 字符串扩展
+    /// </summary>
     public static class StringExtended
     {
+        /// <summary>
+        /// Json转换为XML文档对象
+        /// </summary>
+        /// <param name="jsonStr">json字符串</param>
+        /// <returns>XML文档对象</returns>
+        public static XmlDocument MJsonToXml(this string jsonStr)
+        {
+            return JsonConvert.DeserializeXmlNode(jsonStr); ;
+        }
         /// <summary>
         /// Json字符串转换对象
         /// </summary>
