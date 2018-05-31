@@ -1,4 +1,5 @@
-﻿using MateralTools.MConvert;
+﻿using MateralTools.Base;
+using MateralTools.MConvert;
 using MateralTools.MResult;
 using Microsoft.EntityFrameworkCore;
 using System;

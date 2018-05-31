@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MateralTools.MLinQ
+namespace MateralTools.Base
 {
 
     /// <summary>
@@ -18,6 +14,9 @@ namespace MateralTools.MLinQ
         /// 构造方法
         /// </summary>
         /// <param name="piName">属性名称</param>
+        /// <param name="value">值</param>
+        /// <param name="comparison">比较类型</param>
+        /// <param name="condition">条件类型</param>
         public FilterInfo(string piName, object value, ComparisonEnum comparison = ComparisonEnum.Equal, ConditionEnum condition = ConditionEnum.And)
         {
             Type type = typeof(T);
@@ -38,6 +37,9 @@ namespace MateralTools.MLinQ
         /// 构造方法
         /// </summary>
         /// <param name="pi">属性</param>
+        /// <param name="value">值</param>
+        /// <param name="comparison">比较类型</param>
+        /// <param name="condition">条件类型</param>
         public FilterInfo(PropertyInfo pi, object value, ComparisonEnum comparison = ComparisonEnum.Equal, ConditionEnum condition = ConditionEnum.And)
         {
             PropertyInfo = pi;

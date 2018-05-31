@@ -28,7 +28,7 @@ namespace MateralTools.MData
         /// </summary>
         public string DBType { get; set; }
         /// <summary>
-        /// 自用编号
+        /// 自动编号
         /// </summary>
         public bool AutoNumber { get; set; }
     }
