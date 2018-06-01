@@ -19,9 +19,19 @@ namespace MateralTools.MLinQ
         /// <param name="source">数据源</param>
         /// <param name="filters">过滤器信息</param>
         /// <returns>扩展后的数据源</returns>
+        public static IEnumerable<T> Where<T>(this IEnumerable<T> source,FilterInfo<T>[] filters)
+        {
+            return source.AsQueryable().Where(filters).AsEnumerable();
+        }
+        /// <summary>
+        /// 条件扩展
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="filters">过滤器信息</param>
+        /// <returns>扩展后的数据源</returns>
         public static IQueryable<T> Where<T>(this IQueryable<T> source, FilterInfo<T>[] filters)
         {
-            ParameterExpression param = Expression.Parameter(typeof(T), "f");
+            ParameterExpression param = Expression.Parameter(typeof(T), "m");
             Expression be = null;
             foreach (FilterInfo<T> filter in filters)
             {
@@ -46,7 +56,7 @@ namespace MateralTools.MLinQ
             Expression<Func<T, bool>> func = True<T>();
             if (be != null)
             {
-               func = Expression.Lambda<Func<T, bool>>(be, param);
+                func = Expression.Lambda<Func<T, bool>>(be, param);
             }
             return source.Where(func).AsQueryable();
         }
@@ -57,11 +67,11 @@ namespace MateralTools.MLinQ
         /// <param name="filter"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        private static Expression GetWhere<T>(FilterInfo<T> filter, ParameterExpression param)
+        public static Expression GetWhere<T>(FilterInfo<T> filter, ParameterExpression param)
         {
+            Expression be;
             MemberExpression left1 = Expression.Property(param, filter.PropertyInfo);
             ConstantExpression right1 = Expression.Constant(filter.Value);
-            Expression be;
             switch (filter.Comparison)
             {
                 case ComparisonEnum.NotEqual:
@@ -80,17 +90,7 @@ namespace MateralTools.MLinQ
                     be = Expression.LessThanOrEqual(left1, right1);
                     break;
                 case ComparisonEnum.Contains:
-                    Type strType = typeof(String);
-                    if (filter.PropertyInfo.PropertyType.GUID == strType.GUID)
-                    {
-                        MethodInfo method = strType.GetMethod("Contains", new[] { strType });
-                        ConstantExpression someValue = Expression.Constant(filter.Value, strType);
-                        be = Expression.Call(left1, method, someValue);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("只有类型String可以使用Contains");
-                    }
+                    be = GetContainsExpression(param, filter);
                     break;
                 case ComparisonEnum.Equal:
                 default:
@@ -98,6 +98,40 @@ namespace MateralTools.MLinQ
                     break;
             }
             return be;
+        }
+        /// <summary>
+        /// 获得模糊查询表达式
+        /// </summary>
+        /// <typeparam name="T">目标对象类</typeparam>
+        /// <param name="param">参数表达式</param>
+        /// <param name="filter">过滤器</param>
+        /// <returns>模糊查询表达式</returns>
+        public static Expression GetContainsExpression<T>(ParameterExpression param, FilterInfo<T> filter)
+        {
+            MemberExpression left = Expression.Property(param, filter.PropertyInfo);
+            return GetContainsExpression(left, filter);
+        }
+        /// <summary>
+        /// 获得模糊查询表达式
+        /// </summary>
+        /// <typeparam name="T">目标对象类</typeparam>
+        /// <param name="left">左边的表达式</param>
+        /// <param name="filter">过滤器</param>
+        /// <returns>模糊查询表达式</returns>
+        private static Expression GetContainsExpression<T>(MemberExpression left, FilterInfo<T> filter)
+        {
+            MethodInfo method = filter.PropertyInfo.PropertyType.GetMethod("Contains", new[] { filter.PropertyInfo.PropertyType });
+            if (method != null)
+            {
+                ConstantExpression someValue = Expression.Constant(filter.Value, filter.PropertyInfo.PropertyType);
+                Expression be = Expression.Call(left, method, someValue);
+                return be;
+            }
+            else
+            {
+                string message = $"类型{filter.PropertyInfo.PropertyType.Name}未实现方法Contains({filter.PropertyInfo.PropertyType.Name} value)";
+                throw new ArgumentException(message);
+            }
         }
         /// <summary>
         /// 初始化True条件
@@ -152,19 +186,6 @@ namespace MateralTools.MLinQ
         public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
         {
             return first.Compose(second, Expression.Or);
-        }
-        /// <summary>
-        /// 分页
-        /// </summary>
-        /// <typeparam name="T">对象</typeparam>
-        /// <param name="first">LinQ对象</param>
-        /// <param name="index">第几页</param>
-        /// <param name="size">显示数量</param>
-        /// <param name="startIndex">开始的页数</param>
-        /// <returns></returns>
-        public static IAsyncEnumerable<T> Paging<T>(this IAsyncEnumerable<T> first, int index, int size, int startIndex = 1)
-        {
-            return first.Skip((index - startIndex) * size).Take(size);
         }
         /// <summary>
         /// 分页

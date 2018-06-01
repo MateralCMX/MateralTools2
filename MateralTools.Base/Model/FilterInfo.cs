@@ -13,6 +13,20 @@ namespace MateralTools.Base
         /// <summary>
         /// 构造方法
         /// </summary>
+        /// <param name="func">委托方法</param>
+        /// <param name="value">值</param>
+        /// <param name="condition">条件类型</param>
+        public FilterInfo(Func<object, bool> func, object value, ConditionEnum condition = ConditionEnum.And)
+        {
+            PropertyInfo = null;
+            Value = value;
+            Comparison = ComparisonEnum.Contains;
+            Condition = condition;
+            TargetFunc = func;
+        }
+        /// <summary>
+        /// 构造方法
+        /// </summary>
         /// <param name="piName">属性名称</param>
         /// <param name="value">值</param>
         /// <param name="comparison">比较类型</param>
@@ -27,6 +41,7 @@ namespace MateralTools.Base
                 Value = value;
                 Comparison = comparison;
                 Condition = condition;
+                TargetFunc = null;
             }
             else
             {
@@ -46,7 +61,12 @@ namespace MateralTools.Base
             Value = value;
             Comparison = comparison;
             Condition = condition;
+            TargetFunc = null;
         }
+        /// <summary>
+        /// 目标委托
+        /// </summary>
+        public Func<object, bool> TargetFunc { get; set; }
         /// <summary>
         /// 值
         /// </summary>

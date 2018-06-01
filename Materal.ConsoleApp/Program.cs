@@ -1,10 +1,13 @@
 ﻿using MateralTools.Base;
+using MateralTools.MLinQ;
 using MateralTools.MData;
 using MateralTools.MMongoDB;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Materal.ConsoleApp
 {
@@ -12,36 +15,32 @@ namespace Materal.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var connStr = "mongodb://127.0.0.1:27017/?safe=true";
-            MongoDBHelper db = new MongoDBHelper(connStr, "MateralTools");
-            Person person = new Person();
-            person.Name = "xxx";
-            person.Pwd = "123";
-            person.Score = "80";
-            List<FilterInfo<Person>> filters = new List<FilterInfo<Person>>();
-            filters.Add(new FilterInfo<Person>("Pwd", "123"));
-            filters.Add(new FilterInfo<Person>("Score", "80"));
-            //增加
-            person = db.Insert(person);
-            //查询
-            List<Person> listM = db.Query(filters.ToArray());
-            //修改
-            person = listM[0];
-            person.Name = "Materal";
-            UpdateResult updateResult = db.Update(person);
-            listM = db.Query(filters.ToArray());
-            //删除
-            DeleteResult deleteResult = db.Delete(filters.ToArray());
-            listM = db.Query(filters.ToArray());
-            Console.ReadKey();
+            List<UserModel> listUserM = new List<UserModel>();
+            for (int i = 0; i < 100; i++)
+            {
+                listUserM.Add(new UserModel
+                {
+                    ID = Guid.NewGuid(),
+                    Score = i
+                });
+            }
+            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+            FilterInfo<UserModel>[] filters =
+            {
+                new FilterInfo<UserModel>(x =>numbers.Contains(Convert.ToInt32(x)),3, ConditionEnum.And)
+            };
+            List<UserModel> resM = listUserM.Where(filters).ToList();
         }
-    }
-    [MTableModel("person")]
-    public class Person
-    {
-        public ObjectId _id { get; set; }
-        public string Name { get; set; }
-        public string Pwd { get; set; }
-        public string Score { get; set; }
+        public class UserModel
+        {
+            /// <summary>
+            /// 唯一标识
+            /// </summary>
+            public Guid ID { get; set; }
+            /// <summary>
+            /// 分数
+            /// </summary>
+            public int Score { get; set; }
+        }
     }
 }

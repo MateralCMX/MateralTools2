@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.MData\MateralTools.MData.csproj" />
+    <ProjectReference Include="..\MateralTools.MLinQ\MateralTools.MLinQ.csproj" />
     <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
   </ItemGroup>
 

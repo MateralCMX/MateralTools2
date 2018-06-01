@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace MateralTools.MLinQ
+namespace MateralTools.MEntityFramework
 {
     /// <summary>
     /// 数据操作类父类

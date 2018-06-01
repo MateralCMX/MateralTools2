@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MateralTools.MLinQ
+namespace MateralTools.MEntityFramework
 {
     /// <summary>
     /// 逻辑删除特性

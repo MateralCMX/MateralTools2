@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace MateralTools.MLinQ
+namespace MateralTools.MEntityFramework
 {
     /// <summary>
     /// 业务处理类父类

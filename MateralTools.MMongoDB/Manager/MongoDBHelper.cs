@@ -1,11 +1,13 @@
 ﻿using MateralTools.Base;
 using MateralTools.MData;
+using MateralTools.MLinQ;
 using MateralTools.MVerify;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +19,11 @@ namespace MateralTools.MMongoDB
         /// <summary>
         /// 连接字符串
         /// </summary>
-        private string _connStr = string.Empty;
+        private readonly string _connStr = string.Empty;
         /// <summary>
         /// 数据库名称
         /// </summary>
-        private string _dataBaseName = string.Empty;
+        private readonly string _dataBaseName = string.Empty;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -36,14 +38,14 @@ namespace MateralTools.MMongoDB
         /// 获取连接对象
         /// </summary>
         /// <typeparam name="T">要连接的对象类</typeparam>
-        /// <param name="tableName">表名</param>
+        /// <param name="docName">文档名</param>
         /// <returns>连接对象</returns>
-        public IMongoCollection<T> GetCollection<T>(string tableName)
+        public IMongoCollection<T> GetCollection<T>(string docName)
         {
             MongoClient client = new MongoClient(_connStr);
             IMongoDatabase database = client.GetDatabase(_dataBaseName);
-            tableName = tableName.MIsNullOrEmpty() ? GetTableName<T>() : tableName;
-            IMongoCollection<T> collection = database.GetCollection<T>(tableName);
+            docName = docName.MIsNullOrEmpty() ? GetDocName<T>() : docName;
+            IMongoCollection<T> collection = database.GetCollection<T>(docName);
             return collection;
         }
         /// <summary>
@@ -51,11 +53,11 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要插入的对象类</typeparam>
         /// <param name="model">要插入的对象</param>
-        /// <param name="tableName">表名</param>
+        /// <param name="docName">文档名</param>
         /// <returns>插入后的对象</returns>
-        public T Insert<T>(T model, string tableName = null)
+        public T Insert<T>(T model, string docName = null)
         {
-            IMongoCollection<T> collection = GetCollection<T>(tableName);
+            IMongoCollection<T> collection = GetCollection<T>(docName);
             collection.InsertOne(model);
             return model;
         }
@@ -64,9 +66,9 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要修改的对象类</typeparam>
         /// <param name="model">要修改的对象</param>
-        /// <param name="tableName">表名</param>
+        /// <param name="docName">文档名</param>
         /// <returns>修改结果</returns>
-        public UpdateResult Update<T>(T model, string tableName = null)
+        public UpdateResult Update<T>(T model, string docName = null)
         {
             PropertyInfo keyPi = GetKey<T>();
             if (keyPi != null)
@@ -74,7 +76,7 @@ namespace MateralTools.MMongoDB
                 FilterInfo<T>[] filters = { new FilterInfo<T>(keyPi, keyPi.GetValue(model)) };
                 FilterDefinition<T> filterDefinition = GetFilterDefinition(filters);
                 UpdateDefinition<T> updateDefinition = GetUpdateDefinition(keyPi, model);
-                IMongoCollection<T> collection = GetCollection<T>(tableName);
+                IMongoCollection<T> collection = GetCollection<T>(docName);
                 UpdateResult updateResult = collection.UpdateMany(filterDefinition, updateDefinition);
                 return updateResult;
             }
@@ -88,9 +90,9 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要修改的对象类</typeparam>
         /// <param name="model">要修改的对象</param>
-        /// <param name="tableName">表名</param>
+        /// <param name="docName">文档名</param>
         /// <returns>修改结果</returns>
-        public UpdateResult UpdateOne<T>(T model, string tableName = null)
+        public UpdateResult UpdateOne<T>(T model, string docName = null)
         {
             PropertyInfo keyPi = GetKey<T>();
             if (keyPi != null)
@@ -98,7 +100,7 @@ namespace MateralTools.MMongoDB
                 FilterInfo<T>[] filters = { new FilterInfo<T>(keyPi, keyPi.GetValue(model)) };
                 FilterDefinition<T> filterDefinition = GetFilterDefinition(filters);
                 UpdateDefinition<T> updateDefinition = GetUpdateDefinition(keyPi, model);
-                IMongoCollection<T> collection = GetCollection<T>(tableName);
+                IMongoCollection<T> collection = GetCollection<T>(docName);
                 UpdateResult updateResult = collection.UpdateOne(filterDefinition, updateDefinition);
                 return updateResult;
             }
@@ -112,11 +114,11 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要删除的对象类</typeparam>
         /// <param name="filters">过滤器集合</param>
-        /// <param name="tableName">表名</param>
+        /// <param name="docName">文档名</param>
         /// <returns>删除结果</returns>
-        public DeleteResult Delete<T>(FilterInfo<T>[] filters,string tableName = null)
+        public DeleteResult Delete<T>(FilterInfo<T>[] filters,string docName = null)
         {
-            IMongoCollection<T> collection = GetCollection<T>(tableName);
+            IMongoCollection<T> collection = GetCollection<T>(docName);
             FilterDefinition<T> filter = GetFilterDefinition(filters);
             DeleteResult resM = collection.DeleteMany(filter);
             return resM;
@@ -126,11 +128,11 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要删除的对象类</typeparam>
         /// <param name="filters">过滤器集合</param>
-        /// <param name="tableName">表名</param>
+        /// <param name="docName">文档名</param>
         /// <returns>删除结果</returns>
-        public DeleteResult DeleteOne<T>(FilterInfo<T>[] filters, string tableName = null)
+        public DeleteResult DeleteOne<T>(FilterInfo<T>[] filters, string docName = null)
         {
-            IMongoCollection<T> collection = GetCollection<T>(tableName);
+            IMongoCollection<T> collection = GetCollection<T>(docName);
             FilterDefinition<T> filter = GetFilterDefinition(filters);
             DeleteResult resM = collection.DeleteOne(filter);
             return resM;
@@ -140,11 +142,11 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要查询的目标类</typeparam>
         /// <param name="filters">过滤器集合</param>
-        /// <param name="tableName">表名称</param>
+        /// <param name="docName">文档名称</param>
         /// <returns>查询结果</returns>
-        public T QueryOne<T>(FilterInfo<T>[] filters, string tableName = null)
+        public T QueryOne<T>(FilterInfo<T>[] filters, string docName = null)
         {
-            IMongoCollection<T> collection = GetCollection<T>(tableName);
+            IMongoCollection<T> collection = GetCollection<T>(docName);
             FilterDefinition<T> filter = GetFilterDefinition<T>(filters);
             T resM = collection.Find(filter).FirstOrDefault();
             return resM;
@@ -154,12 +156,12 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要查询的目标类</typeparam>
         /// <param name="filters">过滤器集合</param>
-        /// <param name="tableName">表名称</param>
+        /// <param name="docName">文档名称</param>
         /// <returns>查询结果</returns>
-        public async Task<T> QueryOneAsync<T>(FilterInfo<T>[] filters, string tableName = null)
+        public async Task<T> QueryOneAsync<T>(FilterInfo<T>[] filters, string docName = null)
         {
-            IMongoCollection<T> collection = GetCollection<T>(tableName);
-            FilterDefinition<T> filter = GetFilterDefinition<T>(filters);
+            IMongoCollection<T> collection = GetCollection<T>(docName);
+            FilterDefinition<T> filter = GetFilterDefinition(filters);
             IAsyncCursor<T> listM = await collection.FindAsync(filter);
             T resM = listM.FirstOrDefault();
             return resM;
@@ -169,13 +171,13 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要查询的目标类</typeparam>
         /// <param name="filters">过滤器集合</param>
-        /// <param name="tableName">表名称</param>
+        /// <param name="docName">文档名称</param>
         /// <returns>查询结果</returns>
-        public List<T> Query<T>(FilterInfo<T>[] filters, string tableName = null)
+        public IFindFluent<T, T> Query<T>(FilterInfo<T>[] filters, string docName = null)
         {
-            IMongoCollection<T> collection = GetCollection<T>(tableName);
-            FilterDefinition<T> filter = GetFilterDefinition<T>(filters);
-            List<T> resM = collection.Find(filter).ToList();
+            IMongoCollection<T> collection = GetCollection<T>(docName);
+            FilterDefinition<T> filter = GetFilterDefinition(filters);
+            IFindFluent<T, T> resM = collection.Find(filter);
             return resM;
         }
         /// <summary>
@@ -183,11 +185,11 @@ namespace MateralTools.MMongoDB
         /// </summary>
         /// <typeparam name="T">要查询的目标类</typeparam>
         /// <param name="filters">过滤器集合</param>
-        /// <param name="tableName">表名称</param>
+        /// <param name="docName">文档名称</param>
         /// <returns>查询结果</returns>
-        public async Task<List<T>> QueryAsync<T>(FilterInfo<T>[] filters, string tableName = null)
+        public async Task<List<T>> QueryAsync<T>(FilterInfo<T>[] filters, string docName = null)
         {
-            IMongoCollection<T> collection = GetCollection<T>(tableName);
+            IMongoCollection<T> collection = GetCollection<T>(docName);
             FilterDefinition<T> filter = GetFilterDefinition<T>(filters);
             IAsyncCursor<T> listM = await collection.FindAsync(filter);
             List<T> resM = listM.ToList();
@@ -261,45 +263,25 @@ namespace MateralTools.MMongoDB
         /// <returns>Mongo过滤器</returns>
         private FilterDefinition<T> ConvertToMongoFilter<T>(FilterInfo<T> filter)
         {
-            FilterDefinition<T> filterDefinition = null;
-            switch (filter.Comparison)
-            {
-                case ComparisonEnum.NotEqual:
-                    filterDefinition = Builders<T>.Filter.Ne(filter.PropertyInfo.Name, filter.Value);
-                    break;
-                case ComparisonEnum.Equal:
-                    filterDefinition = Builders<T>.Filter.Eq(filter.PropertyInfo.Name, filter.Value);
-                    break;
-                case ComparisonEnum.GreaterThan:
-                    filterDefinition = Builders<T>.Filter.Gt(filter.PropertyInfo.Name, filter.Value);
-                    break;
-                case ComparisonEnum.LessThan:
-                    filterDefinition = Builders<T>.Filter.Lt(filter.PropertyInfo.Name, filter.Value);
-                    break;
-                case ComparisonEnum.GreaterThanOrEqual:
-                    filterDefinition = Builders<T>.Filter.Gte(filter.PropertyInfo.Name, filter.Value);
-                    break;
-                case ComparisonEnum.LessThanOrEqual:
-                    filterDefinition = Builders<T>.Filter.Lte(filter.PropertyInfo.Name, filter.Value);
-                    break;
-                case ComparisonEnum.Contains:
-                    break;
-            }
+            ParameterExpression param = Expression.Parameter(typeof(T), "m");
+            Expression be = LinQExtended.GetWhere(filter, param);
+            Expression<Func<T, bool>> func = Expression.Lambda<Func<T, bool>>(be, param);
+            FilterDefinition<T> filterDefinition = Builders<T>.Filter.Where(func);
             return filterDefinition;
         }
         /// <summary>
-        /// 获取表名
+        /// 获取文档名
         /// </summary>
         /// <typeparam name="T">目标对象类</typeparam>
-        /// <returns>表名</returns>
-        private string GetTableName<T>()
+        /// <returns>文档名</returns>
+        private string GetDocName<T>()
         {
             Type ttype = typeof(T);
             object[] attr = ttype.GetCustomAttributes(typeof(MTableModelAttribute), true);
             if (attr.Length > 0)
             {
-                string TableName = (attr[0] as MTableModelAttribute).TabelName;
-                return TableName;
+                string docName = (attr[0] as MTableModelAttribute).TabelName;
+                return docName;
             }
             else
             {
