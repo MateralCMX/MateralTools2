@@ -8,7 +8,18 @@ namespace MateralTools.MLog
 {
     public class MXMLLogBLL : IMLogBLL
     {
+        /// <summary>
+        /// 数据处理对象
+        /// </summary>
         private readonly MXMLLogDAL _dal = new MXMLLogDAL();
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="XMLFilePath"></param>
+        public MXMLLogBLL(string XMLFilePath)
+        {
+            _dal = new MXMLLogDAL(XMLFilePath);
+        }
         /// <summary>
         /// 写入异常日志
         /// </summary>

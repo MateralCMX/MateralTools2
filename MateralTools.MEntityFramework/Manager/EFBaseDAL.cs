@@ -1,6 +1,7 @@
 ﻿using MateralTools.Base;
 using MateralTools.MConvert;
 using MateralTools.MResult;
+using MateralTools.MLinQ;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,12 +38,12 @@ namespace MateralTools.MEntityFramework
         /// <param name="pageM">分页对象</param>
         /// <param name="filters">条件</param>
         /// <returns>数据库信息</returns>
-        public virtual List<VModel> GetDBModelViewPageInfoByWhere(MPageModel pageM, params FilterInfo<VModel>[] filters)
+        public virtual IQueryable<VModel> GetDBModelViewPageInfoByWhere(MPageModel pageM, params FilterInfo<VModel>[] filters)
         {
             IQueryable<VModel> listM = GetDBModelViewInfoByWhere(filters);
             pageM.DataCount = listM.Count();
             listM = listM.Paging(pageM.PageIndex, pageM.PageSize);
-            return listM.ToList();
+            return listM;
         }
         /// <summary>
         /// 根据条件获得数据库信息(异步)
@@ -61,12 +62,12 @@ namespace MateralTools.MEntityFramework
         /// <param name="pageM">分页对象</param>
         /// <param name="filters">条件</param>
         /// <returns>数据库信息</returns>
-        public virtual async Task<List<VModel>> GetDBModelViewPageInfoByWhereAsync(MPageModel pageM, params FilterInfo<VModel>[] filters)
+        public virtual async Task<IAsyncEnumerable<VModel>> GetDBModelViewPageInfoByWhereAsync(MPageModel pageM, params FilterInfo<VModel>[] filters)
         {
             IAsyncEnumerable<VModel> listM = GetDBModelViewInfoByWhereAsync(filters);
             pageM.DataCount = await listM.Count();
             listM = listM.Paging(pageM.PageIndex, pageM.PageSize);
-            return await listM.ToList();
+            return listM;
         }
         /// <summary>
         /// 根据主键获得数据模型对象信息
@@ -92,6 +93,7 @@ namespace MateralTools.MEntityFramework
         /// 获得数据模型属性信息
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="MEntityFrameworkException"></exception>
         private DbSet<VModel> GetDBViewSet()
         {
             PropertyInfo dbPro = _DB.GetType().GetProperty(typeof(VModel).Name);
@@ -102,7 +104,7 @@ namespace MateralTools.MEntityFramework
             }
             else
             {
-                throw new ArgumentException($"类型{typeof(VModel).Name}错误。");
+                throw new MEntityFrameworkException($"类型{typeof(VModel).Name}错误。");
             }
         }
     }
@@ -150,12 +152,12 @@ namespace MateralTools.MEntityFramework
         /// <param name="pageM">分页对象</param>
         /// <param name="filters">条件</param>
         /// <returns>数据库信息</returns>
-        public virtual List<TModel> GetDBModelPageInfoByWhere(MPageModel pageM, params FilterInfo<TModel>[] filters)
+        public virtual IQueryable<TModel> GetDBModelPageInfoByWhere(MPageModel pageM, params FilterInfo<TModel>[] filters)
         {
             IQueryable<TModel> listM = GetDBModelInfoByWhere(filters);
             pageM.DataCount = listM.Count();
             listM = listM.Paging(pageM.PageIndex, pageM.PageSize);
-            return listM.ToList();
+            return listM;
         }
         /// <summary>
         /// 根据条件获得数据库信息(异步)
@@ -174,12 +176,12 @@ namespace MateralTools.MEntityFramework
         /// <param name="pageM">分页对象</param>
         /// <param name="filters">条件</param>
         /// <returns>数据库信息</returns>
-        public virtual async Task<List<TModel>> GetDBModelPageInfoByWhereAsync(MPageModel pageM, params FilterInfo<TModel>[] filters)
+        public virtual async Task<IAsyncEnumerable<TModel>> GetDBModelPageInfoByWhereAsync(MPageModel pageM, params FilterInfo<TModel>[] filters)
         {
             IAsyncEnumerable<TModel> listM = GetDBModelInfoByWhereAsync(filters);
             pageM.DataCount = await listM.Count();
             listM = listM.Paging(pageM.PageIndex, pageM.PageSize);
-            return await listM.ToList();
+            return listM;
         }
         /// <summary>
         /// 添加
@@ -197,6 +199,7 @@ namespace MateralTools.MEntityFramework
         /// 删除
         /// </summary>
         /// <param name="id">要删除的模型主键或者模型对象</param>
+        /// <exception cref="MEntityFrameworkException"></exception>
         public virtual void Delete(object id)
         {
             TModel model;
@@ -209,7 +212,7 @@ namespace MateralTools.MEntityFramework
                 model = GetDBModelInfoByID(id);
                 if (model == default(TModel))
                 {
-                    throw new ArgumentException($"参数{nameof(id)}错误。");
+                    throw new MEntityFrameworkException($"参数{nameof(id)}错误。");
                 }
             }
             DbSet<TModel> dbSet = GetDBSet();
@@ -220,6 +223,7 @@ namespace MateralTools.MEntityFramework
         /// 获得数据模型属性信息
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="MEntityFrameworkException"></exception>
         private DbSet<TModel> GetDBSet()
         {
             PropertyInfo dbPro = _DB.GetType().GetProperty(typeof(TModel).Name);
@@ -230,7 +234,7 @@ namespace MateralTools.MEntityFramework
             }
             else
             {
-                throw new ArgumentException($"类型{typeof(TModel).Name}错误。");
+                throw new MEntityFrameworkException($"类型{typeof(TModel).Name}错误。");
             }
         }
     }
@@ -270,6 +274,7 @@ namespace MateralTools.MEntityFramework
         /// <param name="model"></param>
         /// <param name="keyPropertyInfo">主键属性</param>
         /// <returns></returns>
+        /// <exception cref="MEntityFrameworkException"></exception>
         protected T GetBeforeInsertModel<T>(T model, PropertyInfo keyPropertyInfo)
         {
             Type tType = typeof(T);
@@ -294,7 +299,7 @@ namespace MateralTools.MEntityFramework
             }
             else
             {
-                throw new ArgumentException($"类型{typeof(T).Name}不支持该方法。");
+                throw new MEntityFrameworkException($"类型{typeof(T).Name}不支持该方法。");
             }
         }
         /// <summary>
@@ -302,16 +307,17 @@ namespace MateralTools.MEntityFramework
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// <exception cref="MEntityFrameworkException"></exception>
         protected T GetBeforeInsertModel<T>(T model)
         {
             PropertyInfo pi = GetKeyPropertyInfo<T>();
             if (pi != null)
             {
-                return GetBeforeInsertModel<T>(model, pi);
+                return GetBeforeInsertModel(model, pi);
             }
             else
             {
-                throw new ArgumentException($"类型{typeof(T).Name}不能找到主键属性，请为主键属性添加Key特性。");
+                throw new MEntityFrameworkException($"类型{typeof(T).Name}不能找到主键属性，请为主键属性添加Key特性。");
             }
         }
         /// <summary>
@@ -342,6 +348,7 @@ namespace MateralTools.MEntityFramework
         /// <param name="dbSet">数据源</param>
         /// <param name="id">主键值</param>
         /// <returns></returns>
+        /// <exception cref="MEntityFrameworkException"></exception>
         protected static IEnumerable<T> GetModeWhereByID<T>(DbSet<T> dbSet, object id) where T: class
         {
             PropertyInfo modelPro = GetKeyPropertyInfo<T>();
@@ -371,13 +378,13 @@ namespace MateralTools.MEntityFramework
                 }
                 else
                 {
-                    throw new ArgumentException($"该方法不支持类型{typeof(T).Name}");
+                    throw new MEntityFrameworkException($"该方法不支持类型{typeof(T).Name}");
                 }
                 return dbSet.Where(expression.Compile());
             }
             else
             {
-                throw new ArgumentException($"类型{typeof(T).Name}不能找到主键属性，请为主键属性添加Key特性。");
+                throw new MEntityFrameworkException($"类型{typeof(T).Name}不能找到主键属性，请为主键属性添加Key特性。");
             }
         }
     }

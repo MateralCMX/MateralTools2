@@ -1,4 +1,4 @@
-﻿using MateralTools.MLinQ;
+﻿using MateralTools.MEntityFramework;
 using MateralTools.MVerify;
 using System;
 using System.Collections.Generic;

@@ -13,7 +13,7 @@ namespace MateralTools.MLog
         /// <summary>
         /// XML文件地址
         /// </summary>
-        private const string XMLFilePath = "Data/MateralToolsLogDB.xml";
+        private readonly string _XMLFilePath;
         /// <summary>
         /// XML文件对象
         /// </summary>
@@ -23,14 +23,23 @@ namespace MateralTools.MLog
         /// </summary>
         private const string LastIDName = "LastID";
         /// <summary>
-        /// 构造方法
+        /// XML文件地址
         /// </summary>
-        public MXMLLogDAL()
+        /// <param name="XMLFilePath"></param>
+        public MXMLLogDAL(string XMLFilePath)
+        {
+            _XMLFilePath = XMLFilePath;
+            BindXMLDocument();
+        }
+        /// <summary>
+        /// 绑定XMLDoc
+        /// </summary>
+        private void BindXMLDocument()
         {
             _xmlDoc = new XmlDocument();
-            if (System.IO.File.Exists(XMLFilePath))
+            if (System.IO.File.Exists(_XMLFilePath))
             {
-                _xmlDoc.Load(XMLFilePath);
+                _xmlDoc.Load(_XMLFilePath);
             }
             else
             {
@@ -42,6 +51,15 @@ namespace MateralTools.MLog
                 SaveChange();
             }
         }
+
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        public MXMLLogDAL()
+        {
+            BindXMLDocument();
+        }
+
         /// <summary>
         /// 插入一个日志
         /// </summary>
@@ -116,7 +134,7 @@ namespace MateralTools.MLog
         /// </summary>
         public void SaveChange()
         {
-            _xmlDoc.Save(XMLFilePath);
+            _xmlDoc.Save(_XMLFilePath);
         }
     }
 }

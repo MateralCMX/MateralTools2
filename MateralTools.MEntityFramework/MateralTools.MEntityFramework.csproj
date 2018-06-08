@@ -2,21 +2,23 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Description>这是MateralTools的LinQ工具库
-GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <Authors>Materal</Authors>
     <Product>MateralTools</Product>
+    <Description>这是MateralTools的枚举工具库
+GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <Copyright>©Materal</Copyright>
-    <PackageReleaseNotes>增加EF帮助类</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>更新返回异常类型</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
+    <ProjectReference Include="..\MateralTools.MLinQ\MateralTools.MLinQ.csproj" />
   </ItemGroup>
 
 </Project>

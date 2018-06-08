@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+    <Authors>Materal</Authors>
+    <Product>MateralTool</Product>
+    <Description>这是MateralTools的LinQ工具库
+GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
+    <Copyright>©Materal</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MateralTools.MEntityFramework\MateralTools.MEntityFramework.csproj" />
     <ProjectReference Include="..\MateralTools.MLinQ\MateralTools.MLinQ.csproj" />
   </ItemGroup>
 

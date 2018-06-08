@@ -56,6 +56,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MateralTools.MEntityFramework\MateralTools.MEntityFramework.csproj">
+      <Project>{CED29729-DD3B-406E-9F43-B211BCB014C2}</Project>
+      <Name>MateralTools.MEntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj">
       <Project>{09A7C909-F8EA-466C-93BF-E0AE3068E900}</Project>
       <Name>MateralTools.MHttpRequest</Name>

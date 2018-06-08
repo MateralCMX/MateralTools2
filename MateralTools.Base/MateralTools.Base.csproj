@@ -10,8 +10,8 @@
     <Description>这是MateralTools的基本库
 GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>新增一个获取随机字符串方法</PackageReleaseNotes>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>新增PropertyInfoExtended</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using MateralTools.MEntityFramework;
 
 namespace MateralTools.MLog
 {

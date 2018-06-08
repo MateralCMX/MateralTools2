@@ -13,7 +13,7 @@ namespace MateralTools.Base
         /// <summary>
         /// 获得描述
         /// </summary>
-        /// <param name="inputObj">枚举对象</param>
+        /// <param name="inputObj">对象</param>
         /// <returns>描述</returns>
         public static string MGetDescription(this object inputObj)
         {

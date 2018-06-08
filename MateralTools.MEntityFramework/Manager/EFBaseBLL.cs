@@ -1,6 +1,9 @@
-﻿using MateralTools.MConvert;
+﻿using MateralTools.Base;
+using MateralTools.MConvert;
+using MateralTools.MVerify;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace MateralTools.MEntityFramework
@@ -18,6 +21,7 @@ namespace MateralTools.MEntityFramework
         /// </summary>
         /// <param name="id">唯一标识</param>
         /// <returns></returns>
+        /// <exception cref="MEntityFrameworkException"></exception>
         public virtual VModel GetDBModelViewInfoByID(object id)
         {
             MethodInfo method = (typeof(TDAL)).GetMethod("GetDBModelViewInfoByID");
@@ -27,7 +31,7 @@ namespace MateralTools.MEntityFramework
             }
             else
             {
-                throw new ApplicationException("未实现该方法，需重写");
+                throw new MEntityFrameworkException("未实现该方法，需重写");
             }
         }
     }
@@ -69,7 +73,53 @@ namespace MateralTools.MEntityFramework
         /// <param name="model">要验证的模型</param>
         /// <param name="msg">提示信息</param>
         /// <returns>验证结果</returns>
-        protected abstract bool Verification(TModel model, out string msg);
+        protected virtual bool Verification(TModel model, out string msg)
+        {
+            List<string> msgs = new List<string>();
+            Type tType = typeof(TModel);
+            PropertyInfo[] pis = tType.GetProperties();
+            string Description;
+            foreach (PropertyInfo pi in pis)
+            {
+                object attr = pi.GetCustomAttribute(typeof(RequiredAttribute), false);
+                if (attr != null)
+                {
+                    if (pi.GetValue(model).MIsNullOrEmptyStr())
+                    {
+                        try
+                        {
+                            Description = pi.MGetDescription();
+                        }
+                        catch
+                        {
+                            Description = pi.Name;
+                        }
+                        msgs.Add($"{Description}不能为空");
+                    }
+                }
+            }
+            return GetVeificationOutMsg(out msg, msgs);
+        }
+        /// <summary>
+        /// 获得验证返回信息
+        /// </summary>
+        /// <param name="msg">返回信息</param>
+        /// <param name="msgs">信息列表</param>
+        /// <returns>验证结果</returns>
+        public static bool GetVeificationOutMsg(out string msg, List<string> msgs)
+        {
+            if (msgs.Count == 0)
+            {
+                msg = "验证通过。";
+                return true;
+            }
+            else
+            {
+                msg = "验证未通过：" + string.Join(",", msgs) + "。";
+                return false;
+            }
+        }
+
         /// <summary>
         /// 验证添加模型
         /// </summary>
@@ -95,6 +145,7 @@ namespace MateralTools.MEntityFramework
         /// </summary>
         /// <param name="id">唯一标识</param>
         /// <returns></returns>
+        /// <exception cref="MEntityFrameworkException"></exception>
         public virtual TModel GetDBModelInfoByID(object id)
         {
             MethodInfo method = (typeof(TDAL)).GetMethod("GetDBModelInfoByID");
@@ -104,13 +155,14 @@ namespace MateralTools.MEntityFramework
             }
             else
             {
-                throw new ApplicationException("未实现该方法，需重写");
+                throw new MEntityFrameworkException("未实现该方法，需重写");
             }
         }
         /// <summary>
         /// 添加一个对象
         /// </summary>
         /// <param name="model">要添加的对象</param>
+        /// <exception cref="MEntityFrameworkException"></exception>
         public virtual TModel Add(TModel model)
         {
             MethodInfo method = (typeof(TDAL)).GetMethod("Insert");
@@ -123,18 +175,19 @@ namespace MateralTools.MEntityFramework
                 }
                 else
                 {
-                    throw new Exception(msg);
+                    throw new MEntityFrameworkException(msg);
                 }
             }
             else
             {
-                throw new ApplicationException("未实现该方法，需重写");
+                throw new MEntityFrameworkException("未实现该方法，需重写");
             }
         }
         /// <summary>
         /// 删除一个对象
         /// </summary>
         /// <param name="id">对象ID</param>
+        /// <exception cref="MEntityFrameworkException"></exception>
         public virtual void Delete(object id)
         {
             Type TType = typeof(TModel);
@@ -148,7 +201,7 @@ namespace MateralTools.MEntityFramework
                 }
                 else
                 {
-                    throw new ApplicationException("未实现该方法，需重写");
+                    throw new MEntityFrameworkException("未实现该方法，需重写");
                 }
             }
             else
@@ -162,7 +215,7 @@ namespace MateralTools.MEntityFramework
                 }
                 else
                 {
-                    throw new ApplicationException("未实现保存方法，需重写");
+                    throw new MEntityFrameworkException("未实现保存方法，需重写");
                 }
             }
         }
@@ -170,6 +223,7 @@ namespace MateralTools.MEntityFramework
         /// 修改一个对象
         /// </summary>
         /// <param name="model">要修改的对象</param>
+        /// <exception cref="MEntityFrameworkException"></exception>
         public virtual TModel Update(TModel model)
         {
             Type TType = model.GetType();
@@ -195,17 +249,17 @@ namespace MateralTools.MEntityFramework
                     }
                     else
                     {
-                        throw new ApplicationException("未实现保存方法，需重写");
+                        throw new MEntityFrameworkException("未实现保存方法，需重写");
                     }
                 }
                 else
                 {
-                    throw new Exception(msg);
+                    throw new MEntityFrameworkException(msg);
                 }
             }
             else
             {
-                throw new ApplicationException("修改失败，该对象不存在于数据库中");
+                throw new MEntityFrameworkException("修改失败，该对象不存在于数据库中");
             }
         }
         /// <summary>
