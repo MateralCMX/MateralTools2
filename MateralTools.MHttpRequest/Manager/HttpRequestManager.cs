@@ -2,7 +2,9 @@
 using MateralTools.MVerify;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,16 +20,15 @@ namespace MateralTools.MHttpRequest
         /// </summary>
         /// <param name="url">url地址</param>
         /// <param name="data">参数</param>
-        /// <param name="headers">Http头</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>返回值</returns>
-        public static string SendGet(string url, Dictionary<string, string> data = null, Dictionary<string, string> headers = null, int timeout = 100)
+        public static string SendGet(string url, Dictionary<string, string> data = null, int timeout = 100)
         {
             if (!url.MIsNullOrEmpty())
             {
                 url = SpliceURLParams(url, data);
                 string resutlStr = string.Empty;
-                using (HttpClient client = GetHttpClient(headers, timeout))
+                using (HttpClient client = GetHttpClient(timeout))
                 {
                     Task<byte[]> result = client.GetByteArrayAsync(url);
                     byte[] resultBytes = result.Result;
@@ -50,26 +51,51 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static T SendGet<T>(string url, Dictionary<string, string> data = null, Dictionary<string, string> headers = null, int timeout = 100)
         {
-            string resutlStr = SendGet(url, data, headers, timeout);
+            string resutlStr = SendGet(url, data, timeout);
             T model = resutlStr.MJsonToObject<T>();
             return model;
+        }
+        /// <summary>
+        /// 获得HttpContent
+        /// </summary>
+        /// <param name="contentType">Content-Type</param>
+        /// <param name="data">参数</param>
+        /// <returns></returns>
+        private static HttpContent GetHttpContent(Dictionary<string, string> data, HttpContentTypeEnum contentType)
+        {
+            HttpContent content = null;
+            switch (contentType)
+            {
+                case HttpContentTypeEnum.ApplicationJson:
+                    string dataJson = data.MToJson();
+                    var formDataBytes = dataJson == null ? new byte[0] : Encoding.UTF8.GetBytes(dataJson);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        ms.Write(formDataBytes, 0, formDataBytes.Length);
+                        ms.Seek(0, SeekOrigin.Begin);
+                        content = new StreamContent(ms);
+                        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    }
+                    break;
+            }
+            return content;
         }
         /// <summary>
         /// 发送Post请求
         /// </summary>
         /// <param name="url">url地址</param>
         /// <param name="data">参数</param>
-        /// <param name="headers">Http头</param>
+        /// <param name="contentType">Content-Type</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>返回值</returns>
-        public static string SendPost(string url, Dictionary<string, string> data = null, Dictionary<string, string> headers = null, int timeout = 100)
+        public static string SendPost(string url, Dictionary<string, string> data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
             if (!url.MIsNullOrEmpty())
             {
                 string resutlStr = string.Empty;
-                using (HttpClient client = GetHttpClient(headers, timeout))
+                using (HttpClient client = GetHttpClient(timeout))
                 {
-                    using (HttpContent content = new FormUrlEncodedContent(data))
+                    using (HttpContent content = GetHttpContent(data, contentType))
                     {
                         using (HttpResponseMessage responseMessage = client.PostAsync(url, content).Result)
                         {
@@ -77,8 +103,8 @@ namespace MateralTools.MHttpRequest
                             resutlStr = Encoding.UTF8.GetString(resultBytes);
                         }
                     }
+                    return resutlStr;
                 }
-                return resutlStr;
             }
             else
             {
@@ -90,12 +116,12 @@ namespace MateralTools.MHttpRequest
         /// </summary>
         /// <param name="url">url地址</param>
         /// <param name="data">参数</param>
-        /// <param name="headers">Http头</param>
+        /// <param name="contentType">Content-Type</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>返回值</returns>
-        public static T SendPost<T>(string url, Dictionary<string, string> data = null, Dictionary<string, string> headers = null, int timeout = 100)
+        public static T SendPost<T>(string url, Dictionary<string, string> data = null, Dictionary<string, string> headers = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
-            string resutlStr = SendPost(url, data, headers, timeout);
+            string resutlStr = SendPost(url, data, contentType, timeout);
             T model = resutlStr.MJsonToObject<T>();
             return model;
         }
@@ -121,19 +147,12 @@ namespace MateralTools.MHttpRequest
         /// <summary>
         /// 获得Http客户端
         /// </summary>
-        /// <param name="headers">头部</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>Http客户端</returns>
-        private static HttpClient GetHttpClient(Dictionary<string, string> headers, int timeout)
+        private static HttpClient GetHttpClient(int timeout)
         {
-            HttpClient client = new HttpClient();
-            if (headers != null)
-            {
-                foreach (KeyValuePair<string, string> header in headers)
-                {
-                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                }
-            }
+            HttpClientHandler handler = new HttpClientHandler();
+            HttpClient client = new HttpClient(handler);
             client.Timeout = new TimeSpan(0, 0, timeout);
             return client;
         }

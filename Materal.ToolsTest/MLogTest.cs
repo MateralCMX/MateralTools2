@@ -23,7 +23,7 @@ namespace Materal.ToolsTest
         public MLogTest()
         {
             sqliteLogBLL = new MSQLiteLogBLL();
-            xmlLogBLL = new MXMLLogBLL();
+            xmlLogBLL = new MXMLLogBLL("./Data/");
         }
         [TestMethod]
         public void WriteOptionsLog()

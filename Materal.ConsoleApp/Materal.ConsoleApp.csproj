@@ -10,8 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MateralTools.MLinQ\MateralTools.MLinQ.csproj" />
-    <ProjectReference Include="..\MateralTools.MMongoDB\MateralTools.MMongoDB.csproj" />
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
+    <ProjectReference Include="..\MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj" />
+    <ProjectReference Include="..\MateralTools.MResult\MateralTools.MResult.csproj" />
   </ItemGroup>
 
 </Project>

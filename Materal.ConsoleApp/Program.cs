@@ -1,13 +1,7 @@
-﻿using MateralTools.Base;
-using MateralTools.MLinQ;
-using MateralTools.MData;
-using MateralTools.MMongoDB;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
+﻿using MateralTools.MConvert;
+using MateralTools.MHttpRequest;
+using MateralTools.MResult;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Materal.ConsoleApp
 {
@@ -15,32 +9,21 @@ namespace Materal.ConsoleApp
     {
         static void Main(string[] args)
         {
-            List<UserModel> listUserM = new List<UserModel>();
-            for (int i = 0; i < 100; i++)
+            //string url = "http://localhost:8901/api/Car/SynchronizationAllTTXCarInfo";
+            //MResultModel result = HttpRequestManager.SendGet<MResultModel>(url);
+            //string jsonStr = "{\"ResultType\": 0,\"ResultTypeStr\": \"string\",\"Message\": \"string\"}";
+            //MResultModel result = jsonStr.MJsonToObject<MResultModel>();
+            string url = "http://localhost:60647/api/User/Login";
+            Dictionary<string, string> urlParams = new Dictionary<string, string>
             {
-                listUserM.Add(new UserModel
-                {
-                    ID = Guid.NewGuid(),
-                    Score = i
-                });
-            }
-            int[] numbers = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
-            FilterInfo<UserModel>[] filters =
-            {
-                new FilterInfo<UserModel>(x =>numbers.Contains(Convert.ToInt32(x)),3, ConditionEnum.And)
+                ["Account"] = "Admin",
+                ["Password"] = "12345",
             };
-            List<UserModel> resM = listUserM.Where(filters).ToList();
-        }
-        public class UserModel
-        {
-            /// <summary>
-            /// 唯一标识
-            /// </summary>
-            public Guid ID { get; set; }
-            /// <summary>
-            /// 分数
-            /// </summary>
-            public int Score { get; set; }
+            Dictionary<string, string> heades = new Dictionary<string, string>
+            {
+                ["ContentType"] = "application/json"
+            };
+            string result = HttpRequestManager.SendPost(url, urlParams);
         }
     }
 }
