@@ -59,22 +59,20 @@ namespace MateralTools.MHttpRequest
         /// </summary>
         /// <param name="contentType">Content-Type</param>
         /// <param name="data">参数</param>
+        /// <param name="ms">记忆流</param>
         /// <returns></returns>
-        private static HttpContent GetHttpContent(Dictionary<string, string> data, HttpContentTypeEnum contentType)
+        private static HttpContent GetHttpContent(Dictionary<string, string> data, HttpContentTypeEnum contentType, ref MemoryStream ms)
         {
             HttpContent content = null;
             switch (contentType)
             {
                 case HttpContentTypeEnum.ApplicationJson:
                     string dataJson = data.MToJson();
-                    var formDataBytes = dataJson == null ? new byte[0] : Encoding.UTF8.GetBytes(dataJson);
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        ms.Write(formDataBytes, 0, formDataBytes.Length);
-                        ms.Seek(0, SeekOrigin.Begin);
-                        content = new StreamContent(ms);
-                        content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    }
+                    byte[] formDataBytes = Encoding.UTF8.GetBytes(dataJson);
+                    ms.Write(formDataBytes, 0, formDataBytes.Length);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    content = new StreamContent(ms);
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     break;
             }
             return content;
@@ -94,13 +92,15 @@ namespace MateralTools.MHttpRequest
                 string resutlStr = string.Empty;
                 using (HttpClient client = GetHttpClient(timeout))
                 {
-                    using (HttpContent content = GetHttpContent(data, contentType))
+                    MemoryStream ms = new MemoryStream();
+                    using (HttpContent content = GetHttpContent(data, contentType, ref ms))
                     {
                         using (HttpResponseMessage responseMessage = client.PostAsync(url, content).Result)
                         {
                             Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
                             resutlStr = Encoding.UTF8.GetString(resultBytes);
                         }
+                        ms.Close();
                     }
                     return resutlStr;
                 }

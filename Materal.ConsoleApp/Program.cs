@@ -17,11 +17,7 @@ namespace Materal.ConsoleApp
             Dictionary<string, string> urlParams = new Dictionary<string, string>
             {
                 ["Account"] = "Admin",
-                ["Password"] = "12345",
-            };
-            Dictionary<string, string> heades = new Dictionary<string, string>
-            {
-                ["ContentType"] = "application/json"
+                ["Password"] = "123456",
             };
             string result = HttpRequestManager.SendPost(url, urlParams);
         }
