@@ -46,10 +46,9 @@ namespace MateralTools.MHttpRequest
         /// </summary>
         /// <param name="url">url地址</param>
         /// <param name="data">参数</param>
-        /// <param name="headers">Http头</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>返回值</returns>
-        public static T SendGet<T>(string url, Dictionary<string, string> data = null, Dictionary<string, string> headers = null, int timeout = 100)
+        public static T SendGet<T>(string url, Dictionary<string, string> data = null, int timeout = 100)
         {
             string resutlStr = SendGet(url, data, timeout);
             T model = resutlStr.MJsonToObject<T>();
@@ -119,7 +118,7 @@ namespace MateralTools.MHttpRequest
         /// <param name="contentType">Content-Type</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>返回值</returns>
-        public static T SendPost<T>(string url, Dictionary<string, string> data = null, Dictionary<string, string> headers = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
+        public static T SendPost<T>(string url, Dictionary<string, string> data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
             string resutlStr = SendPost(url, data, contentType, timeout);
             T model = resutlStr.MJsonToObject<T>();
