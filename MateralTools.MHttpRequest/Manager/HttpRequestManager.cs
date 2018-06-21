@@ -61,31 +61,46 @@ namespace MateralTools.MHttpRequest
         /// <param name="data">参数</param>
         /// <param name="ms">记忆流</param>
         /// <returns></returns>
-        private static HttpContent GetHttpContent(Dictionary<string, string> data, HttpContentTypeEnum contentType, ref MemoryStream ms)
+        private static HttpContent GetHttpContent(object data, HttpContentTypeEnum contentType, ref MemoryStream ms)
         {
             HttpContent content = null;
             switch (contentType)
             {
                 case HttpContentTypeEnum.ApplicationJson:
                     string dataJson = data.MToJson();
-                    byte[] formDataBytes = Encoding.UTF8.GetBytes(dataJson);
-                    ms.Write(formDataBytes, 0, formDataBytes.Length);
-                    ms.Seek(0, SeekOrigin.Begin);
-                    content = new StreamContent(ms);
+                    content = GetHttpContentByFormDataBytes(ms,dataJson);
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     break;
+                case HttpContentTypeEnum.ApplicationXML:
+                    content = GetHttpContentByFormDataBytes(ms, data.ToString());
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                    break;
             }
+            return content;
+        }
+        /// <summary>
+        /// 获得FormBytes数据
+        /// </summary>
+        /// <param name="ms">记忆流</param>
+        /// <param name="dataStr">数据字符</param>
+        /// <returns>数据流</returns>
+        private static HttpContent GetHttpContentByFormDataBytes(MemoryStream ms, string dataStr)
+        {
+            byte[] formDataBytes = Encoding.UTF8.GetBytes(dataStr);
+            ms.Write(formDataBytes, 0, formDataBytes.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            HttpContent content = new StreamContent(ms);
             return content;
         }
         /// <summary>
         /// 发送Post请求
         /// </summary>
         /// <param name="url">url地址</param>
-        /// <param name="data">参数</param>
+        /// <param name="data">参数(Json字符串,XML文档,对象实体,字典string string)</param>
         /// <param name="contentType">Content-Type</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>返回值</returns>
-        public static string SendPost(string url, Dictionary<string, string> data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
+        public static string SendPost(string url, object data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
             if (!url.MIsNullOrEmpty())
             {

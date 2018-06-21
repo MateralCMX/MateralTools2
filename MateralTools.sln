@@ -55,7 +55,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MMongoDB", "Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Materal.ConsoleApp", "Materal.ConsoleApp\Materal.ConsoleApp.csproj", "{E043154C-0FAC-48E4-A018-281D923FD60A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MEntityFramework", "MateralTools.MEntityFramework\MateralTools.MEntityFramework.csproj", "{CED29729-DD3B-406E-9F43-B211BCB014C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MEntityFramework", "MateralTools.MEntityFramework\MateralTools.MEntityFramework.csproj", "{CED29729-DD3B-406E-9F43-B211BCB014C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MExcel", "MateralTools.MExcel\MateralTools.MExcel.csproj", "{AA84BF96-EB86-4000-9F5F-D0D3D7A6EF39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,10 @@ Global
 		{CED29729-DD3B-406E-9F43-B211BCB014C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CED29729-DD3B-406E-9F43-B211BCB014C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CED29729-DD3B-406E-9F43-B211BCB014C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA84BF96-EB86-4000-9F5F-D0D3D7A6EF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA84BF96-EB86-4000-9F5F-D0D3D7A6EF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA84BF96-EB86-4000-9F5F-D0D3D7A6EF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA84BF96-EB86-4000-9F5F-D0D3D7A6EF39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

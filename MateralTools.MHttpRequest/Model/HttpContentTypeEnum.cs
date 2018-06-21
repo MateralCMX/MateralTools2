@@ -15,5 +15,9 @@ namespace MateralTools.MHttpRequest
         /// application/json
         /// </summary>
         ApplicationJson,
+        /// <summary>
+        /// application/xml
+        /// </summary>
+        ApplicationXML
     }
 }

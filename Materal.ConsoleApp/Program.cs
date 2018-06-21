@@ -1,7 +1,12 @@
 ﻿using MateralTools.MConvert;
+using MateralTools.MExcel;
 using MateralTools.MHttpRequest;
 using MateralTools.MResult;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Xml;
 
 namespace Materal.ConsoleApp
 {
@@ -9,17 +14,10 @@ namespace Materal.ConsoleApp
     {
         static void Main(string[] args)
         {
-            //string url = "http://localhost:8901/api/Car/SynchronizationAllTTXCarInfo";
-            //MResultModel result = HttpRequestManager.SendGet<MResultModel>(url);
-            //string jsonStr = "{\"ResultType\": 0,\"ResultTypeStr\": \"string\",\"Message\": \"string\"}";
-            //MResultModel result = jsonStr.MJsonToObject<MResultModel>();
-            string url = "http://localhost:60647/api/User/Login";
-            Dictionary<string, string> urlParams = new Dictionary<string, string>
-            {
-                ["Account"] = "Admin",
-                ["Password"] = "123456",
-            };
-            string result = HttpRequestManager.SendPost(url, urlParams);
+            string fileName = @"E:\Project\MateralTools\Project\MateralTools\Materal.ConsoleApp\qwer.xlsx";
+            FileStream fs = new FileStream(fileName, FileMode.Open);
+            ExcelManager eMa = new ExcelManager();
+            eMa.GetExcelInfo(fs);
         }
     }
 }

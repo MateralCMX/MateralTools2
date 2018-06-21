@@ -34,7 +34,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 对象类型
         /// </summary>
-        public MResultType ResultType { get; private set; }
+        public MResultType ResultType { get; set; }
         /// <summary>
         /// 对象类型文本
         /// </summary>
@@ -126,7 +126,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 携带数据
         /// </summary>
-        public T Data { get; private set; }
+        public T Data { get; set; }
 
         /// <summary>
         /// 获得一个成功返回对象
@@ -174,7 +174,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 分页信息
         /// </summary>
-        public MPageModel PageInfo { get; private set; }
+        public MPageModel PageInfo { get; set; }
         /// <summary>
         /// 构造方法
         /// </summary>

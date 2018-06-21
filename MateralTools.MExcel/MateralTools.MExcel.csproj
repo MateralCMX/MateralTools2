@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>这是MateralTools的Excel工具库
+GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
+    <Copyright>©Materal</Copyright>
+    <Authors>Materal</Authors>
+    <NeutralLanguage>zh-CN</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotNetCore.NPOI" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
+  </ItemGroup>
+
+</Project>
