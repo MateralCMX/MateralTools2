@@ -55,6 +55,44 @@ namespace MateralTools.MHttpRequest
             return model;
         }
         /// <summary>
+        /// 发送Get请求(异步)
+        /// </summary>
+        /// <param name="url">url地址</param>
+        /// <param name="data">参数</param>
+        /// <param name="timeout">超时时间</param>
+        /// <returns>返回值</returns>
+        public static async Task<string> SendGetAsync(string url, Dictionary<string, string> data = null, int timeout = 100)
+        {
+            if (!url.MIsNullOrEmpty())
+            {
+                url = SpliceURLParams(url, data);
+                string resutlStr = string.Empty;
+                using (HttpClient client = GetHttpClient(timeout))
+                {
+                    byte[] resultBytes = await client.GetByteArrayAsync(url);
+                    resutlStr = Encoding.UTF8.GetString(resultBytes);
+                }
+                return resutlStr;
+            }
+            else
+            {
+                throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+            }
+        }
+        /// <summary>
+        /// 发送Get请求(异步)
+        /// </summary>
+        /// <param name="url">url地址</param>
+        /// <param name="data">参数</param>
+        /// <param name="timeout">超时时间</param>
+        /// <returns>返回值</returns>
+        public static async Task<T> SendGetAsync<T>(string url, Dictionary<string, string> data = null, int timeout = 100)
+        {
+            string resutlStr = await SendGetAsync(url, data, timeout);
+            T model = resutlStr.MJsonToObject<T>();
+            return model;
+        }
+        /// <summary>
         /// 获得HttpContent
         /// </summary>
         /// <param name="contentType">Content-Type</param>
@@ -136,6 +174,53 @@ namespace MateralTools.MHttpRequest
         public static T SendPost<T>(string url, Dictionary<string, string> data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
             string resutlStr = SendPost(url, data, contentType, timeout);
+            T model = resutlStr.MJsonToObject<T>();
+            return model;
+        }
+        /// <summary>
+        /// 发送Post请求(异步)
+        /// </summary>
+        /// <param name="url">url地址</param>
+        /// <param name="data">参数(Json字符串,XML文档,对象实体,字典string string)</param>
+        /// <param name="contentType">Content-Type</param>
+        /// <param name="timeout">超时时间</param>
+        /// <returns>返回值</returns>
+        public static async Task<string> SendPostAsync(string url, object data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
+        {
+            if (!url.MIsNullOrEmpty())
+            {
+                string resutlStr = string.Empty;
+                using (HttpClient client = GetHttpClient(timeout))
+                {
+                    MemoryStream ms = new MemoryStream();
+                    using (HttpContent content = GetHttpContent(data, contentType, ref ms))
+                    {
+                        using (HttpResponseMessage responseMessage = await client.PostAsync(url, content))
+                        {
+                            Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
+                            resutlStr = Encoding.UTF8.GetString(resultBytes);
+                        }
+                        ms.Close();
+                    }
+                    return resutlStr;
+                }
+            }
+            else
+            {
+                throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+            }
+        }
+        /// <summary>
+        /// 发送Post请求(异步)
+        /// </summary>
+        /// <param name="url">url地址</param>
+        /// <param name="data">参数</param>
+        /// <param name="contentType">Content-Type</param>
+        /// <param name="timeout">超时时间</param>
+        /// <returns>返回值</returns>
+        public static async Task<T> SendPostAsync<T>(string url, Dictionary<string, string> data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
+        {
+            string resutlStr = await SendPostAsync(url, data, contentType, timeout);
             T model = resutlStr.MJsonToObject<T>();
             return model;
         }
