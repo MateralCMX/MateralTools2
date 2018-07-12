@@ -29,7 +29,7 @@ namespace MateralTools.MResult
     /// <summary>
     /// 返回对象模型
     /// </summary>
-    public class MResultModel
+    public class DataResult
     {
         /// <summary>
         /// 对象类型
@@ -52,7 +52,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 构造函数
         /// </summary>
-        public MResultModel()
+        public DataResult()
         {
         }
         /// <summary>
@@ -60,7 +60,7 @@ namespace MateralTools.MResult
         /// </summary>
         /// <param name="resultType">返回类型</param>
         /// <param name="message">返回消息</param>
-        public MResultModel(MResultType resultType, string message = "")
+        public DataResult(MResultType resultType, string message = "")
         {
             ResultType = resultType;
             Message = message;
@@ -70,27 +70,27 @@ namespace MateralTools.MResult
         /// </summary>
         /// <param name="message">返回消息</param>
         /// <returns>成功返回对象</returns>
-        public static MResultModel GetSuccessResultM(string message = "")
+        public static DataResult Success(string message = "")
         {
-            return new MResultModel(MResultType.Success, message);
+            return new DataResult(MResultType.Success, message);
         }
         /// <summary>
         /// 获得一个失败返回对象
         /// </summary>
         /// <param name="message">返回消息</param>
         /// <returns>失败返回对象</returns>
-        public static MResultModel GetFailResultM(string message = "")
+        public static DataResult Fail(string message = "")
         {
-            return new MResultModel(MResultType.Fail, message);
+            return new DataResult(MResultType.Fail, message);
         }
         /// <summary>
         /// 获得一个错误返回对象
         /// </summary>
         /// <param name="message">返回消息</param>
         /// <returns>错误返回对象</returns>
-        public static MResultModel GetErrorResultM(string message = "")
+        public static DataResult Error(string message = "")
         {
-            return new MResultModel(MResultType.Error, message);
+            return new DataResult(MResultType.Error, message);
         }
         /// <summary>
         /// 返回Json字符串
@@ -105,12 +105,12 @@ namespace MateralTools.MResult
     /// 携带数据的返回对象模型
     /// </summary>
     /// <typeparam name="T">保存数据类型</typeparam>
-    public class MResultModel<T> : MResultModel
+    public class DataResult<T> : DataResult
     {
         /// <summary>
         /// 构造函数
         /// </summary>
-        public MResultModel():base()
+        public DataResult():base()
         {
         }
         /// <summary>
@@ -119,7 +119,7 @@ namespace MateralTools.MResult
         /// <param name="resultType">返回类型</param>
         /// <param name="data">返回数据对象</param>
         /// <param name="message">返回消息</param>
-        public MResultModel(MResultType resultType, T data, string message = "") : base(resultType, message)
+        public DataResult(MResultType resultType, T data, string message = "") : base(resultType, message)
         {
             Data = data;
         }
@@ -134,9 +134,18 @@ namespace MateralTools.MResult
         /// <param name="data">返回数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>成功返回对象</returns>
-        public static MResultModel<T> GetSuccessResultM(T data, string message = "")
+        public static DataResult<T> Success(T data, string message = "")
         {
-            return new MResultModel<T>(MResultType.Success, data, message);
+            return new DataResult<T>(MResultType.Success, data, message);
+        }
+        /// <summary>
+        /// 获得一个成功返回对象
+        /// </summary>
+        /// <param name="message">返回消息</param>
+        /// <returns>成功返回对象</returns>
+        public new static DataResult<T> Success(string message = "")
+        {
+            return new DataResult<T>(MResultType.Success, default(T), message);
         }
         /// <summary>
         /// 获得一个失败返回对象
@@ -144,9 +153,18 @@ namespace MateralTools.MResult
         /// <param name="data">返回数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>失败返回对象</returns>
-        public static MResultModel<T> GetFailResultM(T data = default(T), string message = "")
+        public static DataResult<T> Fail(T data = default(T), string message = "")
         {
-            return new MResultModel<T>(MResultType.Fail, data, message);
+            return new DataResult<T>(MResultType.Fail, data, message);
+        }
+        /// <summary>
+        /// 获得一个失败返回对象
+        /// </summary>
+        /// <param name="message">返回消息</param>
+        /// <returns>失败返回对象</returns>
+        public new static DataResult<T> Fail(string message = "")
+        {
+            return new DataResult<T>(MResultType.Fail, default(T), message);
         }
         /// <summary>
         /// 获得一个错误返回对象
@@ -154,21 +172,30 @@ namespace MateralTools.MResult
         /// <param name="data">返回数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>错误返回对象</returns>
-        public static MResultModel<T> GetErrorResultM(T data = default(T), string message = "")
+        public static DataResult<T> Error(T data = default(T), string message = "")
         {
-            return new MResultModel<T>(MResultType.Error, data, message);
+            return new DataResult<T>(MResultType.Error, data, message);
+        }
+        /// <summary>
+        /// 获得一个错误返回对象
+        /// </summary>
+        /// <param name="message">返回消息</param>
+        /// <returns>错误返回对象</returns>
+        public new static DataResult<T> Error(string message = "")
+        {
+            return new DataResult<T>(MResultType.Error, default(T), message);
         }
     }
     /// <summary>
     /// 携带分页数据的返回对象
     /// </summary>
     /// <typeparam name="T">保存数据类型</typeparam>
-    public class MResultPageModel<T> : MResultModel<T>
+    public class PagedResult<T> : DataResult<T>
     {
         /// <summary>
         /// 构造函数
         /// </summary>
-        public MResultPageModel() : base()
+        public PagedResult() : base()
         {
         }
         /// <summary>
@@ -182,7 +209,7 @@ namespace MateralTools.MResult
         /// <param name="data">返回数据对象</param>
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
-        public MResultPageModel(MResultType resultType, T data, MPageModel pagingM, string message = "") : base(resultType, data, message)
+        public PagedResult(MResultType resultType, T data, MPageModel pagingM, string message = "") : base(resultType, data, message)
         {
             PageInfo = pagingM;
         }
@@ -194,9 +221,9 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
         /// <returns>成功返回对象</returns>
-        public static MResultPageModel<T> GetSuccessResultM(T data, MPageModel pagingM, string message = "")
+        public static PagedResult<T> Success(T data, MPageModel pagingM, string message = "")
         {
-            return new MResultPageModel<T>(MResultType.Success, data, pagingM, message);
+            return new PagedResult<T>(MResultType.Success, data, pagingM, message);
         }
         /// <summary>
         /// 获得一个成功返回对象
@@ -204,13 +231,13 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>成功返回对象</returns>
-        public static MResultPageModel<T> GetSuccessResultM(MPageData<T> pagingM, string message = "")
+        public static PagedResult<T> Success(MPageData<T> pagingM, string message = "")
         {
             if (pagingM == null)
             {
                 pagingM = new MPageData<T>();
             }
-            return new MResultPageModel<T>(MResultType.Success, pagingM.Data, pagingM.PageInfo, message);
+            return new PagedResult<T>(MResultType.Success, pagingM.Data, pagingM.PageInfo, message);
         }
         /// <summary>
         /// 获得一个失败返回对象
@@ -219,9 +246,9 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
         /// <returns>失败返回对象</returns>
-        public static MResultPageModel<T> GetFailResultM(T data = default(T), MPageModel pagingM = null, string message = "")
+        public static PagedResult<T> Fail(T data = default(T), MPageModel pagingM = null, string message = "")
         {
-            return new MResultPageModel<T>(MResultType.Fail, data, pagingM, message);
+            return new PagedResult<T>(MResultType.Fail, data, pagingM, message);
         }
         /// <summary>
         /// 获得一个失败返回对象
@@ -229,13 +256,13 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>失败返回对象</returns>
-        public static MResultPageModel<T> GetFailResultM(MPageData<T> pagingM = null, string message = "")
+        public static PagedResult<T> Fail(MPageData<T> pagingM = null, string message = "")
         {
             if (pagingM == null)
             {
                 pagingM = new MPageData<T>();
             }
-            return new MResultPageModel<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
+            return new PagedResult<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
         }
         /// <summary>
         /// 获得一个错误返回对象
@@ -244,9 +271,9 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
         /// <returns>错误返回对象</returns>
-        public static MResultPageModel<T> GetErrorResultM(T data = default(T), MPageModel pagingM = null, string message = "")
+        public static PagedResult<T> Error(T data = default(T), MPageModel pagingM = null, string message = "")
         {
-            return new MResultPageModel<T>(MResultType.Error, data, pagingM, message);
+            return new PagedResult<T>(MResultType.Error, data, pagingM, message);
         }
         /// <summary>
         /// 获得一个错误返回对象
@@ -254,13 +281,13 @@ namespace MateralTools.MResult
         /// <param name="pagingM">分页数据对象</param>
         /// <param name="message">返回消息</param>
         /// <returns>错误返回对象</returns>
-        public static MResultPageModel<T> GetErrorResultM(MPageData<T> pagingM = null, string message = "")
+        public static PagedResult<T> Error(MPageData<T> pagingM = null, string message = "")
         {
             if (pagingM == null)
             {
                 pagingM = new MPageData<T>();
             }
-            return new MResultPageModel<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
+            return new PagedResult<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
         }
     }
 }

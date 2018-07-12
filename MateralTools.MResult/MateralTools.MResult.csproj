@@ -10,10 +10,11 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <RepositoryUrl />
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
-    <Version>1.0.4</Version>
-    <PackageReleaseNotes>新增一个无参数构造方法</PackageReleaseNotes>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.8</Version>
+    <PackageReleaseNotes>更改MResultModel为DataResult
+更改MPageModel为PagedResult</PackageReleaseNotes>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
+    <FileVersion>1.0.8.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">

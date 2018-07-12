@@ -190,8 +190,9 @@ namespace MateralTools.MConvert
         /// <typeparam name="T">复制的模型</typeparam>
         /// <param name="sourceM">复制源头对象</param>
         /// <param name="targetM">复制目标对象</param>
+        /// <param name="notCopyPropertieNames">不复制的属性名称</param>
         /// <returns>复制的对象</returns>
-        public static void MCopyProperties<T>(this object sourceM, T targetM)
+        public static void MCopyProperties<T>(this object sourceM, T targetM, params string[] notCopyPropertieNames)
         {
             if (sourceM != null)
             {
@@ -200,10 +201,13 @@ namespace MateralTools.MConvert
                 PropertyInfo[] T2Props = typeof(T).GetProperties();
                 foreach (PropertyInfo prop in T1Props)
                 {
-                    tempProp = T2Props.Where(m => m.Name == prop.Name).FirstOrDefault();
-                    if (tempProp != null)
+                    if (!notCopyPropertieNames.Contains(prop.Name))
                     {
-                        tempProp.SetValue(targetM, prop.GetValue(sourceM, null), null);
+                        tempProp = T2Props.Where(m => m.Name == prop.Name).FirstOrDefault();
+                        if (tempProp != null)
+                        {
+                            tempProp.SetValue(targetM, prop.GetValue(sourceM, null), null);
+                        }
                     }
                 }
             }
@@ -213,8 +217,9 @@ namespace MateralTools.MConvert
         /// </summary>
         /// <typeparam name="T">复制的模型</typeparam>
         /// <param name="sourceM">复制源头对象</param>
+        /// <param name="notCopyPropertieNames">不复制的属性名称</param>
         /// <returns>复制的对象</returns>
-        public static T MCopyProperties<T>(this object sourceM)
+        public static T MCopyProperties<T>(this object sourceM, params string[] notCopyPropertieNames)
         {
             if (sourceM != null)
             {

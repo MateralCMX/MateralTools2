@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
 namespace MateralTools.Base
 {
-
     /// <summary>
     /// 过滤器信息
     /// </summary>
@@ -16,7 +16,7 @@ namespace MateralTools.Base
         /// <param name="func">委托方法</param>
         /// <param name="value">值</param>
         /// <param name="condition">条件类型</param>
-        public FilterInfo(Func<object, bool> func, object value, ConditionEnum condition = ConditionEnum.And)
+        private FilterInfo(Func<object, bool> func, object value, ConditionEnum condition = ConditionEnum.And)
         {
             PropertyInfo = null;
             Value = value;
@@ -83,6 +83,45 @@ namespace MateralTools.Base
         /// 条件类型
         /// </summary>
         public ConditionEnum Condition { get; set; }
+        /// <summary>
+        /// 转换过滤器
+        /// </summary>
+        /// <typeparam name="TModel">要转换的类型</typeparam>
+        /// <param name="inputM">输入模型</param>
+        /// <returns>转换模型</returns>
+        public static FilterInfo<TModel> Convert<TModel>(FilterInfo<T> inputM)
+        {
+            Type type = typeof(TModel);
+            PropertyInfo pi = type.GetProperty((inputM.PropertyInfo.Name));
+            if (pi != null)
+            {
+                FilterInfo<TModel> resM = new FilterInfo<TModel>(inputM.PropertyInfo.Name, inputM.Value, inputM.Comparison, inputM.Condition);
+                return resM;
+            }
+            else
+            {
+                throw new ArgumentNullException($"类型{type.Name}上不存属性{inputM.PropertyInfo.Name}");
+            }
+        }
+        /// <summary>
+        /// 转换过滤器
+        /// </summary>
+        /// <typeparam name="TModel">要转换的类型</typeparam>
+        /// <param name="inputM">输入模型</param>
+        /// <returns>转换模型</returns>
+        public static FilterInfo<TModel>[] Convert<TModel>(FilterInfo<T>[] inputM)
+        {
+            List<FilterInfo<TModel>> resM = new List<FilterInfo<TModel>>();
+            foreach (FilterInfo<T> item in inputM)
+            {
+                try
+                {
+                    resM.Add(Convert<TModel>(item));
+                }
+                catch { }
+            }
+            return resM.ToArray();
+        }
     }
     /// <summary>
     /// 比较类型

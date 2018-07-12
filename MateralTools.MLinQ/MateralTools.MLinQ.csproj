@@ -9,11 +9,10 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
-    <Version>1.2.0</Version>
-    <PackageReleaseNotes>移除EF帮助类
-EF帮助类在MateralTools.MEntityFramework包中</PackageReleaseNotes>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.1</Version>
+    <PackageReleaseNotes>添加异步查询分页方法</PackageReleaseNotes>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.1.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
@@ -23,6 +22,10 @@ EF帮助类在MateralTools.MEntityFramework包中</PackageReleaseNotes>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
     <DocumentationFile>bin\Release\net461\MateralTools.MLinQ.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.MResult\MateralTools.MResult.csproj" />

@@ -12,9 +12,9 @@ namespace MateralTools.CoreWebAPI.Controllers
     {
         [HttpGet]
         [Route("[action]")]
-        public MResultModel<string> GetValue()
+        public DataResult<string> GetValue()
         {
-            return MResultModel<string>.GetSuccessResultM("Materal", "获取成功");
+            return DataResult<string>.Success("Materal", "获取成功");
         }
     }
 }

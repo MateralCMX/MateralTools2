@@ -24,7 +24,7 @@ namespace Materal.CoreToolsTest
             //};
             //string result = HttpRequestManager.SendGet(url, urlParams);
             string url = "http://localhost:8901/api/Car/SynchronizationAllTTXCarInfo";
-            MResultModel result = HttpRequestManager.SendGet<MResultModel>(url);
+            DataResult result = HttpRequestManager.SendGet<DataResult>(url);
         }
         [TestMethod]
         public void SendPostTest()

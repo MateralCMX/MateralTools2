@@ -57,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Materal.ConsoleApp", "Mater
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MEntityFramework", "MateralTools.MEntityFramework\MateralTools.MEntityFramework.csproj", "{CED29729-DD3B-406E-9F43-B211BCB014C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MExcel", "MateralTools.MExcel\MateralTools.MExcel.csproj", "{AA84BF96-EB86-4000-9F5F-D0D3D7A6EF39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MExcel", "MateralTools.MExcel\MateralTools.MExcel.csproj", "{AA84BF96-EB86-4000-9F5F-D0D3D7A6EF39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

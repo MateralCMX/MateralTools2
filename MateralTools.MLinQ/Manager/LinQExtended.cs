@@ -1,4 +1,5 @@
 ﻿using MateralTools.Base;
+using MateralTools.MResult;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,26 @@ namespace MateralTools.MLinQ
                 func = Expression.Lambda<Func<T, bool>>(be, param);
             }
             return source.Where(func).AsQueryable();
+        }
+        /// <summary>
+        /// 条件扩展(异步)
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="filters">过滤器信息</param>
+        /// <returns>扩展后的数据源</returns>
+        public static IAsyncEnumerable<T> WhereAnsy<T>(this IQueryable<T> source, FilterInfo<T>[] filters)
+        {
+            return Where(source, filters).ToAsyncEnumerable();
+        }
+        /// <summary>
+        /// 条件扩展(异步)
+        /// </summary>
+        /// <param name="source">数据源</param>
+        /// <param name="filters">过滤器信息</param>
+        /// <returns>扩展后的数据源</returns>
+        public static IAsyncEnumerable<T> WhereAnsy<T>(this IEnumerable<T> source, FilterInfo<T>[] filters)
+        {
+            return Where(source, filters).ToAsyncEnumerable();
         }
         /// <summary>
         /// 获得拼装条件
@@ -205,6 +226,18 @@ namespace MateralTools.MLinQ
         /// </summary>
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
+        /// <param name="pageM">分页对象</param>
+        /// <param name="startIndex">开始的页数</param>
+        /// <returns></returns>
+        public static IEnumerable<T> Paging<T>(this IEnumerable<T> first, MPageModel pageM, int startIndex = 1)
+        {
+            return Paging(first, pageM.PageIndex, pageM.PageSize, startIndex);
+        }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="first">LinQ对象</param>
         /// <param name="index">第几页</param>
         /// <param name="size">显示数量</param>
         /// <param name="startIndex">开始的页数</param>
@@ -212,6 +245,68 @@ namespace MateralTools.MLinQ
         public static IQueryable<T> Paging<T>(this IQueryable<T> first, int index, int size, int startIndex = 1)
         {
             return first.Skip((index - startIndex) * size).Take(size);
+        }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="first">LinQ对象</param>
+        /// <param name="pageM">分页对象</param>
+        /// <param name="startIndex">开始的页数</param>
+        /// <returns></returns>
+        public static IQueryable<T> Paging<T>(this IQueryable<T> first, MPageModel pageM, int startIndex = 1)
+        {
+            return Paging(first, pageM.PageIndex, pageM.PageSize, startIndex);
+        }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="first">LinQ对象</param>
+        /// <param name="index">第几页</param>
+        /// <param name="size">显示数量</param>
+        /// <param name="startIndex">开始的页数</param>
+        /// <returns></returns>
+        public static IAsyncEnumerable<T> PagingAsync<T>(this IEnumerable<T> first, int index, int size, int startIndex = 1)
+        {
+            return Paging(first, index, size, startIndex).ToAsyncEnumerable();
+        }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="first">LinQ对象</param>
+        /// <param name="pageM">分页对象</param>
+        /// <param name="startIndex">开始的页数</param>
+        /// <returns></returns>
+        public static IAsyncEnumerable<T> PagingAsync<T>(this IEnumerable<T> first, MPageModel pageM, int startIndex = 1)
+        {
+            return Paging(first, pageM.PageIndex, pageM.PageSize, startIndex).ToAsyncEnumerable();
+        }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="first">LinQ对象</param>
+        /// <param name="index">第几页</param>
+        /// <param name="size">显示数量</param>
+        /// <param name="startIndex">开始的页数</param>
+        /// <returns></returns>
+        public static IAsyncEnumerable<T> PagingAsync<T>(this IQueryable<T> first, int index, int size, int startIndex = 1)
+        {
+            return Paging(first, index, size, startIndex).ToAsyncEnumerable();
+        }
+        /// <summary>
+        /// 分页
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="first">LinQ对象</param>
+        /// <param name="pageM">分页对象</param>
+        /// <param name="startIndex">开始的页数</param>
+        /// <returns></returns>
+        public static IAsyncEnumerable<T> PagingAsync<T>(this IQueryable<T> first, MPageModel pageM, int startIndex = 1)
+        {
+            return Paging(first, pageM.PageIndex, pageM.PageSize, startIndex).ToAsyncEnumerable();
         }
     }
     /// <summary>
