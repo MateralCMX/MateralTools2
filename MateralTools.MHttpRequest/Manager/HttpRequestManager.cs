@@ -28,13 +28,20 @@ namespace MateralTools.MHttpRequest
             {
                 url = SpliceURLParams(url, data);
                 string resutlStr = string.Empty;
-                using (HttpClient client = GetHttpClient(timeout))
+                try
                 {
-                    Task<byte[]> result = client.GetByteArrayAsync(url);
-                    byte[] resultBytes = result.Result;
-                    resutlStr = Encoding.UTF8.GetString(resultBytes);
+                    using (HttpClient client = GetHttpClient(timeout))
+                    {
+                        Task<byte[]> result = client.GetByteArrayAsync(url);
+                        byte[] resultBytes = result.Result;
+                        resutlStr = Encoding.UTF8.GetString(resultBytes);
+                    }
+                    return resutlStr;
                 }
-                return resutlStr;
+                catch (HttpRequestException ex)
+                {
+                    throw ex;
+                }
             }
             else
             {
@@ -67,12 +74,19 @@ namespace MateralTools.MHttpRequest
             {
                 url = SpliceURLParams(url, data);
                 string resutlStr = string.Empty;
-                using (HttpClient client = GetHttpClient(timeout))
+                try
                 {
-                    byte[] resultBytes = await client.GetByteArrayAsync(url);
-                    resutlStr = Encoding.UTF8.GetString(resultBytes);
+                    using (HttpClient client = GetHttpClient(timeout))
+                    {
+                        byte[] resultBytes = await client.GetByteArrayAsync(url);
+                        resutlStr = Encoding.UTF8.GetString(resultBytes);
+                    }
+                    return resutlStr;
                 }
-                return resutlStr;
+                catch (HttpRequestException ex)
+                {
+                    throw ex;
+                }
             }
             else
             {
@@ -106,7 +120,7 @@ namespace MateralTools.MHttpRequest
             {
                 case HttpContentTypeEnum.ApplicationJson:
                     string dataJson = data.MToJson();
-                    content = GetHttpContentByFormDataBytes(ms,dataJson);
+                    content = GetHttpContentByFormDataBytes(ms, dataJson);
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     break;
                 case HttpContentTypeEnum.ApplicationXML:
@@ -148,12 +162,22 @@ namespace MateralTools.MHttpRequest
                     MemoryStream ms = new MemoryStream();
                     using (HttpContent content = GetHttpContent(data, contentType, ref ms))
                     {
-                        using (HttpResponseMessage responseMessage = client.PostAsync(url, content).Result)
+                        try
                         {
-                            Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
-                            resutlStr = Encoding.UTF8.GetString(resultBytes);
+                            using (HttpResponseMessage responseMessage = client.PostAsync(url, content).Result)
+                            {
+                                Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
+                                resutlStr = Encoding.UTF8.GetString(resultBytes);
+                            }
                         }
-                        ms.Close();
+                        catch (HttpRequestException ex)
+                        {
+                            throw ex;
+                        }
+                        finally
+                        {
+                            ms.Close();
+                        }
                     }
                     return resutlStr;
                 }
@@ -195,12 +219,22 @@ namespace MateralTools.MHttpRequest
                     MemoryStream ms = new MemoryStream();
                     using (HttpContent content = GetHttpContent(data, contentType, ref ms))
                     {
-                        using (HttpResponseMessage responseMessage = await client.PostAsync(url, content))
+                        try
                         {
-                            Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
-                            resutlStr = Encoding.UTF8.GetString(resultBytes);
+                            using (HttpResponseMessage responseMessage = await client.PostAsync(url, content))
+                            {
+                                Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
+                                resutlStr = Encoding.UTF8.GetString(resultBytes);
+                            }
                         }
-                        ms.Close();
+                        catch (HttpRequestException ex)
+                        {
+                            throw ex;
+                        }
+                        finally
+                        {
+                            ms.Close();
+                        }
                     }
                     return resutlStr;
                 }
