@@ -102,10 +102,8 @@ namespace MateralTools.MConvert
         {
             Type TType = obj.GetType();
             PropertyInfo[] props = TType.GetProperties();
-            PropertyInfo[] subProps;
             foreach (PropertyInfo prop in props)
             {
-                subProps = prop.PropertyType.GetProperties();
                 try
                 {
                     prop.SetValue(obj, dr[prop.Name], null);
@@ -117,6 +115,7 @@ namespace MateralTools.MConvert
                 //}
                 //else
                 //{
+                //    PropertyInfo[] subProps = prop.PropertyType.GetProperties();
                 //    if (!(dr[prop.Name] is System.DBNull) && subProps.Length == 2 && dr[prop.Name].GetType().Name == subProps[1].PropertyType.Name)
                 //    {
                 //        prop.SetValue(obj, dr[prop.Name], null);
@@ -134,7 +133,6 @@ namespace MateralTools.MConvert
 
             Type TType = obj.GetType();
             PropertyInfo[] props = TType.GetProperties();
-            PropertyInfo[] subProps;
             foreach (PropertyInfo prop in props)
             {
                 MColumnModelAttribute cma = null;
@@ -143,19 +141,23 @@ namespace MateralTools.MConvert
                     if (attr.GetType() == typeof(MColumnModelAttribute))
                     {
                         cma = attr as MColumnModelAttribute;
-                        if (!(dr[cma.DBColumnName] is System.DBNull) && dr[cma.DBColumnName].GetType().Name == prop.PropertyType.Name)
+                        try
                         {
                             prop.SetValue(obj, dr[cma.DBColumnName], null);
                         }
-                        else
-                        {
-                            subProps = prop.PropertyType.GetProperties();
-                            if (!(dr[cma.DBColumnName] is System.DBNull) && subProps.Length == 2 && dr[cma.DBColumnName].GetType().Name == subProps[1].PropertyType.Name)
-                            {
-                                prop.SetValue(obj, dr[cma.DBColumnName], null);
-                            }
-                        }
-                        break;
+                        catch { }
+                        //if (!(dr[cma.DBColumnName] is System.DBNull) && dr[cma.DBColumnName].GetType().Name == prop.PropertyType.Name)
+                        //{
+                        //    prop.SetValue(obj, dr[cma.DBColumnName], null);
+                        //}
+                        //else
+                        //{
+                        //    PropertyInfo[] subProps = prop.PropertyType.GetProperties();
+                        //    if (!(dr[cma.DBColumnName] is System.DBNull) && subProps.Length == 2 && dr[cma.DBColumnName].GetType().Name == subProps[1].PropertyType.Name)
+                        //    {
+                        //        prop.SetValue(obj, dr[cma.DBColumnName], null);
+                        //    }
+                        //}
                     }
                 }
             }
