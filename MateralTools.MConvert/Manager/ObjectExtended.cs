@@ -105,18 +105,23 @@ namespace MateralTools.MConvert
             PropertyInfo[] subProps;
             foreach (PropertyInfo prop in props)
             {
-                if (!(dr[prop.Name] is System.DBNull) && dr[prop.Name].GetType().Name == prop.PropertyType.Name)
+                subProps = prop.PropertyType.GetProperties();
+                try
                 {
                     prop.SetValue(obj, dr[prop.Name], null);
                 }
-                else
-                {
-                    subProps = prop.PropertyType.GetProperties();
-                    if (!(dr[prop.Name] is System.DBNull) && subProps.Length == 2 && dr[prop.Name].GetType().Name == subProps[1].PropertyType.Name)
-                    {
-                        prop.SetValue(obj, dr[prop.Name], null);
-                    }
-                }
+                catch { }
+                //if (!(dr[prop.Name] is System.DBNull) && dr[prop.Name].GetType().Name == prop.PropertyType.Name)
+                //{
+                //    prop.SetValue(obj, dr[prop.Name], null);
+                //}
+                //else
+                //{
+                //    if (!(dr[prop.Name] is System.DBNull) && subProps.Length == 2 && dr[prop.Name].GetType().Name == subProps[1].PropertyType.Name)
+                //    {
+                //        prop.SetValue(obj, dr[prop.Name], null);
+                //    }
+                //}
             }
         }
         /// <summary>
