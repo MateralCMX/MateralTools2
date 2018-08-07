@@ -352,7 +352,7 @@ Array.prototype.MRemove = function (item) {
     }
     return array;
 };
-Array.prototype.MRomeveAll = function (item) {
+Array.prototype.MRemoveAll = function (item) {
     var array = this;
     var index = array.indexOf(item);
     while (index >= 0) {

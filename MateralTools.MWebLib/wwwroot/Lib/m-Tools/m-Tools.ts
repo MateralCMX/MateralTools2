@@ -559,7 +559,8 @@ interface Array<T>
     MClear<T>(): Array<T>;
     /**
      * 插入数组
-     * @param index 要插入的对象
+     * @param item 要插入的对象
+     * @param index 位序
      * @returns 插入后的数组
      */
     MInsert<T>(item: T, index: number): Array<T>;
@@ -580,7 +581,7 @@ interface Array<T>
      * @param item 要删除的对象
      * @returns 删除后的数组
      */
-    MRomeveAll<T>(item: T): Array<T>;
+    MRemoveAll<T>(item: T): Array<T>;
 }
 if (!Array.prototype.indexOf)
 {
@@ -630,7 +631,7 @@ Array.prototype.MRemove = function <T>(item: T): Array<T>
     }
     return array;
 };
-Array.prototype.MRomeveAll = function <T>(item: T): Array<T>
+Array.prototype.MRemoveAll = function <T>(item: T): Array<T>
 {
     let array = this as Array<T>;
     let index: number = array.indexOf(item);

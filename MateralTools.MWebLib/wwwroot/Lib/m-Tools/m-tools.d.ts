@@ -195,7 +195,7 @@ interface Array<T> {
      * @param item 要删除的对象
      * @returns 删除后的数组
      */
-    MRomeveAll<T>(item: T): Array<T>;
+    MRemoveAll<T>(item: T): Array<T>;
 }
 interface Math {
     /**
