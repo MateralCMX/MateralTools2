@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
+    <ProjectReference Include="..\MateralTools.MExcel\MateralTools.MExcel.csproj" />
     <ProjectReference Include="..\MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj" />
     <ProjectReference Include="..\MateralTools.MResult\MateralTools.MResult.csproj" />
   </ItemGroup>

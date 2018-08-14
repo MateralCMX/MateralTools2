@@ -158,5 +158,9 @@
         /// 16进制字符串
         /// </summary>
         public const string REG_HEX_Number = @"[\dA-Fa-f]+";
+        /// <summary>
+        /// Guid
+        /// </summary>
+        public const string REG_Guid = @"[a-zA-Z\d]{8}-([a-zA-Z\d]{4}-){3}[a-zA-Z\d]{12}";
     }
 }

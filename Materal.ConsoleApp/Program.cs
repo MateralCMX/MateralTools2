@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 using MateralTools.MConvert;
+using MateralTools.MExcel;
 
 namespace Materal.ConsoleApp
 {
@@ -8,8 +10,9 @@ namespace Materal.ConsoleApp
     {
         static void Main(string[] args)
         {
-            string dateStr = "Tue Jul 24 2018 09:58:27 GMT+0800 (中国标准时间)";
-            DateTime dt = (DateTime)dateStr.ConvertTo(typeof(DateTime));
+            string fileName = @"D:\qwer.xlsx";
+            ExcelManager excelMa = new ExcelManager();
+            var result = excelMa.ReadExcelToDataTable(fileName, null, 2);
         }
     }
 }

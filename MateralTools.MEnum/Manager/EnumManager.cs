@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MateralTools.Base;
+using System;
 using System.Collections.Generic;
 
 namespace MateralTools.MEnum
@@ -24,6 +25,26 @@ namespace MateralTools.MEnum
             {
                 throw new MEnumException("该类型不是枚举");
             }
+        }
+        /// <summary>
+        /// 通过描述获得枚举对象
+        /// </summary>
+        /// <typeparam name="T">枚举类型</typeparam>
+        /// <param name="Description">描述</param>
+        /// <returns></returns>
+        public static T GetEnumByDescription<T>(string Description)
+        {
+            List<Enum> allEnum = GetAllEnum(typeof(T));
+            T result = default(T);
+            foreach (Enum item in allEnum)
+            {
+                if (Description == item.MGetDescription())
+                {
+                    result = GetEnumByName<T>(item.ToString());
+                    break;
+                }
+            }
+            return result;
         }
         /// <summary>
         /// 获取枚举总数

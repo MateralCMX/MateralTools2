@@ -9,9 +9,8 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>删除获取描述方法
-请使用ObjectExtended.MGetDescription</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>新增通过描述获取枚举方法</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">

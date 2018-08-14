@@ -780,6 +780,29 @@ namespace MateralTools.MVerify
         {
             return InputStr.MGetVerifyRegex(RegexData.REG_HEX_Number, false);
         }
+        /// <summary>
+        /// 验证输入字符串是否为Guid
+        /// </summary>
+        /// <param name="InputStr">输入的字符串</param>
+        /// <returns>
+        /// true是Guid
+        /// false不是Guid
+        /// </returns>
+        public static bool MIsGuid(this string InputStr)
+        {
+            return InputStr.MVerifyRegex(RegexData.REG_Guid, true);
+        }
+        /// <summary>
+        /// 获取输入字符串中所有的Guid
+        /// </summary>
+        /// <param name="InputStr">输入的字符串</param>
+        /// <returns>
+        /// 字符串中所有的Guid
+        /// </returns>
+        public static MatchCollection MGetGuidInStr(this string InputStr)
+        {
+            return InputStr.MGetVerifyRegex(RegexData.REG_Guid, false);
+        }
         #endregion
         #region 复杂验证
         /// <summary>  

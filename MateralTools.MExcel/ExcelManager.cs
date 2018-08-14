@@ -1,8 +1,10 @@
 ﻿using MateralTools.Base;
+using MateralTools.MVerify;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 
@@ -11,27 +13,104 @@ namespace MateralTools.MExcel
     public class ExcelManager
     {
         /// <summary>
-        /// 获得Excel信息
+        /// 读取Excel文件
         /// </summary>
         /// <param name="fileName">文件名</param>
-        /// <param name="sheetName">表名</param>
-        /// <param name="isFirstRowColumn">第一行是否为表头</param>
+        /// <param name="sheetName">工作簿名称</param>
+        /// <param name="startRowNum">开始行数</param>
         /// <returns></returns>
-        public DataTable GetExcelInfo(string fileName, string sheetName = null, bool isFirstRowColumn = true)
+        /// <exception cref="ArgumentNullException"></exception>
+        public DataTable ReadExcelToDataTable(string fileName, string sheetName = null, int startRowNum = 0)
         {
-            if (File.Exists(fileName))
+            if (!File.Exists(fileName)) throw new ArgumentNullException("文件不存在");
+            DataTable result = new DataTable();
+            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
-                DataTable dt = null;
-                using (FileStream fs = new FileStream(fileName, FileMode.Open))
+                IWorkbook workbook = GetWorkbook(fs);
+                ISheet sheet = GetSheet(workbook, sheetName);
+                IRow headRow;
+                if (startRowNum == 0)
                 {
-                    dt = GetExcelInfo(fs, sheetName, isFirstRowColumn);
+                    headRow = sheet.GetRow(0);
                 }
-                return dt;
+                else
+                {
+                    headRow = sheet.GetRow(startRowNum - 1);
+                }
+                result = GetDefultTable(headRow);
+                List<IRow> excelRows = ReadExcel(sheet, sheetName, startRowNum);
+                foreach (IRow row in excelRows)
+                {
+                    DataRow dataRow = result.NewRow();
+                    for (int i = row.FirstCellNum; i < row.LastCellNum; ++i)
+                    {
+                        ICell cell = row.GetCell(i);
+                        if (cell != null)
+                        {
+                            dataRow[i] = cell.ToString();
+                        }
+                    }
+                    result.Rows.Add(dataRow);
+                }
             }
-            else
+            return result;
+        }
+        /// <summary>
+        /// 读取Excel文件
+        /// </summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="sheetName">工作簿名称</param>
+        /// <param name="startRowNum">开始行数</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public List<IRow> ReadExcel(string fileName, string sheetName = null, int startRowNum = 0)
+        {
+            if (!File.Exists(fileName)) throw new ArgumentNullException("文件不存在");
+            List<IRow> result = new List<IRow>();
+            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
-                throw new MException("文件不存在");
+                IWorkbook workbook = GetWorkbook(fs);
+                ISheet sheet = GetSheet(workbook, sheetName);
+                result = ReadExcel(sheet, sheetName, startRowNum);
             }
+            return result;
+        }
+        /// <summary>
+        /// 获得默认表
+        /// </summary>
+        /// <param name="headRow">表头行</param>
+        /// <returns></returns>
+        private DataTable GetDefultTable(IRow headRow)
+        {
+            DataTable dt = new DataTable();
+            for (int i = headRow.FirstCellNum; i <= headRow.LastCellNum; ++i)
+            {
+                ICell cell = headRow.GetCell(i);
+                if (cell != null)
+                {
+                    DataColumn column = new DataColumn(cell.ToString(), typeof(string));
+                    dt.Columns.Add(column);
+                }
+            }
+            return dt;
+        }
+        /// <summary>
+        /// 读取Excel文件
+        /// </summary>
+        /// <param name="workbook">工作簿</param>
+        /// <param name="sheetName">工作簿名称</param>
+        /// <param name="startRowNum">开始行数</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private List<IRow> ReadExcel(ISheet sheet, string sheetName = null, int startRowNum = 0)
+        {
+            if (startRowNum < 0) throw new ArgumentNullException("开始行数不能小于0");
+            List<IRow> result = new List<IRow>();
+            for (int i = startRowNum; i <= sheet.LastRowNum; i++)
+            {
+                result.Add(sheet.GetRow(i));
+            }
+            return result;
         }
         /// <summary>
         /// 获得工作簿对象
@@ -41,11 +120,11 @@ namespace MateralTools.MExcel
         private IWorkbook GetWorkbook(FileStream fs)
         {
             IWorkbook workbook = null;
-            if (fs.Name.IndexOf(".xlsx") > 0)
+            if (fs.Name.IndexOf(".xlsx", StringComparison.Ordinal) > 0)
             {
                 workbook = new XSSFWorkbook(fs);
             }
-            else if (fs.Name.IndexOf(".xls") > 0)
+            else if (fs.Name.IndexOf(".xls", StringComparison.Ordinal) > 0)
             {
                 workbook = new HSSFWorkbook(fs);
             }
@@ -60,7 +139,7 @@ namespace MateralTools.MExcel
         private ISheet GetSheet(IWorkbook workbook, string sheetName = null)
         {
             ISheet sheet = null;
-            if (sheetName != null)
+            if (!sheetName.MIsNullOrEmpty())
             {
                 sheet = workbook.GetSheet(sheetName);
                 if (sheet == null)
@@ -73,84 +152,6 @@ namespace MateralTools.MExcel
                 sheet = workbook.GetSheetAt(0);
             }
             return sheet;
-        }
-        /// <summary>
-        /// 获得默认表
-        /// </summary>
-        /// <param name="rowColumn">表头行</param>
-        /// <returns></returns>
-        private DataTable GetDefultTable(IRow rowColumn)
-        {
-            DataTable dt = new DataTable();
-            int cellCount = rowColumn.LastCellNum;
-            for (int i = rowColumn.FirstCellNum; i < cellCount; ++i)
-            {
-                ICell cell = rowColumn.GetCell(i);
-                if (cell != null)
-                {
-                    string cellValue = cell.StringCellValue;
-                    if (cellValue != null)
-                    {
-                        DataColumn column = new DataColumn(cellValue);
-                        dt.Columns.Add(column);
-                    }
-                }
-            }
-            return dt;
-        }
-        /// <summary>
-        /// 获得Excel信息
-        /// </summary>
-        /// <param name="fs">文件流</param>
-        /// <param name="sheetName">表名</param>
-        /// <param name="isFirstRowColumn">第一行是否为表头</param>
-        /// <returns></returns>
-        public DataTable GetExcelInfo(FileStream fs, string sheetName = null, bool isFirstRowColumn = true)
-        {
-            DataTable dt = null;
-            try
-            {
-                dt = new DataTable();
-                int startRow = 0;
-                IWorkbook workbook = GetWorkbook(fs);
-                ISheet sheet = GetSheet(workbook, sheetName);
-                if (sheet != null)
-                {
-                    IRow firstRow = sheet.GetRow(0);
-                    int cellCount = firstRow.LastCellNum;
-                    if (isFirstRowColumn)
-                    {
-                        dt = GetDefultTable(firstRow);
-                        startRow = sheet.FirstRowNum + 1;
-                    }
-                    else
-                    {
-                        startRow = sheet.FirstRowNum;
-                    }
-                    int rowCount = sheet.LastRowNum;
-                    for (int i = startRow; i <= rowCount; ++i)
-                    {
-                        IRow row = sheet.GetRow(i);
-                        if (row != null)
-                        {
-                            DataRow dataRow = dt.NewRow();
-                            for (int j = row.FirstCellNum; j < cellCount; ++j)
-                            {
-                                if (row.GetCell(j) != null)
-                                {
-                                    dataRow[j] = row.GetCell(j).ToString();
-                                }
-                            }
-                            dt.Rows.Add(dataRow);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return dt;
         }
     }
 }
