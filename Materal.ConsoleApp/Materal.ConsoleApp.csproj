@@ -14,6 +14,7 @@
     <ProjectReference Include="..\MateralTools.MExcel\MateralTools.MExcel.csproj" />
     <ProjectReference Include="..\MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj" />
     <ProjectReference Include="..\MateralTools.MResult\MateralTools.MResult.csproj" />
+    <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
   </ItemGroup>
 
 </Project>

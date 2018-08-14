@@ -8,8 +8,8 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <Copyright>©Materal</Copyright>
     <Authors>Materal</Authors>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>优化读取Excel</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>重写读取逻辑</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

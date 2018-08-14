@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using MateralTools.MConvert;
 using MateralTools.MExcel;
+using NPOI.SS.UserModel;
+using MateralTools.MVerify;
 
 namespace Materal.ConsoleApp
 {
@@ -12,7 +15,8 @@ namespace Materal.ConsoleApp
         {
             string fileName = @"D:\qwer.xlsx";
             ExcelManager excelMa = new ExcelManager();
-            var result = excelMa.ReadExcelToDataTable(fileName, null, 2);
+            DataSet ds = excelMa.ReadExcelToDataSet(fileName, 2);
+            Console.ReadKey();
         }
     }
 }
