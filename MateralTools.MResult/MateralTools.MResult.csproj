@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Materal</Authors>
     <Product>MateralTools</Product>
     <Description>这是MateralTools的返回类型工具库
@@ -10,11 +10,10 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <RepositoryUrl />
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
-    <Version>1.0.8</Version>
-    <PackageReleaseNotes>更改MResultModel为DataResult
-更改MPageModel为PagedResult</PackageReleaseNotes>
-    <AssemblyVersion>1.0.8.0</AssemblyVersion>
-    <FileVersion>1.0.8.0</FileVersion>
+    <Version>1.0.10</Version>
+    <PackageReleaseNotes>新增Skip和Take</PackageReleaseNotes>
+    <AssemblyVersion>1.0.10.0</AssemblyVersion>
+    <FileVersion>1.0.10.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">

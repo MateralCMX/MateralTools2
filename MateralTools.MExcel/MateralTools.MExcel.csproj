@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>这是MateralTools的Excel工具库
 GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <Copyright>©Materal</Copyright>
     <Authors>Materal</Authors>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <Version>1.0.2</Version>
-    <PackageReleaseNotes>重写读取逻辑</PackageReleaseNotes>
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes>新增导出方法</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +18,7 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
+    <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
     <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
   </ItemGroup>
 

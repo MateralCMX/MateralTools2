@@ -10,11 +10,47 @@ namespace MateralTools.MResult
         /// <summary>
         /// 查询页面
         /// </summary>
-        public int PageIndex { get; set; }
+        private int _pageIndex = 1;
+        /// <summary>
+        /// 查询页面
+        /// </summary>
+        public int PageIndex
+        {
+            get
+            {
+                return _pageIndex;
+            }
+            set
+            {
+                if (value < 1)
+                {
+                    throw new MResultException("PageIndex必须大于等于1");
+                }
+                _pageIndex = value;
+            }
+        }
         /// <summary>
         /// 每页显示数量
         /// </summary>
-        public int PageSize { get; set; }
+        private int _pageSize = 1;
+        /// <summary>
+        /// 每页显示数量
+        /// </summary>
+        public int PageSize
+        {
+            get
+            {
+                return _pageSize;
+            }
+            set
+            {
+                if (value < 1)
+                {
+                    throw new MResultException("PageSize必须大于等于1");
+                }
+                _pageSize = value;
+            }
+        }
         /// <summary>
         /// 总页数
         /// </summary>
@@ -36,6 +72,26 @@ namespace MateralTools.MResult
         /// 数据总数
         /// </summary>
         public long DataCount { get; set; }
+        /// <summary>
+        /// 跳过数量
+        /// </summary>
+        public long Skip
+        {
+            get
+            {
+                return PageSize * (PageIndex - 1);
+            }
+        }
+        /// <summary>
+        /// 获取数量
+        /// </summary>
+        public long Take
+        {
+            get
+            {
+                return PageSize;
+            }
+        }
         /// <summary>
         /// 构造方法
         /// </summary>
