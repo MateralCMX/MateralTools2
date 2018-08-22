@@ -10,10 +10,10 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <RepositoryUrl />
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
-    <Version>1.0.10</Version>
+    <Version>1.1.0</Version>
     <PackageReleaseNotes>新增Skip和Take</PackageReleaseNotes>
-    <AssemblyVersion>1.0.10.0</AssemblyVersion>
-    <FileVersion>1.0.10.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">

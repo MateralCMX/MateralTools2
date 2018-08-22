@@ -54,7 +54,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 总页数
         /// </summary>
-        public long PageCount
+        public int PageCount
         {
             get
             {
@@ -71,11 +71,11 @@ namespace MateralTools.MResult
         /// <summary>
         /// 数据总数
         /// </summary>
-        public long DataCount { get; set; }
+        public int DataCount { get; set; }
         /// <summary>
         /// 跳过数量
         /// </summary>
-        public long Skip
+        public int Skip
         {
             get
             {
@@ -85,7 +85,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 获取数量
         /// </summary>
-        public long Take
+        public int Take
         {
             get
             {

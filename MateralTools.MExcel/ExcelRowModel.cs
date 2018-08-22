@@ -35,7 +35,14 @@ namespace MateralTools.MExcel
         {
             get
             {
-                return Rows.Max(m => m.LastCellNum);
+                if (Rows.Count > 0)
+                {
+                    return Rows.Max(m => m.LastCellNum);
+                }
+                else
+                {
+                    throw new MException("未能读取到有效数据");
+                }
             }
         }
     }

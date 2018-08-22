@@ -130,11 +130,19 @@ namespace MateralTools.MExcel
             foreach (IRow row in excelRowModel.Rows)
             {
                 DataRow dataRow = result.NewRow();
+                bool isAdd = false;
                 for (int i = 0; i < row.LastCellNum; i++)
                 {
-                    dataRow[i] = row.GetCell(i).ToString();
+                    if (!row.GetCell(i).MIsNullOrEmptyStr())
+                    {
+                        isAdd = true;
+                        dataRow[i] = row.GetCell(i).ToString();
+                    }
                 }
-                result.Rows.Add(dataRow);
+                if (isAdd)
+                {
+                    result.Rows.Add(dataRow);
+                }
             }
             return result;
         }
@@ -148,7 +156,11 @@ namespace MateralTools.MExcel
         {
             ExcelRowModel result = new ExcelRowModel();
             result.Rows = new List<IRow>();
-            for (int i = startRowNum; i < sheet.LastRowNum; i++)
+            if (sheet.LastRowNum <= startRowNum)
+            {
+                throw new MException($"表{sheet.SheetName}无数据");
+            }
+            for (int i = startRowNum; i <= sheet.LastRowNum; i++)
             {
                 IRow row = sheet.GetRow(i);
                 result.Rows.Add(row);
@@ -163,29 +175,27 @@ namespace MateralTools.MExcel
         /// <returns>数据集</returns>
         public DataSet WorkbookToDataSet(IWorkbook workbook, params int[] startRowNums)
         {
-            List<ISheet> sheets = GetAllSheets(workbook);
             #region 开始行数组
             if (startRowNums != null && startRowNums.Length != 0)
             {
                 if (startRowNums.Length == 1)
                 {
-                    startRowNums = GetStartRowNums(sheets.Count, startRowNums[0]);
+                    startRowNums = GetStartRowNums(workbook.NumberOfSheets, startRowNums[0]);
                 }
-                else if (startRowNums.Length != sheets.Count)
+                else if (startRowNums.Length != workbook.NumberOfSheets)
                 {
                     throw new MException("提供的开始行数数量与数据表数量不匹配");
                 }
             }
             else
             {
-                startRowNums = GetStartRowNums(sheets.Count, 0);
+                startRowNums = GetStartRowNums(workbook.NumberOfSheets, 0);
             }
             #endregion
             DataSet result = new DataSet();
-            for (int i = 0; i < sheets.Count; i++)
+            for (int i = 0; i < workbook.NumberOfSheets; i++)
             {
-                ISheet sheet = sheets[i];
-                DataTable dataTable = SheetToDataTable(sheet, startRowNums[i]);
+                DataTable dataTable = SheetToDataTable(workbook.GetSheetAt(i), startRowNums[i]);
                 result.Tables.Add(dataTable);
             }
             return result;

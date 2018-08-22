@@ -44,7 +44,7 @@
         /// <summary>
         /// URL地址(http|https|ftp|rtsp|mms)正则表达式
         /// </summary>
-        public const string REG_URL = @"(https|http|ftp|rtsp|mms)://[\S]+";
+        public const string REG_URL = @"(https|http|ftp|rtsp|mms|ws|wss)://[\S]+";
         /// <summary>
         /// 磁盘根目录正则表达式
         /// </summary>
