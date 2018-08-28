@@ -67,6 +67,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MMySQLDBHelper
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MateralTools", "MateralTools", "{5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MRedisDBHelper", "MateralTools.MRedisDBHelper\MateralTools.MRedisDBHelper.csproj", "{EF74CD93-F2AF-436D-9200-BA962E63B043}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +199,10 @@ Global
 		{340F290C-A2F6-4CBC-BA1A-BDC45C010E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{340F290C-A2F6-4CBC-BA1A-BDC45C010E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{340F290C-A2F6-4CBC-BA1A-BDC45C010E60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF74CD93-F2AF-436D-9200-BA962E63B043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF74CD93-F2AF-436D-9200-BA962E63B043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF74CD93-F2AF-436D-9200-BA962E63B043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF74CD93-F2AF-436D-9200-BA962E63B043}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,6 +234,7 @@ Global
 		{9E4FAB9D-A7EB-4BB1-891B-CE3D11983F82} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{C81A1DBA-7741-4730-B1F0-28C00C6FABF8} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{340F290C-A2F6-4CBC-BA1A-BDC45C010E60} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
+		{EF74CD93-F2AF-436D-9200-BA962E63B043} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE9653B5-B36A-4E7F-BC50-E36E84C62896}
