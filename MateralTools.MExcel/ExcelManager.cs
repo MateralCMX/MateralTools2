@@ -156,7 +156,7 @@ namespace MateralTools.MExcel
         {
             ExcelRowModel result = new ExcelRowModel();
             result.Rows = new List<IRow>();
-            if (sheet.LastRowNum <= startRowNum)
+            if (sheet.LastRowNum < startRowNum)
             {
                 throw new MException($"表{sheet.SheetName}无数据");
             }

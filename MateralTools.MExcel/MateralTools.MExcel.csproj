@@ -8,8 +8,8 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <Copyright>©Materal</Copyright>
     <Authors>Materal</Authors>
     <NeutralLanguage>zh-CN</NeutralLanguage>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>新增导出方法</PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>修复只有一行数据读不了数据的问题</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

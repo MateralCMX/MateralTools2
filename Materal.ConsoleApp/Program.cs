@@ -15,7 +15,7 @@ namespace Materal.ConsoleApp
     {
         static void Main(string[] args)
         {
-            string openFileName = @"D:\车辆导入模板.xls";
+            string openFileName = @"D:\qwe.xls";
             string saveFileName = @"D:\qwer.xls";
             ExcelManager excelMa = new ExcelManager();
             DataSet ds = excelMa.ReadExcelToDataSet(openFileName, 3);
@@ -56,7 +56,11 @@ namespace Materal.ConsoleApp
             //FileStream fs2 = File.Create(saveFileName);
             //workbook.Write(fs2);
             //fs2.Close();
-            //Console.ReadKey();
+
+
+
+
+            Console.ReadKey();
         }
     }
 }
