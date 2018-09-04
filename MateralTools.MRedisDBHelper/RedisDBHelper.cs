@@ -3,7 +3,7 @@ using StackExchange.Redis;
 using System;
 using System.Collections.Concurrent;
 
-namespace Redis.ConsoleApp
+namespace MateralTools.MRedisDBHelper
 {
     public class RedisDBHelper : IDisposable
     {

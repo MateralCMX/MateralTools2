@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace MateralTools.MResult
+﻿namespace MateralTools.MResult
 {
     /// <summary>
-    /// 分页模型
+    /// 分页请求模型
     /// </summary>
-    public class MPageModel
+    public class MPageRequestModel
     {
         /// <summary>
         /// 查询页面
@@ -52,27 +50,6 @@ namespace MateralTools.MResult
             }
         }
         /// <summary>
-        /// 总页数
-        /// </summary>
-        public int PageCount
-        {
-            get
-            {
-                if (DataCount % PageSize > 0)
-                {
-                    return DataCount / PageSize + 1;
-                }
-                else
-                {
-                    return DataCount / PageSize;
-                }
-            }
-        }
-        /// <summary>
-        /// 数据总数
-        /// </summary>
-        public int DataCount { get; set; }
-        /// <summary>
         /// 跳过数量
         /// </summary>
         public int Skip
@@ -95,30 +72,65 @@ namespace MateralTools.MResult
         /// <summary>
         /// 构造方法
         /// </summary>
+        public MPageRequestModel() { }
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="pagingIndex">当前页数</param>
+        /// <param name="pagingSize">每页显示数量</param>
+        public MPageRequestModel(int pagingIndex, int pagingSize)
+        {
+            PageIndex = pagingIndex;
+            PageSize = pagingSize;
+        }
+    }
+    /// <summary>
+    /// 分页模型
+    /// </summary>
+    public class MPageModel : MPageRequestModel
+    {
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int PageCount
+        {
+            get
+            {
+                if (DataCount % PageSize > 0)
+                {
+                    return DataCount / PageSize + 1;
+                }
+                else
+                {
+                    return DataCount / PageSize;
+                }
+            }
+        }
+        /// <summary>
+        /// 数据总数
+        /// </summary>
+        public int DataCount { get; set; }
+        /// <summary>
+        /// 构造方法
+        /// </summary>
         public MPageModel() { }
         /// <summary>
         /// 构造方法
         /// </summary>
         /// <param name="pagingIndex">当前页数</param>
         /// <param name="pagingSize">每页显示数量</param>
-        public MPageModel(int pagingIndex,int pagingSize)
+        public MPageModel(MPageRequestModel pageM, int dataCount) : base(pageM.PageIndex, pageM.PageSize)
         {
-            if (pagingIndex > 0)
-            {
-                if (pagingSize > 0)
-                {
-                    PageIndex = pagingIndex;
-                    PageSize = pagingSize;
-                }
-                else
-                {
-                    throw new MResultException($"参数{nameof(pagingSize)}必须大于0");
-                }
-            }
-            else
-            {
-                throw new MResultException($"参数{nameof(pagingIndex)}必须大于0");
-            }
+            DataCount = dataCount;
+        }
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="pagingIndex">当前页数</param>
+        /// <param name="pagingSize">每页显示数量</param>
+        public MPageModel(int pagingIndex, int pagingSize, int dataCount):base(pagingIndex, pagingSize)
+        {
+            DataCount = dataCount;
         }
     }
     /// <summary>

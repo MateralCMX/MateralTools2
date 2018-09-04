@@ -114,10 +114,6 @@
       <Project>{aa9119f1-86b8-4374-8b75-6478d1d48805}</Project>
       <Name>MateralTools.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MateralTools.MAlipay\MateralTools.MAlipay.csproj">
-      <Project>{070ddf3d-5583-48cc-b29b-3ee1802f296e}</Project>
-      <Name>MateralTools.MAlipay</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MateralTools.MCache\MateralTools.MCache.csproj">
       <Project>{4f5119cb-4420-4335-aa0b-6280e0fcd135}</Project>
       <Name>MateralTools.MCache</Name>
@@ -173,10 +169,6 @@
     <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj">
       <Project>{c464d9b0-9ec0-4ea5-a9a4-98d318cc85cc}</Project>
       <Name>MateralTools.MVerify</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MateralTools.MWeChat\MateralTools.MWeChat.csproj">
-      <Project>{edb2bd74-3a63-401a-b43a-22742bd1b08d}</Project>
-      <Name>MateralTools.MWeChat</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

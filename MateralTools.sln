@@ -45,10 +45,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MIO", "Materal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MEnum", "MateralTools.MEnum\MateralTools.MEnum.csproj", "{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.CoreWebAPI", "MateralTools.CoreWebAPI\MateralTools.CoreWebAPI.csproj", "{0B098617-1DF8-4939-970C-382D16B6F8A9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MWebLib", "MateralTools.MWebLib\MateralTools.MWebLib.csproj", "{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MLog", "MateralTools.MLog\MateralTools.MLog.csproj", "{CE67DDF5-B087-4CC4-BED7-28C603EF6017}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MMongoDB", "MateralTools.MMongoDB\MateralTools.MMongoDB.csproj", "{87C6F367-01C8-49B6-8F00-4EE5212950D1}"
@@ -67,7 +63,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MMySQLDBHelper
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MateralTools", "MateralTools", "{5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateralTools.MRedisDBHelper", "MateralTools.MRedisDBHelper\MateralTools.MRedisDBHelper.csproj", "{EF74CD93-F2AF-436D-9200-BA962E63B043}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MateralTools.MRedisDBHelper", "MateralTools.MRedisDBHelper\MateralTools.MRedisDBHelper.csproj", "{EF74CD93-F2AF-436D-9200-BA962E63B043}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "MateralTools.MWebLib", "MateralTools.MWebLib\", "{21CDFC52-3B8B-4417-BED1-E2DF7817FB25}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_61287"
+		Debug.AspNetCompiler.PhysicalPath = "MateralTools.MWebLib\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61287\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_61287"
+		Release.AspNetCompiler.PhysicalPath = "MateralTools.MWebLib\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61287\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "61287"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,14 +175,6 @@ Global
 		{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C90A3775-91ED-4ACB-A5E6-3ABF3777A069}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B098617-1DF8-4939-970C-382D16B6F8A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CE67DDF5-B087-4CC4-BED7-28C603EF6017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CE67DDF5-B087-4CC4-BED7-28C603EF6017}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE67DDF5-B087-4CC4-BED7-28C603EF6017}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -203,6 +211,10 @@ Global
 		{EF74CD93-F2AF-436D-9200-BA962E63B043}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF74CD93-F2AF-436D-9200-BA962E63B043}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF74CD93-F2AF-436D-9200-BA962E63B043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21CDFC52-3B8B-4417-BED1-E2DF7817FB25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21CDFC52-3B8B-4417-BED1-E2DF7817FB25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21CDFC52-3B8B-4417-BED1-E2DF7817FB25}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{21CDFC52-3B8B-4417-BED1-E2DF7817FB25}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -225,8 +237,6 @@ Global
 		{CBCF9510-5D38-47AA-8830-5979EB61BE23} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{DFAB0E55-3457-49D5-A111-28BBCF769AB9} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{C90A3775-91ED-4ACB-A5E6-3ABF3777A069} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
-		{0B098617-1DF8-4939-970C-382D16B6F8A9} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
-		{E9F9157E-4AF8-4770-BBE2-90140BE9E9EE} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{CE67DDF5-B087-4CC4-BED7-28C603EF6017} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{87C6F367-01C8-49B6-8F00-4EE5212950D1} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{CED29729-DD3B-406E-9F43-B211BCB014C2} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
@@ -235,6 +245,7 @@ Global
 		{C81A1DBA-7741-4730-B1F0-28C00C6FABF8} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{340F290C-A2F6-4CBC-BA1A-BDC45C010E60} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 		{EF74CD93-F2AF-436D-9200-BA962E63B043} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
+		{21CDFC52-3B8B-4417-BED1-E2DF7817FB25} = {5D25072E-B800-4A70-B2D2-5A61A8C3ABAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE9653B5-B36A-4E7F-BC50-E36E84C62896}

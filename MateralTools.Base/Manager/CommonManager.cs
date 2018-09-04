@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MateralTools.Base
+namespace MateralTools.Base.Manager
 {
     /// <summary>
     /// 共用管理类
@@ -14,7 +14,7 @@ namespace MateralTools.Base
         /// <returns>时间戳</returns>
         public static string GetTimeStamp()
         {
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            var ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
         /// <summary>
@@ -24,15 +24,15 @@ namespace MateralTools.Base
         /// <param name="maxLength">最大长度</param>
         /// <returns>随机字符串</returns>
         /// <exception cref="MException"></exception>
-        public static string GetRandomStrByGUID(int minLength, int maxLength)
+        public static string GetRandomStrByGuid(int minLength, int maxLength)
         {
             if (minLength > 0)
             {
                 if (minLength < maxLength)
                 {
-                    Random rd = new Random();
-                    int length = rd.Next(minLength, maxLength);
-                    return GetRandomStrByGUID(length);
+                    var rd = new Random();
+                    var length = rd.Next(minLength, maxLength);
+                    return GetRandomStrByGuid(length);
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace MateralTools.Base
         /// <param name="length">长度</param>
         /// <returns>随机字符串</returns>
         /// <exception cref="MException"></exception>
-        public static string GetRandomStrByGUID(int length = 32)
+        public static string GetRandomStrByGuid(int length = 32)
         {
             if (length > 0)
             {

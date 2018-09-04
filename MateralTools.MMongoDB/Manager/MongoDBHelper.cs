@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MateralTools.MMongoDB
@@ -116,7 +115,7 @@ namespace MateralTools.MMongoDB
         /// <param name="filters">过滤器集合</param>
         /// <param name="docName">文档名</param>
         /// <returns>删除结果</returns>
-        public DeleteResult Delete<T>(FilterInfo<T>[] filters,string docName = null)
+        public DeleteResult Delete<T>(FilterInfo<T>[] filters, string docName = null)
         {
             IMongoCollection<T> collection = GetCollection<T>(docName);
             FilterDefinition<T> filter = GetFilterDefinition(filters);
@@ -147,7 +146,7 @@ namespace MateralTools.MMongoDB
         public T QueryOne<T>(FilterInfo<T>[] filters, string docName = null)
         {
             IMongoCollection<T> collection = GetCollection<T>(docName);
-            FilterDefinition<T> filter = GetFilterDefinition<T>(filters);
+            FilterDefinition<T> filter = GetFilterDefinition(filters);
             T resM = collection.Find(filter).FirstOrDefault();
             return resM;
         }
@@ -285,7 +284,7 @@ namespace MateralTools.MMongoDB
             }
             else
             {
-                throw new MMongoDBException($"类需要拥有特性{typeof(MTableModelAttribute).Name}");
+                return ttype.Name;
             }
         }
         /// <summary>

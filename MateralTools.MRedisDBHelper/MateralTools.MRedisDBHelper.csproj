@@ -6,6 +6,7 @@
     <Description>这是MateralTools的Redis工具库
 GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <PackageReleaseNotes>Redis数据库帮助类</PackageReleaseNotes>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

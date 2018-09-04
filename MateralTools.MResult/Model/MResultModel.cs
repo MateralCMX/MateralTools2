@@ -19,12 +19,7 @@ namespace MateralTools.MResult
         /// 失败
         /// </summary>
         [Description("失败")]
-        Fail = 1,
-        /// <summary>
-        /// 错误
-        /// </summary>
-        [Description("错误")]
-        Error = 2
+        Fail = 1
     }
     /// <summary>
     /// 返回对象模型
@@ -82,15 +77,6 @@ namespace MateralTools.MResult
         public static DataResult Fail(string message = "")
         {
             return new DataResult(MResultType.Fail, message);
-        }
-        /// <summary>
-        /// 获得一个错误返回对象
-        /// </summary>
-        /// <param name="message">返回消息</param>
-        /// <returns>错误返回对象</returns>
-        public static DataResult Error(string message = "")
-        {
-            return new DataResult(MResultType.Error, message);
         }
         /// <summary>
         /// 返回Json字符串
@@ -165,25 +151,6 @@ namespace MateralTools.MResult
         public new static DataResult<T> Fail(string message = "")
         {
             return new DataResult<T>(MResultType.Fail, default(T), message);
-        }
-        /// <summary>
-        /// 获得一个错误返回对象
-        /// </summary>
-        /// <param name="data">返回数据对象</param>
-        /// <param name="message">返回消息</param>
-        /// <returns>错误返回对象</returns>
-        public static DataResult<T> Error(T data = default(T), string message = "")
-        {
-            return new DataResult<T>(MResultType.Error, data, message);
-        }
-        /// <summary>
-        /// 获得一个错误返回对象
-        /// </summary>
-        /// <param name="message">返回消息</param>
-        /// <returns>错误返回对象</returns>
-        public new static DataResult<T> Error(string message = "")
-        {
-            return new DataResult<T>(MResultType.Error, default(T), message);
         }
     }
     /// <summary>
@@ -263,17 +230,6 @@ namespace MateralTools.MResult
                 pagingM = new MPageData<T>();
             }
             return new PagedResult<T>(MResultType.Fail, pagingM.Data, pagingM.PageInfo, message);
-        }
-        /// <summary>
-        /// 获得一个错误返回对象
-        /// </summary>
-        /// <param name="data">返回数据对象</param>
-        /// <param name="pagingM">分页信息</param>
-        /// <param name="message">返回消息</param>
-        /// <returns>错误返回对象</returns>
-        public static PagedResult<T> Error(T data = default(T), MPageModel pagingM = null, string message = "")
-        {
-            return new PagedResult<T>(MResultType.Error, data, pagingM, message);
         }
         /// <summary>
         /// 获得一个错误返回对象

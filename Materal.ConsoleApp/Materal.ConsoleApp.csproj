@@ -6,13 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.6.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
     <ProjectReference Include="..\MateralTools.MExcel\MateralTools.MExcel.csproj" />
     <ProjectReference Include="..\MateralTools.MHttpRequest\MateralTools.MHttpRequest.csproj" />
+    <ProjectReference Include="..\MateralTools.MMongoDB\MateralTools.MMongoDB.csproj" />
     <ProjectReference Include="..\MateralTools.MResult\MateralTools.MResult.csproj" />
     <ProjectReference Include="..\MateralTools.MVerify\MateralTools.MVerify.csproj" />
   </ItemGroup>
