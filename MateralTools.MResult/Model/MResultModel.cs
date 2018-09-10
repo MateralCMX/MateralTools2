@@ -185,6 +185,18 @@ namespace MateralTools.MResult
         /// 获得一个成功返回对象
         /// </summary>
         /// <param name="data">返回数据对象</param>
+        /// <param name="dataCount">数据总数</param>
+        /// <param name="message">返回消息</param>
+        /// <returns>成功返回对象</returns>
+        public static PagedResult<T> Success(T data, int dataCount, string message = "")
+        {
+            return new PagedResult<T>(MResultType.Success, data, new MPageModel(1, 1, dataCount), message);
+        }
+
+        /// <summary>
+        /// 获得一个成功返回对象
+        /// </summary>
+        /// <param name="data">返回数据对象</param>
         /// <param name="pagingM">分页信息</param>
         /// <param name="message">返回消息</param>
         /// <returns>成功返回对象</returns>

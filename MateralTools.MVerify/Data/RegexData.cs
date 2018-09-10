@@ -48,7 +48,7 @@
         /// <summary>
         /// 磁盘根目录正则表达式
         /// </summary>
-        private const string _REG_DiskPath = @"\w:";
+        private const string _REG_DiskPath = @"\w:[\\/]?";
         /// <summary>
         /// 相对路径正则表达式
         /// </summary>
@@ -57,6 +57,11 @@
         /// 文件名正则表达式
         /// </summary>
         public const string REG_FileName = @"[^\\\?\/\*\|<>:" + "\"" + @"]+([^\.]|\.[^\\\?\/\*\|<>:" + "\"" + @"]+)";
+
+        /// <summary>
+        /// 文件夹绝对路径正则表达式
+        /// </summary>
+        public const string REG_AbsoluteDirectoryPath = @"[\w]:(\\[^\\\?\/\*\|<>:\" + "\"].+)+";
         /// <summary>
         /// 磁盘根目录正则表达式
         /// </summary>
