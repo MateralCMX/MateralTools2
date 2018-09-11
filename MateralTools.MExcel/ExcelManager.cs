@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using MateralTools.Base.Model;
+using MateralTools.MConvert.Manager;
 
 namespace MateralTools.MExcel
 {

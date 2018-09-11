@@ -1,32 +1,34 @@
 ﻿using System;
 
-namespace MateralTools.MData
+namespace MateralTools.MData.Model
 {
+    /// <inheritdoc />
     /// <summary>
     /// 数据模型
     /// </summary>
     public class MColumnModelAttribute : Attribute
     {
+        /// <inheritdoc />
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="ColumnName">列名</param>
+        /// <param name="columnName">列名</param>
         /// <param name="dbType">数据类型</param>
-        /// <param name="IsAutoNumber">是否为自动编号</param>
-        public MColumnModelAttribute(string ColumnName, string dbType = "varchar(200)", bool IsAutoNumber = false)
+        /// <param name="isAutoNumber">是否为自动编号</param>
+        public MColumnModelAttribute(string columnName, string dbType = "varchar(200)", bool isAutoNumber = false)
         {
-            DBColumnName = ColumnName;
-            AutoNumber = IsAutoNumber;
-            DBType = dbType;
+            DbColumnName = columnName;
+            AutoNumber = isAutoNumber;
+            DbType = dbType;
         }
         /// <summary>
         /// 数据库中的列名
         /// </summary>
-        public string DBColumnName { get; set; }
+        public string DbColumnName { get; set; }
         /// <summary>
         /// 数据类型
         /// </summary>
-        public string DBType { get; set; }
+        public string DbType { get; set; }
         /// <summary>
         /// 自动编号
         /// </summary>

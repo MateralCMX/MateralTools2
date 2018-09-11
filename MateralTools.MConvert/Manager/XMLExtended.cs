@@ -1,17 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
+using Newtonsoft.Json;
 
-namespace MateralTools.MConvert
+namespace MateralTools.MConvert.Manager
 {
     /// <summary>
     /// XML扩展
     /// </summary>
-    public static class XMLExtended
+    public static class XmlExtended
     {
         /// <summary>
         /// XML文档对象转换为Json字符串

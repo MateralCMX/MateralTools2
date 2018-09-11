@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MateralTools.MEnum
+namespace MateralTools.MEnum.Model
 {
     /// <summary>
     /// 时间类型

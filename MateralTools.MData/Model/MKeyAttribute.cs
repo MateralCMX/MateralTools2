@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MateralTools.MData
+namespace MateralTools.MData.Model
 {
+    /// <inheritdoc />
     /// <summary>
     /// 主键特性
     /// </summary>

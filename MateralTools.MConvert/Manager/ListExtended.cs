@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 
-namespace MateralTools.MConvert
+namespace MateralTools.MConvert.Manager
 {
     /// <summary>
     /// 列表扩展
@@ -18,8 +17,8 @@ namespace MateralTools.MConvert
         /// <returns>动态数据集</returns>
         public static ObservableCollection<T> MToObservableCollection<T>(this List<T> listM)
         {
-            ObservableCollection<T> obsM = new ObservableCollection<T>();
-            foreach (T item in listM)
+            var obsM = new ObservableCollection<T>();
+            foreach (var item in listM)
             {
                 obsM.Add(item);
             }
@@ -37,9 +36,9 @@ namespace MateralTools.MConvert
             {
                 listM = new List<T>();
             }
-            Type TType = typeof(T);
-            DataTable dt = TType.MToDataTable();
-            foreach (T item in listM)
+            var type = typeof(T);
+            var dt = type.MToDataTable();
+            foreach (var item in listM)
             {
                 dt.Rows.Add(item.MToDataRow(dt.NewRow()));
             }

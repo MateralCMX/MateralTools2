@@ -1,21 +1,21 @@
-﻿using MateralTools.Base;
-using MateralTools.MConvert;
+﻿using MateralTools.Base.Manager;
+using MateralTools.MConvert.Manager;
 using MateralTools.MVerify;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using MateralTools.Base.Manager;
 
-namespace MateralTools.MEntityFramework
+namespace MateralTools.MEntityFramework.Manager
 {
+    /// <inheritdoc />
     /// <summary>
     /// 业务处理类父类
     /// </summary>
-    /// <typeparam name="TDAL">对应的数据操作类</typeparam>
+    /// <typeparam name="TDal">对应的数据操作类</typeparam>
     /// <typeparam name="TModel">对应的数据模型</typeparam>
-    /// <typeparam name="VModel">对应的视图模型</typeparam>
-    public abstract class EFBaseBLL<TDAL, TModel, VModel> : EFBaseBLL<TDAL, TModel>
+    /// <typeparam name="TVModel">对应的视图模型</typeparam>
+    public abstract class EfBaseBll<TDal, TModel, TVModel> : EfBaseBll<TDal, TModel>
     {
         /// <summary>
         /// 根据唯一标识获得视图信息
@@ -23,25 +23,20 @@ namespace MateralTools.MEntityFramework
         /// <param name="id">唯一标识</param>
         /// <returns></returns>
         /// <exception cref="MEntityFrameworkException"></exception>
-        public virtual VModel GetDBModelViewInfoByID(object id)
+        public virtual TVModel GetDBModelViewInfoByID(object id)
         {
-            MethodInfo method = (typeof(TDAL)).GetMethod("GetDBModelViewInfoByID");
-            if (method != null)
-            {
-                return (VModel)method.Invoke(_dal, new object[] { id });
-            }
-            else
-            {
-                throw new MEntityFrameworkException("未实现该方法，需重写");
-            }
+            var method = (typeof(TDal)).GetMethod("GetDBModelViewInfoByID");
+            return method != null
+                ? (TVModel) method.Invoke(Dal, new[] {id})
+                : throw new MEntityFrameworkException("未实现该方法，需重写");
         }
     }
     /// <summary>
     /// 业务处理类父类
     /// </summary>
-    /// <typeparam name="TDAL">对应的数据操作类</typeparam>
+    /// <typeparam name="TDal">对应的数据操作类</typeparam>
     /// <typeparam name="TModel">对应的数据模型</typeparam>
-    public abstract class EFBaseBLL<TDAL, TModel>
+    public abstract class EfBaseBll<TDal, TModel>
     {
         /// <summary>
         /// 不修改列表
@@ -50,24 +45,24 @@ namespace MateralTools.MEntityFramework
         /// <summary>
         /// 构造方法
         /// </summary>
-        public EFBaseBLL()
+        public EfBaseBll()
         {
-            PropertyInfo logicDeletePi = GetLogicDeletePropertyInfo();
+            var logicDeletePi = GetLogicDeletePropertyInfo();
             if (logicDeletePi != null)
             {
                 NotUpdateList.Add(logicDeletePi.Name);
             }
-            PropertyInfo pi = EFBaseDAL.GetKeyPropertyInfo<TModel>();
+            var pi = EFBaseDAL.GetKeyPropertyInfo<TModel>();
             if (pi != null)
             {
                 NotUpdateList.Add(pi.Name);
             }
-            _dal = _dal.MGetDefultObject<TDAL>();
+            Dal = Dal.MGetDefultObject<TDal>();
         }
         /// <summary>
         /// 数据操作对象
         /// </summary>
-        public readonly TDAL _dal;
+        public readonly TDal Dal;
         /// <summary>
         /// 验证模型
         /// </summary>
@@ -149,10 +144,10 @@ namespace MateralTools.MEntityFramework
         /// <exception cref="MEntityFrameworkException"></exception>
         public virtual TModel GetDBModelInfoByID(object id)
         {
-            MethodInfo method = (typeof(TDAL)).GetMethod("GetDBModelInfoByID");
+            MethodInfo method = (typeof(TDal)).GetMethod("GetDBModelInfoByID");
             if (method != null)
             {
-                return (TModel)method.Invoke(_dal, new object[] { id });
+                return (TModel)method.Invoke(Dal, new[] { id });
             }
             else
             {
@@ -166,12 +161,12 @@ namespace MateralTools.MEntityFramework
         /// <exception cref="MEntityFrameworkException"></exception>
         public virtual TModel Add(TModel model)
         {
-            MethodInfo method = (typeof(TDAL)).GetMethod("Insert");
+            MethodInfo method = (typeof(TDal)).GetMethod("Insert");
             if (method != null)
             {
                 if (VerificationAdd(model, out string msg))
                 {
-                    model = (TModel)method.Invoke(_dal, new object[] { model });
+                    model = (TModel)method.Invoke(Dal, new object[] { model });
                     return model;
                 }
                 else
@@ -191,14 +186,13 @@ namespace MateralTools.MEntityFramework
         /// <exception cref="MEntityFrameworkException"></exception>
         public virtual void Delete(object id)
         {
-            Type TType = typeof(TModel);
             PropertyInfo pi = GetLogicDeletePropertyInfo();
             if (pi == null)
             {
-                MethodInfo method = (typeof(TDAL)).GetMethod("Delete");
+                MethodInfo method = (typeof(TDal)).GetMethod("Delete");
                 if (method != null)
                 {
-                    method.Invoke(_dal, new object[] { id });
+                    method.Invoke(Dal, new[] { id });
                 }
                 else
                 {
@@ -207,12 +201,12 @@ namespace MateralTools.MEntityFramework
             }
             else
             {
-                TModel DBModel = GetDBModelInfoByID(id);
-                pi.SetValue(DBModel, true);
-                MethodInfo method = (typeof(TDAL)).GetMethod("SaveChange");
+                TModel dbModel = GetDBModelInfoByID(id);
+                pi.SetValue(dbModel, true);
+                MethodInfo method = (typeof(TDal)).GetMethod("SaveChange");
                 if (method != null)
                 {
-                    method.Invoke(_dal, new object[] { });
+                    method.Invoke(Dal, new object[] { });
                 }
                 else
                 {
@@ -227,26 +221,26 @@ namespace MateralTools.MEntityFramework
         /// <exception cref="MEntityFrameworkException"></exception>
         public virtual TModel Update(TModel model)
         {
-            Type TType = model.GetType();
-            PropertyInfo[] pis = TType.GetProperties();
+            Type type = model.GetType();
+            PropertyInfo[] pis = type.GetProperties();
             PropertyInfo pi = EFBaseDAL.GetKeyPropertyInfo<TModel>();
-            TModel DBModel = GetDBModelInfoByID(pi.GetValue(model));
-            if (DBModel != null)
+            TModel dbModel = GetDBModelInfoByID(pi.GetValue(model));
+            if (dbModel != null)
             {
                 foreach (PropertyInfo item in pis)
                 {
                     if (!NotUpdateList.Contains(item.Name))
                     {
-                        item.SetValue(DBModel, item.GetValue(model));
+                        item.SetValue(dbModel, item.GetValue(model));
                     }
                 }
-                if (VerificationUpdate(DBModel, out string msg))
+                if (VerificationUpdate(dbModel, out string msg))
                 {
-                    MethodInfo method = (typeof(TDAL)).GetMethod("SaveChange");
+                    MethodInfo method = (typeof(TDal)).GetMethod("SaveChange");
                     if (method != null)
                     {
-                        method.Invoke(_dal, new object[] { });
-                        return DBModel;
+                        method.Invoke(Dal, new object[] { });
+                        return dbModel;
                     }
                     else
                     {
@@ -263,16 +257,16 @@ namespace MateralTools.MEntityFramework
                 throw new MEntityFrameworkException("修改失败，该对象不存在于数据库中");
             }
         }
+
         /// <summary>
         /// 获得逻辑删除属性
         /// </summary>
-        /// <typeparam name="TM">类型</typeparam>
         /// <returns>类型</returns>
         public PropertyInfo GetLogicDeletePropertyInfo()
         {
             Type tType = typeof(TModel);
             PropertyInfo[] pis = tType.GetProperties();
-            LogicDeleteAttribute ka = null;
+            LogicDeleteAttribute ka;
             PropertyInfo pi = null;
             foreach (PropertyInfo item in pis)
             {

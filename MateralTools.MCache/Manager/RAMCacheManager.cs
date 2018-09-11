@@ -1,36 +1,34 @@
-﻿using MateralTools.MVerify;
+﻿using System;
+using MateralTools.MCache.Model;
+using MateralTools.MVerify;
 using Microsoft.Extensions.Caching.Memory;
-using System;
 
-namespace MateralTools.MCache
+namespace MateralTools.MCache.Manager
 {
     /// <summary>
     /// 内存缓存管理器
     /// </summary>
-    public class RAMCacheManager
+    public class RamCacheManager
     {
         /// <summary>
         /// 缓存对象
         /// </summary>
-        private IMemoryCache _memoryCache;
-        /// <summary>
-        /// 缓存对象
-        /// </summary>
-        public IMemoryCache MemoryCache { get => _memoryCache; }
+        public IMemoryCache MemoryCache { get; }
+
         /// <summary>
         /// 构造方法
         /// </summary>
-        public RAMCacheManager()
+        public RamCacheManager()
         {
-            _memoryCache = new MemoryCache(new MemoryCacheOptions());
+            MemoryCache = new MemoryCache(new MemoryCacheOptions());
         }
         /// <summary>
         /// 构造方法
         /// </summary>
         /// <param name="memoryCache">缓存对象</param>
-        public RAMCacheManager(IMemoryCache memoryCache)
+        public RamCacheManager(IMemoryCache memoryCache)
         {
-            _memoryCache = memoryCache;
+            MemoryCache = memoryCache;
         }
         /// <summary>
         /// 获得缓存对象
@@ -49,21 +47,7 @@ namespace MateralTools.MCache
         /// <returns>缓存值</returns>
         public T Get<T>(string key)
         {
-            if (!key.MIsNullOrEmpty())
-            {
-                if (_memoryCache.TryGetValue(key, out T value))
-                {
-                    return value;
-                }
-                else
-                {
-                    throw new MCacheException($"缓存中不存在{nameof(key)}为{key}的{typeof(T).Name}对象");
-                }
-            }
-            else
-            {
-                throw new MCacheException($"{nameof(key)}值不能为空。");
-            }
+            return !key.MIsNullOrEmpty() ? (MemoryCache.TryGetValue(key, out T value) ? value : throw new MCacheException($"缓存中不存在{nameof(key)}为{key}的{typeof(T).Name}对象")) : throw new MCacheException($"{nameof(key)}值不能为空。");
         }
         /// <summary>
         /// 保存缓存对象
@@ -73,14 +57,8 @@ namespace MateralTools.MCache
         /// <param name="value">保存的值</param>
         public void Set<T>(string key, T value)
         {
-            if (!key.MIsNullOrEmpty())
-            {
-                _memoryCache.Set(key, value);
-            }
-            else
-            {
-                throw new MCacheException($"{nameof(key)}值不能为空。");
-            }
+            if (key.MIsNullOrEmpty())throw new MCacheException($"{nameof(key)}值不能为空。");
+            MemoryCache.Set(key, value);
         }
         /// <summary>
         /// 保存缓存对象
@@ -91,14 +69,8 @@ namespace MateralTools.MCache
         /// <param name="absoluteExpiration">过期时间点</param>
         public void Set<T>(string key, T value, DateTimeOffset absoluteExpiration)
         {
-            if (!key.MIsNullOrEmpty())
-            {
-                _memoryCache.Set(key, value, absoluteExpiration);
-            }
-            else
-            {
-                throw new MCacheException($"{nameof(key)}值不能为空。");
-            }
+            if (key.MIsNullOrEmpty())throw new MCacheException($"{nameof(key)}值不能为空。");
+            MemoryCache.Set(key, value, absoluteExpiration);
         }
         /// <summary>
         /// 保存缓存对象
@@ -109,14 +81,8 @@ namespace MateralTools.MCache
         /// <param name="absoluteExpirationRelativeToNow">过期时间</param>
         public void Set<T>(string key, T value, TimeSpan absoluteExpirationRelativeToNow)
         {
-            if (!key.MIsNullOrEmpty())
-            {
-                _memoryCache.Set(key, value, absoluteExpirationRelativeToNow);
-            }
-            else
-            {
-                throw new MCacheException($"{nameof(key)}值不能为空。");
-            }
+            if (key.MIsNullOrEmpty())throw new MCacheException($"{nameof(key)}值不能为空。");
+            MemoryCache.Set(key, value, absoluteExpirationRelativeToNow);
         }
     }
 }

@@ -2,13 +2,14 @@
 using MateralTools.MVerify;
 using System;
 using System.Collections.Generic;
+using MateralTools.MEntityFramework.Manager;
 
 namespace MateralTools.MLog
 {
     /// <summary>
     /// 应用程序日志业务类
     /// </summary>
-    public class MSQLiteLogBLL : EFBaseBLL<MSQLiteLogDAL<MSQLiteLogContext>, T_ApplicationLog>, IMLogBLL
+    public class MSQLiteLogBLL : EfBaseBll<MSQLiteLogDAL<MSQLiteLogContext>, T_ApplicationLog>, IMLogBLL
     {
         /// <summary>
         /// 应用程序日志数据操作对象
@@ -78,7 +79,7 @@ namespace MateralTools.MLog
                 Message = message,
                 FK_Parent_ID = parentID
             };
-            logM = _dal.Insert(logM);
+            logM = Dal.Insert(logM);
             return logM.ID;
         }
         /// <summary>
@@ -93,7 +94,7 @@ namespace MateralTools.MLog
                 (byte)ApplicationLogTypeEnum.Debug,
                 (byte)ApplicationLogTypeEnum.Options
             };
-            return _dal.GetLogInfoByCreateTimeAndTypes(start, end, types);
+            return Dal.GetLogInfoByCreateTimeAndTypes(start, end, types);
         }
         /// <summary>
         /// 根据时间获得日志信息
@@ -112,7 +113,7 @@ namespace MateralTools.MLog
         /// <returns>日志信息</returns>
         public T_ApplicationLog GetLogInfoByID(int id)
         {
-            return _dal.GetDBModelInfoByID(id);
+            return Dal.GetDBModelInfoByID(id);
         }
         /// <summary>
         /// 根据唯一标识获得异常日志信息

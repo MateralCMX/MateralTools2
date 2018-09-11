@@ -1,8 +1,9 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace MateralTools.MConvert
+namespace MateralTools.MConvert.Manager
 {
     /// <summary>
     /// Byte扩展
@@ -17,7 +18,7 @@ namespace MateralTools.MConvert
         public static object MToObject(this byte[] buff)
         {
             object obj;
-            using (MemoryStream ms = new MemoryStream(buff))
+            using (var ms = new MemoryStream(buff))
             {
                 IFormatter iFormatter = new BinaryFormatter();
                 obj = iFormatter.Deserialize(ms);
@@ -31,15 +32,8 @@ namespace MateralTools.MConvert
         /// <returns>转换完成后的对象</returns>
         public static T MToObject<T>(this byte[] buff)
         {
-            object obj = MToObject(buff);
-            if (obj is T model)
-            {
-                return model;
-            }
-            else
-            {
-                return default(T);
-            }
+            var obj = MToObject(buff);
+            return obj is T model ? model : default(T);
         }
         /// <summary>
         /// 字节数组转16进制字符串
@@ -48,15 +42,7 @@ namespace MateralTools.MConvert
         /// <returns></returns>
         public static string MToHexStr(this byte[] bytes)
         {
-            string returnStr = "";
-            if (bytes != null)
-            {
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    returnStr += bytes[i].ToString("X2");
-                }
-            }
-            return returnStr;
+            return bytes == null ? string.Empty : bytes.Aggregate(string.Empty, (current, item) => current + item.ToString("X2"));
         }
     }
 }

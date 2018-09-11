@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MateralTools.MEnum
+namespace MateralTools.MEnum.Model
 {
     /// <summary>
     /// 性别枚举

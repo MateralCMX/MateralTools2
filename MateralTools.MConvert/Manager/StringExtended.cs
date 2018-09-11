@@ -3,8 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Text;
 using System.Xml;
+using MateralTools.MConvert.Model;
 
-namespace MateralTools.MConvert
+namespace MateralTools.MConvert.Manager
 {
     /// <summary>
     /// 字符串扩展
@@ -18,7 +19,7 @@ namespace MateralTools.MConvert
         /// <returns>XML文档对象</returns>
         public static XmlDocument MJsonToXml(this string jsonStr)
         {
-            return JsonConvert.DeserializeXmlNode(jsonStr); ;
+            return JsonConvert.DeserializeXmlNode(jsonStr);
         }
         /// <summary>
         /// Json字符串转换对象
@@ -29,7 +30,7 @@ namespace MateralTools.MConvert
         {
             try
             {
-                object model = new object();
+                var model = new object();
                 JsonConvert.PopulateObject(jsonStr, model);
                 return model;
             }
@@ -48,7 +49,7 @@ namespace MateralTools.MConvert
         {
             try
             {
-                T model = ConvertManager.GetDefultObject<T>();
+                var model = ConvertManager.GetDefultObject<T>();
                 JsonConvert.PopulateObject(jsonStr, model);
                 return model;
             }
@@ -64,42 +65,36 @@ namespace MateralTools.MConvert
         /// <returns></returns>
         public static byte[] MToHexByte(this string hexString)
         {
-            if (hexString.MIsHexNumber())
+            if (!hexString.MIsHexNumber())throw new MConvertException("16进制字符串有误");
+            try
             {
-                try
+                hexString = hexString.Replace(" ", "");
+                if ((hexString.Length % 2) != 0)
                 {
-                    hexString = hexString.Replace(" ", "");
-                    if ((hexString.Length % 2) != 0)
-                    {
-                        hexString += " ";
-                    }
-                    byte[] returnBytes = new byte[hexString.Length / 2];
-                    for (int i = 0; i < returnBytes.Length; i++)
-                    {
-                        returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
-                    }
-                    return returnBytes;
+                    hexString += " ";
                 }
-                catch (Exception ex)
+                var returnBytes = new byte[hexString.Length / 2];
+                for (var i = 0; i < returnBytes.Length; i++)
                 {
-                    throw new MConvertException("16进制字符串有误", ex);
+                    returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
                 }
+                return returnBytes;
             }
-            else
+            catch (Exception ex)
             {
-                throw new MConvertException("16进制字符串有误");
+                throw new MConvertException("16进制字符串有误", ex);
             }
         }
         /// <summary>
         /// 文本转换为二进制字符
         /// </summary>
-        /// <param name="InputStr">文本</param>
+        /// <param name="inputStr">文本</param>
         /// <param name="digit">位数</param>
         /// <returns>二进制字符串</returns>
-        public static string MToBinaryStr(this string InputStr, int digit = 8)
+        public static string MToBinaryStr(this string inputStr, int digit = 8)
         {
-            byte[] data = Encoding.UTF8.GetBytes(InputStr);
-            StringBuilder resStr = new StringBuilder(data.Length * digit);
+            var data = Encoding.UTF8.GetBytes(inputStr);
+            var resStr = new StringBuilder(data.Length * digit);
             foreach (var item in data)
             {
                 resStr.Append(Convert.ToString(item, 2).PadLeft(digit, '0'));
@@ -109,17 +104,16 @@ namespace MateralTools.MConvert
         /// <summary>
         /// 二进制字符转换为文本
         /// </summary>
-        /// <param name="InputStr">二进制字符串</param>
+        /// <param name="inputStr">二进制字符串</param>
         /// <param name="digit">位数</param>
         /// <returns>文本</returns>
-        public static string MBinaryToStr(this string InputStr, int digit = 8)
+        public static string MBinaryToStr(this string inputStr, int digit = 8)
         {
-            StringBuilder resStr = new StringBuilder();
-            int numOfBytes = InputStr.Length / digit;
-            byte[] bytes = new byte[numOfBytes];
-            for (int i = 0; i < numOfBytes; i++)
+            var numOfBytes = inputStr.Length / digit;
+            var bytes = new byte[numOfBytes];
+            for (var i = 0; i < numOfBytes; i++)
             {
-                bytes[i] = Convert.ToByte(InputStr.Substring(digit * i, digit), 2);
+                bytes[i] = Convert.ToByte(inputStr.Substring(digit * i, digit), 2);
             }
             return Encoding.UTF8.GetString(bytes);
         }

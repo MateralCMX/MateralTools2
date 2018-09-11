@@ -1,12 +1,11 @@
-﻿using MateralTools.Base;
-using System;
+﻿using System;
 using MateralTools.Base.Model;
 
-namespace MateralTools.MCache
+namespace MateralTools.MCache.Model
 {
     public class MCacheException : MException
     {
-        public MCacheException() : base() { }
+        public MCacheException(){ }
         public MCacheException(string message) : base(message) { }
         public MCacheException(string message, Exception innerException) : base(message, innerException) { }
     }

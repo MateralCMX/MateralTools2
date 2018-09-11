@@ -1,9 +1,9 @@
-﻿using MateralTools.Base;
+﻿using MateralTools.Base.Manager;
 using System;
 using System.Collections.Generic;
-using MateralTools.Base.Manager;
+using MateralTools.MEnum.Model;
 
-namespace MateralTools.MEnum
+namespace MateralTools.MEnum.Manager
 {
     /// <summary>
     /// 枚举管理类
@@ -18,14 +18,7 @@ namespace MateralTools.MEnum
         /// <returns></returns>
         public static T GetEnumByName<T>(string enumName)
         {
-            if (typeof(T).IsEnum)
-            {
-                return (T)Enum.Parse(typeof(T), enumName);
-            }
-            else
-            {
-                throw new MEnumException("该类型不是枚举");
-            }
+            return typeof(T).IsEnum ? (T) Enum.Parse(typeof(T), enumName) : throw new MEnumException("该类型不是枚举");
         }
         /// <summary>
         /// 通过描述获得枚举对象
@@ -35,15 +28,13 @@ namespace MateralTools.MEnum
         /// <returns></returns>
         public static T GetEnumByDescription<T>(string Description)
         {
-            List<Enum> allEnum = GetAllEnum(typeof(T));
-            T result = default(T);
-            foreach (Enum item in allEnum)
+            var allEnum = GetAllEnum(typeof(T));
+            var result = default(T);
+            foreach (var item in allEnum)
             {
-                if (Description == item.MGetDescription())
-                {
-                    result = GetEnumByName<T>(item.ToString());
-                    break;
-                }
+                if (Description != item.MGetDescription()) continue;
+                result = GetEnumByName<T>(item.ToString());
+                break;
             }
             return result;
         }
@@ -54,14 +45,7 @@ namespace MateralTools.MEnum
         /// <returns></returns>
         public static int GetCount(Type enumType)
         {
-            if (enumType.IsEnum)
-            {
-                return Enum.GetValues(enumType).Length;
-            }
-            else
-            {
-                throw new MEnumException("该类型不是枚举类型");
-            }
+            return enumType.IsEnum ? Enum.GetValues(enumType).Length : throw new MEnumException("该类型不是枚举类型");
         }
         /// <summary>
         /// 获得所有枚举值
@@ -70,20 +54,14 @@ namespace MateralTools.MEnum
         /// <returns>枚举模型列表</returns>
         public static List<Enum> GetAllEnum(Type enumType)
         {
-            if (enumType.IsEnum)
+            if (!enumType.IsEnum)throw new MEnumException("该类型不是枚举类型");
+            var listM = new List<Enum>();
+            var allEnums = Enum.GetValues(enumType);
+            foreach (var item in allEnums)
             {
-                List<Enum> listM = new List<Enum>();
-                Array allEnums = Enum.GetValues(enumType);
-                foreach (object item in allEnums)
-                {
-                    listM.Add((Enum)item);
-                }
-                return listM;
+                listM.Add((Enum) item);
             }
-            else
-            {
-                throw new MEnumException("该类型不是枚举类型");
-            }
+            return listM;
         }
     }
 }

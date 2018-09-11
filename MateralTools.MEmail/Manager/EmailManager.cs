@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 
-namespace MateralTools.MEmail
+namespace MateralTools.MEmail.Manager
 {
     public class EmailManager
     {
@@ -25,7 +25,7 @@ namespace MateralTools.MEmail
         /// <param name="formName">发送人名称</param>
         /// <param name="formEmail">发送邮件地址</param>
         /// <param name="targetEmail">目标地址</param>
-        public EmailManager(string formName, string formEmail, string[] targetEmail)
+        public EmailManager(string formName, string formEmail, IEnumerable<string> targetEmail)
         {
             FormEmail = formEmail;
             FormName = formName;
@@ -39,7 +39,7 @@ namespace MateralTools.MEmail
         /// <param name="pwd">密码(授权码)</param>
         public void QQSend(string titles, string contents, string pwd)
         {
-            SendSSL(titles, contents, pwd, "smtp.qq.com", 25);
+            SendSsl(titles, contents, pwd, "smtp.qq.com");
         }
         /// <summary>
         /// 发送邮件
@@ -47,23 +47,23 @@ namespace MateralTools.MEmail
         /// <param name="titles">邮件标题</param>
         /// <param name="contents">邮件内容</param>
         /// <param name="pwd">密码(授权码)</param>
-        /// <param name="SMTPServer">SMTP地址</param>
-        /// <param name="Port">端口号</param>
-        public void Send(string titles, string contents, string pwd, string SMTPServer, int Port = 25)
+        /// <param name="smtpServer">SMTP地址</param>
+        /// <param name="port">端口号</param>
+        public void Send(string titles, string contents, string pwd, string smtpServer, int port = 25)
         {
-            SmtpClient client = new SmtpClient(SMTPServer)
+            var client = new SmtpClient(smtpServer)
             {
                 EnableSsl = false,
-                Port = Port,
+                Port = port,
                 UseDefaultCredentials = false,
                 Credentials = new System.Net.NetworkCredential(FormEmail, pwd)
             };
-            MailAddress from = new MailAddress(FormEmail, FormName, Encoding.UTF8);
-            MailMessage message = new MailMessage
+            var from = new MailAddress(FormEmail, FormName, Encoding.UTF8);
+            var message = new MailMessage
             {
                 From = from
             };
-            foreach (string item in TargetEmail)
+            foreach (var item in TargetEmail)
             {
                 message.To.Add(new MailAddress(item, "", Encoding.UTF8));
             }
@@ -80,23 +80,23 @@ namespace MateralTools.MEmail
         /// <param name="titles">邮件标题</param>
         /// <param name="contents">邮件内容</param>
         /// <param name="pwd">密码(授权码)</param>
-        /// <param name="SMTPServer">SMTP地址</param>
-        /// <param name="Port">端口号</param>
-        public void SendSSL(string titles, string contents, string pwd, string SMTPServer, int Port = 25)
+        /// <param name="smtpServer">SMTP地址</param>
+        /// <param name="port">端口号</param>
+        public void SendSsl(string titles, string contents, string pwd, string smtpServer, int port = 25)
         {
-            SmtpClient client = new SmtpClient(SMTPServer)
+            var client = new SmtpClient(smtpServer)
             {
                 EnableSsl = true,
-                Port = Port,
+                Port = port,
                 UseDefaultCredentials = false,
                 Credentials = new System.Net.NetworkCredential(FormEmail, pwd)
             };
-            MailAddress from = new MailAddress(FormEmail, FormName, Encoding.UTF8);
-            MailMessage message = new MailMessage
+            var from = new MailAddress(FormEmail, FormName, Encoding.UTF8);
+            var message = new MailMessage
             {
                 From = from
             };
-            foreach (string item in TargetEmail)
+            foreach (var item in TargetEmail)
             {
                 message.To.Add(new MailAddress(item, "", Encoding.UTF8));
             }

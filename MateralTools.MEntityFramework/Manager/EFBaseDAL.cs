@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using MateralTools.Base.Model;
+using MateralTools.MConvert.Manager;
 
 namespace MateralTools.MEntityFramework
 {

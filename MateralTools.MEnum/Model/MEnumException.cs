@@ -1,8 +1,7 @@
-﻿using MateralTools.Base;
+﻿using MateralTools.Base.Model;
 using System;
-using MateralTools.Base.Model;
 
-namespace MateralTools.MEnum
+namespace MateralTools.MEnum.Model
 {
     /// <summary>
     /// M枚举异常
