@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using MateralTools.Base.Model;
 
-namespace MateralTools.Base
+namespace MateralTools.Base.Manager
 {
     /// <summary>
     /// 属性信息扩展
@@ -20,17 +16,8 @@ namespace MateralTools.Base
         /// <returns>描述</returns>
         public static string MGetDescription(this PropertyInfo pi)
         {
-            string name = string.Empty;
             object attr = pi.GetCustomAttribute(typeof(DescriptionAttribute), false);
-            if (attr != null)
-            {
-                name = (attr as DescriptionAttribute).Description;
-            }
-            else
-            {
-                throw new MException("需要特性DescriptionAttribute");
-            }
-            return name;
+            return attr != null ? (attr as DescriptionAttribute)?.Description : throw new MException("需要特性DescriptionAttribute");
         }
     }
 }

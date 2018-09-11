@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using MateralTools.Base.Manager;
 
 namespace MateralTools.MEntityFramework
 {

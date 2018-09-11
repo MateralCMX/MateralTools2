@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace MateralTools.Base
+namespace MateralTools.Base.Model
 {
     /// <summary>
     /// 过滤器信息
@@ -33,20 +33,13 @@ namespace MateralTools.Base
         /// <param name="condition">条件类型</param>
         public FilterInfo(string piName, object value, ComparisonEnum comparison = ComparisonEnum.Equal, ConditionEnum condition = ConditionEnum.And)
         {
-            Type type = typeof(T);
-            PropertyInfo pi = type.GetProperty(piName);
-            if (pi != null)
-            {
-                PropertyInfo = pi;
-                Value = value;
-                Comparison = comparison;
-                Condition = condition;
-                TargetFunc = null;
-            }
-            else
-            {
-                throw new ArgumentNullException($"类型{type.Name}上不存属性{piName}");
-            }
+            var type = typeof(T);
+            var pi = type.GetProperty(piName);
+            PropertyInfo = pi ?? throw new ArgumentNullException($"类型{type.Name}上不存属性{piName}");
+            Value = value;
+            Comparison = comparison;
+            Condition = condition;
+            TargetFunc = null;
         }
         /// <summary>
         /// 构造方法
@@ -91,17 +84,11 @@ namespace MateralTools.Base
         /// <returns>转换模型</returns>
         public static FilterInfo<TModel> Convert<TModel>(FilterInfo<T> inputM)
         {
-            Type type = typeof(TModel);
-            PropertyInfo pi = type.GetProperty((inputM.PropertyInfo.Name));
-            if (pi != null)
-            {
-                FilterInfo<TModel> resM = new FilterInfo<TModel>(inputM.PropertyInfo.Name, inputM.Value, inputM.Comparison, inputM.Condition);
-                return resM;
-            }
-            else
-            {
-                throw new ArgumentNullException($"类型{type.Name}上不存属性{inputM.PropertyInfo.Name}");
-            }
+            var type = typeof(TModel);
+            var pi = type.GetProperty((inputM.PropertyInfo.Name));
+            if (pi == null) throw new ArgumentNullException($"类型{type.Name}上不存属性{inputM.PropertyInfo.Name}");
+            var resM = new FilterInfo<TModel>(inputM.PropertyInfo.Name, inputM.Value, inputM.Comparison, inputM.Condition);
+            return resM;
         }
         /// <summary>
         /// 转换过滤器
@@ -111,14 +98,17 @@ namespace MateralTools.Base
         /// <returns>转换模型</returns>
         public static FilterInfo<TModel>[] Convert<TModel>(FilterInfo<T>[] inputM)
         {
-            List<FilterInfo<TModel>> resM = new List<FilterInfo<TModel>>();
-            foreach (FilterInfo<T> item in inputM)
+            var resM = new List<FilterInfo<TModel>>();
+            foreach (var item in inputM)
             {
                 try
                 {
                     resM.Add(Convert<TModel>(item));
                 }
-                catch { }
+                catch
+                {
+                    // ignored
+                }
             }
             return resM.ToArray();
         }

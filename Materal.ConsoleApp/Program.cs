@@ -1,10 +1,9 @@
-﻿using System;
+﻿using MateralTools.MExcel;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using MateralTools.MExcel;
-using MateralTools.MVerify;
 
 namespace Materal.ConsoleApp
 {
@@ -99,7 +98,7 @@ namespace Materal.ConsoleApp
                 text += $"    /// {Remark}\r\n";
                 text += "    /// </summary>\r\n";
                 text += "    [Serializable]\r\n";
-                text += $"    public class {EventFileName} : SetDeviceParamEvent\r\n";
+                text += $"    public class {EventFileName} : SetDeviceParamEvent<{CSharpType}>\r\n";
                 text += "    {\r\n";
                 text += $"        public {EventFileName}(string[] deviceNos, {CSharpType} value)\r\n";
                 text += "        {\r\n";
@@ -107,14 +106,6 @@ namespace Materal.ConsoleApp
                 text += "            DeviceNos = deviceNos;\r\n";
                 text += "            Value = value;\r\n";
                 text += "        }\r\n";
-                text += "        /// <summary>\r\n";
-                text += "        /// 要设置的设备号组\r\n";
-                text += "        /// </summary>\r\n";
-                text += "        public string[] DeviceNos { get; set; }\r\n";
-                text += "        /// <summary>\r\n";
-                text += "        /// 值\r\n";
-                text += "        /// </summary>\r\n";
-                text += $"        public {CSharpType} Value" + " { get; set; }\r\n";
                 text += "    }\r\n";
                 text += "}\r\n";
                 return text;

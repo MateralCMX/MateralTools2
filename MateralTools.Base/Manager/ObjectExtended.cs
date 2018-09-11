@@ -1,12 +1,12 @@
-﻿using MateralTools.Base;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using MateralTools.Base.Model;
 
-namespace MateralTools.Base
+namespace MateralTools.Base.Manager
 {
     /// <summary>
     /// Object扩展
@@ -20,20 +20,14 @@ namespace MateralTools.Base
         /// <returns>描述</returns>
         public static string MGetDescription(this object inputObj)
         {
-            string name = string.Empty;
-            Type objType = inputObj.GetType();
-            FieldInfo fieldInfo = objType.GetField(inputObj.ToString());
-            if (fieldInfo != null)
+            var name = string.Empty;
+            var objType = inputObj.GetType();
+            var fieldInfo = objType.GetField(inputObj.ToString());
+            if (fieldInfo == null)throw new MException("需要特性DescriptionAttribute");
+            var attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            foreach (DescriptionAttribute attr in attrs)
             {
-                object[] attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                foreach (DescriptionAttribute attr in attrs)
-                {
-                    name = attr.Description;
-                }
-            }
-            else
-            {
-                throw new MException("需要特性DescriptionAttribute");
+                name = attr.Description;
             }
             return name;
         }
@@ -44,25 +38,19 @@ namespace MateralTools.Base
         /// <returns>克隆的对象</returns>
         public static T MCloneByXml<T>(this T inputObj)
         {
-            Type tType = inputObj.GetType();
-            Attribute attr = tType.GetCustomAttribute(typeof(SerializableAttribute));
-            if (attr != null)
+            var tType = inputObj.GetType();
+            var attr = tType.GetCustomAttribute(typeof(SerializableAttribute));
+            if (attr == null)throw new MException("拷贝类型需要拥有特性[SerializableAttribute]");
+            object resM;
+            using (var ms = new MemoryStream())
             {
-                object resM;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    XmlSerializer xml = new XmlSerializer(typeof(T));
-                    xml.Serialize(ms, inputObj);
-                    ms.Seek(0, SeekOrigin.Begin);
-                    resM = xml.Deserialize(ms);
-                    ms.Close();
-                }
-                return (T)resM;
+                var xml = new XmlSerializer(typeof(T));
+                xml.Serialize(ms, inputObj);
+                ms.Seek(0, SeekOrigin.Begin);
+                resM = xml.Deserialize(ms);
+                ms.Close();
             }
-            else
-            {
-                throw new MException("拷贝类型需要拥有特性[SerializableAttribute]");
-            }
+            return (T) resM;
         }
         /// <summary>
         /// 克隆对象(反射)
@@ -71,21 +59,13 @@ namespace MateralTools.Base
         /// <returns>克隆的对象</returns>
         public static T MCloneByReflex<T>(this T inputObj)
         {
-            Type tType = inputObj.GetType();
-            T resM = (T)Activator.CreateInstance(tType);
-            PropertyInfo[] pis = tType.GetProperties();
-            object piValue;
-            foreach (PropertyInfo pi in pis)
+            var tType = inputObj.GetType();
+            var resM = (T)Activator.CreateInstance(tType);
+            var pis = tType.GetProperties();
+            foreach (var pi in pis)
             {
-                piValue = pi.GetValue(inputObj);
-                if (piValue is ValueType)
-                {
-                    pi.SetValue(resM, piValue);
-                }
-                else
-                {
-                    pi.SetValue(resM, MClone(piValue));
-                }
+                var piValue = pi.GetValue(inputObj);
+                pi.SetValue(resM, piValue is ValueType ? piValue : MClone(piValue));
             }
             return resM;
         }
@@ -96,21 +76,15 @@ namespace MateralTools.Base
         /// <returns>克隆的对象</returns>
         public static T MCloneBySerializable<T>(this T inputObj)
         {
-            Type tType = inputObj.GetType();
-            Attribute attr = tType.GetCustomAttribute(typeof(SerializableAttribute));
-            if (attr != null)
+            var tType = inputObj.GetType();
+            var attr = tType.GetCustomAttribute(typeof(SerializableAttribute));
+            if (attr == null)throw new MException("拷贝类型需要拥有特性[SerializableAttribute]");
+            using (var stream = new MemoryStream())
             {
-                BinaryFormatter BF2 = new BinaryFormatter();
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    BF2.Serialize(stream, inputObj);
-                    stream.Position = 0;
-                    return (T)BF2.Deserialize(stream);
-                }
-            }
-            else
-            {
-                throw new MException("拷贝类型需要拥有特性[SerializableAttribute]");
+                var bf2 = new BinaryFormatter();
+                bf2.Serialize(stream, inputObj);
+                stream.Position = 0;
+                return (T) bf2.Deserialize(stream);
             }
         }
         /// <summary>
@@ -120,16 +94,9 @@ namespace MateralTools.Base
         /// <returns>克隆的对象</returns>
         public static T MClone<T>(this T inputObj)
         {
-            Type tType = inputObj.GetType();
-            Attribute attr = tType.GetCustomAttribute(typeof(SerializableAttribute));
-            if (attr != null)
-            {
-                return MCloneBySerializable(inputObj);
-            }
-            else
-            {
-                return MCloneByReflex(inputObj);
-            }
+            var tType = inputObj.GetType();
+            var attr = tType.GetCustomAttribute(typeof(SerializableAttribute));
+            return attr != null ? MCloneBySerializable(inputObj) : MCloneByReflex(inputObj);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using MateralTools.Base.Model;
 
 namespace MateralTools.Base.Manager
 {
@@ -26,23 +27,11 @@ namespace MateralTools.Base.Manager
         /// <exception cref="MException"></exception>
         public static string GetRandomStrByGuid(int minLength, int maxLength)
         {
-            if (minLength > 0)
-            {
-                if (minLength < maxLength)
-                {
-                    var rd = new Random();
-                    var length = rd.Next(minLength, maxLength);
-                    return GetRandomStrByGuid(length);
-                }
-                else
-                {
-                    throw new MException("最大长度必须大于最小长度");
-                }
-            }
-            else
-            {
-                throw new MException("长度必须大于0");
-            }
+            if (minLength <= 0)throw new MException("长度必须大于0");
+            if (minLength >= maxLength) throw new MException("最大长度必须大于最小长度");
+            var rd = new Random();
+            var length = rd.Next(minLength, maxLength);
+            return GetRandomStrByGuid(length);
         }
         /// <summary>
         /// 获得随机字符串(GUID模式)
@@ -52,20 +41,14 @@ namespace MateralTools.Base.Manager
         /// <exception cref="MException"></exception>
         public static string GetRandomStrByGuid(int length = 32)
         {
-            if (length > 0)
+            if (length <= 0)throw new MException("长度必须大于0");
+            var resM = string.Empty;
+            var count = length % 32 == 0 ? length / 32 : length / 32 + 1;
+            for (var i = 0; i < count; i++)
             {
-                string resM = string.Empty;
-                int count = length % 32 == 0 ? length / 32 : length / 32 + 1;
-                for (int i = 0; i < count; i++)
-                {
-                    resM += Guid.NewGuid().ToString().Replace("-", "");
-                }
-                return resM.Substring(0, length);
+                resM += Guid.NewGuid().ToString().Replace("-", "");
             }
-            else
-            {
-                throw new MException("长度必须大于0");
-            }
+            return resM.Substring(0, length);
         }
         /// <summary>
         /// 获取随机字符串(字典模式)
@@ -77,23 +60,11 @@ namespace MateralTools.Base.Manager
         /// <exception cref="MException"></exception>
         public static string GetRandomStrByDictionarie(int minLength, int maxLength, string dictionarie = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
         {
-            if (minLength > 0)
-            {
-                if (minLength < maxLength)
-                {
-                    Random rd = new Random();
-                    int length = rd.Next(minLength, maxLength);
-                    return GetRandomStrByDictionarie(length, dictionarie);
-                }
-                else
-                {
-                    throw new MException("最大长度必须大于最小长度");
-                }
-            }
-            else
-            {
-                throw new MException("长度必须大于0");
-            }
+            if (minLength <= 0)throw new MException("长度必须大于0");
+            if (minLength >= maxLength)throw new MException("最大长度必须大于最小长度");
+            var rd = new Random();
+            var length = rd.Next(minLength, maxLength);
+            return GetRandomStrByDictionarie(length, dictionarie);
         }
         /// <summary>
         /// 获取随机字符串(字典模式)
@@ -104,20 +75,14 @@ namespace MateralTools.Base.Manager
         /// <exception cref="MException"></exception>
         public static string GetRandomStrByDictionarie(int length = 32, string dictionarie = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
         {
-            if (length > 0)
+            if (length <= 0)throw new MException("长度必须大于0");
+            var resM = string.Empty;
+            var rd = new Random();
+            for (var i = 0; i < length; i++)
             {
-                string resM = string.Empty;
-                Random rd = new Random();
-                for (int i = 0; i < length; i++)
-                {
-                    resM += dictionarie[rd.Next(0, dictionarie.Length)];
-                }
-                return resM;
+                resM += dictionarie[rd.Next(0, dictionarie.Length)];
             }
-            else
-            {
-                throw new MException("长度必须大于0");
-            }
+            return resM;
         }
         /// <summary>
         /// 生成随机字符串
@@ -127,32 +92,26 @@ namespace MateralTools.Base.Manager
         /// <exception cref="MException"></exception>
         public static string GetRandomStrByTick(int length)
         {
-            if (length > 0)
+            if (length <= 0)throw new MException("长度必须大于0");
+            var rep = 0;
+            var str = string.Empty;
+            var tick = DateTime.Now.Ticks + rep++;
+            var random = new Random(((int) (((ulong) tick) & 0xffffffffL)) | ((int) (tick >> rep)));
+            for (var i = 0; i < length; i++)
             {
-                int rep = 0;
-                string str = string.Empty;
-                long tick = DateTime.Now.Ticks + rep++;
-                Random random = new Random(((int)(((ulong)tick) & 0xffffffffL)) | ((int)(tick >> rep)));
-                for (int i = 0; i < length; i++)
+                char ch;
+                var num = random.Next();
+                if ((num % 2) == 0)
                 {
-                    char ch;
-                    int num = random.Next();
-                    if ((num % 2) == 0)
-                    {
-                        ch = (char)(0x30 + ((ushort)(num % 10)));
-                    }
-                    else
-                    {
-                        ch = (char)(0x41 + ((ushort)(num % 0x1a)));
-                    }
-                    str = str + ch.ToString();
+                    ch = (char) (0x30 + ((ushort) (num % 10)));
                 }
-                return str;
+                else
+                {
+                    ch = (char) (0x41 + ((ushort) (num % 0x1a)));
+                }
+                str = str + ch.ToString();
             }
-            else
-            {
-                throw new MException("长度必须大于0");
-            }
+            return str;
         }
     }
 }

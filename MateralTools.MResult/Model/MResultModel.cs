@@ -2,6 +2,7 @@
 using MateralTools.MEnum;
 using MateralTools.MConvert;
 using MateralTools.Base;
+using MateralTools.Base.Manager;
 
 namespace MateralTools.MResult
 {

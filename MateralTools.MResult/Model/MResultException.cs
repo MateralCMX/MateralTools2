@@ -1,5 +1,6 @@
 ﻿using MateralTools.Base;
 using System;
+using MateralTools.Base.Model;
 
 namespace MateralTools.MResult
 {

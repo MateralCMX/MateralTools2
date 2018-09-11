@@ -1,6 +1,7 @@
 ﻿using MateralTools.Base;
 using System;
 using System.Collections.Generic;
+using MateralTools.Base.Manager;
 
 namespace MateralTools.MEnum
 {

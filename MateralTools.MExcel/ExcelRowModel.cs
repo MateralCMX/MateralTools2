@@ -3,6 +3,7 @@ using NPOI.SS.UserModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MateralTools.Base.Model;
 
 namespace MateralTools.MExcel
 {
