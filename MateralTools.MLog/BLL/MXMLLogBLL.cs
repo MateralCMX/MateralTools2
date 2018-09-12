@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MateralTools.MLog.DAL;
+using MateralTools.MLog.Model;
 
-namespace MateralTools.MLog
+namespace MateralTools.MLog.BLL
 {
-    public class MXMLLogBLL : IMLogBLL
+    public class MxmlLogBLL : IMLogBLL
     {
         /// <summary>
         /// 数据处理对象
         /// </summary>
-        private readonly MXMLLogDAL _dal = new MXMLLogDAL();
+        private readonly MxmlLogDAL _dal;
         /// <summary>
         /// 构造方法
         /// </summary>
-        /// <param name="XMLFilePath"></param>
-        public MXMLLogBLL(string XMLFilePath)
+        /// <param name="xmlFilePath"></param>
+        public MxmlLogBLL(string xmlFilePath)
         {
-            _dal = new MXMLLogDAL(XMLFilePath);
+            _dal = new MxmlLogDAL(xmlFilePath);
         }
         /// <summary>
         /// 写入异常日志
@@ -26,23 +25,20 @@ namespace MateralTools.MLog
         /// <param name="ex">异常对象</param>
         public int WriteExceptionLog(Exception ex)
         {
-            T_ApplicationLog logM;
-            T_ApplicationLog_Exception exceptionM;
-            string message = string.Empty;
             int? parentID = null;
             int? fistID = null;
             do
             {
-                message = ex.Message;
-                logM = new T_ApplicationLog
+                var message = ex.Message;
+                var logM = new ApplicationLog
                 {
                     Types = (byte)ApplicationLogTypeEnum.Exception,
                     CreateTime = DateTime.Now,
                     Title = "发生异常",
                     Message = message,
-                    FK_Parent_ID = parentID
+                    ParentID = parentID
                 };
-                exceptionM = new T_ApplicationLog_Exception
+                var exceptionM = new ApplicationLogException
                 {
                     StackTrace = ex.StackTrace,
                     Types = ex.GetType().Name
@@ -65,9 +61,9 @@ namespace MateralTools.MLog
         /// <param name="parentID">父级ID</param>
         public int WriteOptionsLog(string title, string message, int? parentID = null)
         {
-            int ID = WriteLog(title, message, ApplicationLogTypeEnum.Options, parentID);
+            var id = WriteLog(title, message, ApplicationLogTypeEnum.Options, parentID);
             _dal.SaveChange();
-            return ID;
+            return id;
         }
         /// <summary>
         /// 写入调试日志
@@ -77,9 +73,9 @@ namespace MateralTools.MLog
         /// <param name="parentID">父级ID</param>
         public int WriteDebugLog(string title, string message, int? parentID = null)
         {
-            int ID = WriteLog(title, message, ApplicationLogTypeEnum.Debug, parentID);
+            var id = WriteLog(title, message, ApplicationLogTypeEnum.Debug, parentID);
             _dal.SaveChange();
-            return ID;
+            return id;
         }
         /// <summary>
         /// 写入日志
@@ -90,13 +86,13 @@ namespace MateralTools.MLog
         /// <param name="parentID">父级ID</param>
         private int WriteLog(string title, string message, ApplicationLogTypeEnum types, int? parentID = null)
         {
-            T_ApplicationLog logM = new T_ApplicationLog
+            ApplicationLog logM = new ApplicationLog
             {
                 Types = (byte)types,
                 CreateTime = DateTime.Now,
                 Title = title,
                 Message = message,
-                FK_Parent_ID = parentID
+                ParentID = parentID
             };
             return _dal.InsertLog(logM);
         }
@@ -106,7 +102,7 @@ namespace MateralTools.MLog
         /// <param name="start">开始时间</param>
         /// <param name="end">结束时间</param>
         /// <returns>日志信息</returns>
-        public List<T_ApplicationLog> GetLogInfoByCreateTime(DateTime start, DateTime end)
+        public List<ApplicationLog> GetLogInfoByCreateTime(DateTime start, DateTime end)
         {
             //byte[] types = {
             //    (byte)ApplicationLogTypeEnum.Debug,
@@ -121,7 +117,7 @@ namespace MateralTools.MLog
         /// <param name="start">开始时间</param>
         /// <param name="end">结束时间</param>
         /// <returns>日志信息</returns>
-        public List<V_ApplicationLog_Exception> GetExceptionLogInfoByCreateTime(DateTime start, DateTime end)
+        public List<ApplicationLogExceptionView> GetExceptionLogInfoByCreateTime(DateTime start, DateTime end)
         {
             //return _applicationLogExceptionDAL.GetExceptionLogInfoByCreateTime(start, end);
             return null;
@@ -131,7 +127,7 @@ namespace MateralTools.MLog
         /// </summary>
         /// <param name="id">唯一标识</param>
         /// <returns>日志信息</returns>
-        public T_ApplicationLog GetLogInfoByID(int id)
+        public ApplicationLog GetLogInfoByID(int id)
         {
             //return _dal.GetDBModelInfoByID(id);
             return null;
@@ -141,7 +137,7 @@ namespace MateralTools.MLog
         /// </summary>
         /// <param name="id">唯一标识</param>
         /// <returns>异常日志信息</returns>
-        public V_ApplicationLog_Exception GetExceptionLogInfoByID(int id)
+        public ApplicationLogExceptionView GetExceptionLogInfoByID(int id)
         {
             //return _applicationLogExceptionDAL.GetDBModelViewInfoByID(id);
             return null;

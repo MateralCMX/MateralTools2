@@ -1,4 +1,5 @@
-﻿using MateralTools.MConvert;
+﻿using MateralTools.MConvert.Manager;
+using MateralTools.MHttpRequest.Model;
 using MateralTools.MVerify;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using MateralTools.MConvert.Manager;
 
-namespace MateralTools.MHttpRequest
+namespace MateralTools.MHttpRequest.Manager
 {
     /// <summary>
     /// HTTP请求管理器
@@ -25,29 +25,16 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static string SendGet(string url, Dictionary<string, string> data = null, int timeout = 100)
         {
-            if (!url.MIsNullOrEmpty())
+            if (url.MIsNullOrEmpty())throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+            url = SpliceUrlParams(url, data);
+            string resutlStr;
+            using (var client = GetHttpClient(timeout))
             {
-                url = SpliceURLParams(url, data);
-                string resutlStr = string.Empty;
-                try
-                {
-                    using (HttpClient client = GetHttpClient(timeout))
-                    {
-                        Task<byte[]> result = client.GetByteArrayAsync(url);
-                        byte[] resultBytes = result.Result;
-                        resutlStr = Encoding.UTF8.GetString(resultBytes);
-                    }
-                    return resutlStr;
-                }
-                catch (HttpRequestException ex)
-                {
-                    throw ex;
-                }
+                var result = client.GetByteArrayAsync(url);
+                var resultBytes = result.Result;
+                resutlStr = Encoding.UTF8.GetString(resultBytes);
             }
-            else
-            {
-                throw new MHttpRequestException($"参数{nameof(url)}不能为空");
-            }
+            return resutlStr;
         }
         /// <summary>
         /// 发送Get请求
@@ -58,8 +45,8 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static T SendGet<T>(string url, Dictionary<string, string> data = null, int timeout = 100)
         {
-            string resutlStr = SendGet(url, data, timeout);
-            T model = resutlStr.MJsonToObject<T>();
+            var resutlStr = SendGet(url, data, timeout);
+            var model = resutlStr.MJsonToObject<T>();
             return model;
         }
         /// <summary>
@@ -71,28 +58,15 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static async Task<string> SendGetAsync(string url, Dictionary<string, string> data = null, int timeout = 100)
         {
-            if (!url.MIsNullOrEmpty())
+            if (url.MIsNullOrEmpty())throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+            url = SpliceUrlParams(url, data);
+            string resutlStr;
+            using (var client = GetHttpClient(timeout))
             {
-                url = SpliceURLParams(url, data);
-                string resutlStr = string.Empty;
-                try
-                {
-                    using (HttpClient client = GetHttpClient(timeout))
-                    {
-                        byte[] resultBytes = await client.GetByteArrayAsync(url);
-                        resutlStr = Encoding.UTF8.GetString(resultBytes);
-                    }
-                    return resutlStr;
-                }
-                catch (HttpRequestException ex)
-                {
-                    throw ex;
-                }
+                var resultBytes = await client.GetByteArrayAsync(url);
+                resutlStr = Encoding.UTF8.GetString(resultBytes);
             }
-            else
-            {
-                throw new MHttpRequestException($"参数{nameof(url)}不能为空");
-            }
+            return resutlStr;
         }
         /// <summary>
         /// 发送Get请求(异步)
@@ -103,8 +77,8 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static async Task<T> SendGetAsync<T>(string url, Dictionary<string, string> data = null, int timeout = 100)
         {
-            string resutlStr = await SendGetAsync(url, data, timeout);
-            T model = resutlStr.MJsonToObject<T>();
+            var resutlStr = await SendGetAsync(url, data, timeout);
+            var model = resutlStr.MJsonToObject<T>();
             return model;
         }
         /// <summary>
@@ -116,18 +90,20 @@ namespace MateralTools.MHttpRequest
         /// <returns></returns>
         private static HttpContent GetHttpContent(object data, HttpContentTypeEnum contentType, ref MemoryStream ms)
         {
-            HttpContent content = null;
+            HttpContent content;
             switch (contentType)
             {
                 case HttpContentTypeEnum.ApplicationJson:
-                    string dataJson = data.MToJson();
+                    var dataJson = data.MToJson();
                     content = GetHttpContentByFormDataBytes(ms, dataJson);
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     break;
-                case HttpContentTypeEnum.ApplicationXML:
+                case HttpContentTypeEnum.ApplicationXml:
                     content = GetHttpContentByFormDataBytes(ms, data.ToString());
                     content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(contentType), contentType, null);
             }
             return content;
         }
@@ -139,7 +115,7 @@ namespace MateralTools.MHttpRequest
         /// <returns>数据流</returns>
         private static HttpContent GetHttpContentByFormDataBytes(MemoryStream ms, string dataStr)
         {
-            byte[] formDataBytes = Encoding.UTF8.GetBytes(dataStr);
+            var formDataBytes = Encoding.UTF8.GetBytes(dataStr);
             ms.Write(formDataBytes, 0, formDataBytes.Length);
             ms.Seek(0, SeekOrigin.Begin);
             HttpContent content = new StreamContent(ms);
@@ -155,37 +131,27 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static string SendPost(string url, object data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
-            if (!url.MIsNullOrEmpty())
+            if (url.MIsNullOrEmpty())throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+            using (var client = GetHttpClient(timeout))
             {
-                string resutlStr = string.Empty;
-                using (HttpClient client = GetHttpClient(timeout))
+                var ms = new MemoryStream();
+                string resutlStr;
+                using (var content = GetHttpContent(data, contentType, ref ms))
                 {
-                    MemoryStream ms = new MemoryStream();
-                    using (HttpContent content = GetHttpContent(data, contentType, ref ms))
+                    try
                     {
-                        try
+                        using (var responseMessage = client.PostAsync(url, content).Result)
                         {
-                            using (HttpResponseMessage responseMessage = client.PostAsync(url, content).Result)
-                            {
-                                Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
-                                resutlStr = Encoding.UTF8.GetString(resultBytes);
-                            }
-                        }
-                        catch (HttpRequestException ex)
-                        {
-                            throw ex;
-                        }
-                        finally
-                        {
-                            ms.Close();
+                            var resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
+                            resutlStr = Encoding.UTF8.GetString(resultBytes);
                         }
                     }
-                    return resutlStr;
+                    finally
+                    {
+                        ms.Close();
+                    }
                 }
-            }
-            else
-            {
-                throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+                return resutlStr;
             }
         }
         /// <summary>
@@ -198,8 +164,8 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static T SendPost<T>(string url, Dictionary<string, string> data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
-            string resutlStr = SendPost(url, data, contentType, timeout);
-            T model = resutlStr.MJsonToObject<T>();
+            var resutlStr = SendPost(url, data, contentType, timeout);
+            var model = resutlStr.MJsonToObject<T>();
             return model;
         }
         /// <summary>
@@ -212,37 +178,27 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static async Task<string> SendPostAsync(string url, object data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
-            if (!url.MIsNullOrEmpty())
+            if (url.MIsNullOrEmpty())throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+            using (var client = GetHttpClient(timeout))
             {
-                string resutlStr = string.Empty;
-                using (HttpClient client = GetHttpClient(timeout))
+                var ms = new MemoryStream();
+                string resutlStr;
+                using (var content = GetHttpContent(data, contentType, ref ms))
                 {
-                    MemoryStream ms = new MemoryStream();
-                    using (HttpContent content = GetHttpContent(data, contentType, ref ms))
+                    try
                     {
-                        try
+                        using (var responseMessage = await client.PostAsync(url, content))
                         {
-                            using (HttpResponseMessage responseMessage = await client.PostAsync(url, content))
-                            {
-                                Byte[] resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
-                                resutlStr = Encoding.UTF8.GetString(resultBytes);
-                            }
-                        }
-                        catch (HttpRequestException ex)
-                        {
-                            throw ex;
-                        }
-                        finally
-                        {
-                            ms.Close();
+                            var resultBytes = responseMessage.Content.ReadAsByteArrayAsync().Result;
+                            resutlStr = Encoding.UTF8.GetString(resultBytes);
                         }
                     }
-                    return resutlStr;
+                    finally
+                    {
+                        ms.Close();
+                    }
                 }
-            }
-            else
-            {
-                throw new MHttpRequestException($"参数{nameof(url)}不能为空");
+                return resutlStr;
             }
         }
         /// <summary>
@@ -255,8 +211,8 @@ namespace MateralTools.MHttpRequest
         /// <returns>返回值</returns>
         public static async Task<T> SendPostAsync<T>(string url, Dictionary<string, string> data = null, HttpContentTypeEnum contentType = HttpContentTypeEnum.ApplicationJson, int timeout = 100)
         {
-            string resutlStr = await SendPostAsync(url, data, contentType, timeout);
-            T model = resutlStr.MJsonToObject<T>();
+            var resutlStr = await SendPostAsync(url, data, contentType, timeout);
+            var model = resutlStr.MJsonToObject<T>();
             return model;
         }
         /// <summary>
@@ -265,17 +221,15 @@ namespace MateralTools.MHttpRequest
         /// <param name="url">url地址</param>
         /// <param name="data">参数字典</param>
         /// <returns>带参数的Url地址</returns>
-        private static string SpliceURLParams(string url, Dictionary<string, string> data)
+        private static string SpliceUrlParams(string url, Dictionary<string, string> data)
         {
-            if (!url.MIsNullOrEmpty() && data != null)
+            if (url.MIsNullOrEmpty() || data == null) return url;
+            var urlParamsStrs = new List<string>();
+            foreach (var param in data)
             {
-                List<string> urlParamsStrs = new List<string>();
-                foreach (KeyValuePair<string, string> param in data)
-                {
-                    urlParamsStrs.Add($"{param.Key}={param.Value}");
-                }
-                url += $"?{string.Join("&", urlParamsStrs)}";
+                urlParamsStrs.Add($"{param.Key}={param.Value}");
             }
+            url += $"?{string.Join("&", urlParamsStrs)}";
             return url;
         }
         /// <summary>
@@ -285,9 +239,8 @@ namespace MateralTools.MHttpRequest
         /// <returns>Http客户端</returns>
         private static HttpClient GetHttpClient(int timeout)
         {
-            HttpClientHandler handler = new HttpClientHandler();
-            HttpClient client = new HttpClient(handler);
-            client.Timeout = new TimeSpan(0, 0, timeout);
+            var handler = new HttpClientHandler();
+            var client = new HttpClient(handler) {Timeout = new TimeSpan(0, 0, timeout)};
             return client;
         }
     }

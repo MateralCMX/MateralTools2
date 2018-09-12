@@ -1,11 +1,10 @@
-﻿using MateralTools.Base;
-using NPOI.SS.UserModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MateralTools.Base.Model;
+using NPOI.SS.UserModel;
 
-namespace MateralTools.MExcel
+namespace MateralTools.MExcel.Model
 {
     public class ExcelWorkbook
     {
@@ -21,7 +20,6 @@ namespace MateralTools.MExcel
         /// 文件路径
         /// </summary>
         public string FilePatch { get;}
-        public IWorkbook Workbook { get;}
     }
     public class ExcelRowModel
     {
@@ -32,19 +30,6 @@ namespace MateralTools.MExcel
         /// <summary>
         /// 最大的单元格数
         /// </summary>
-        public short MaxCellNum
-        {
-            get
-            {
-                if (Rows.Count > 0)
-                {
-                    return Rows.Max(m => m.LastCellNum);
-                }
-                else
-                {
-                    throw new MException("未能读取到有效数据");
-                }
-            }
-        }
+        public short MaxCellNum => Rows.Count > 0 ? Rows.Max(m => m.LastCellNum) : throw new MException("未能读取到有效数据");
     }
 }

@@ -1,17 +1,16 @@
-﻿using MateralTools.Base;
-using MateralTools.MConvert;
-using MateralTools.MVerify;
-using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using MateralTools.Base.Model;
 using MateralTools.MConvert.Manager;
+using MateralTools.MExcel.Model;
+using MateralTools.MVerify;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
-namespace MateralTools.MExcel
+namespace MateralTools.MExcel.Manager
 {
     public class ExcelManager
     {
@@ -35,7 +34,7 @@ namespace MateralTools.MExcel
         /// <returns>数据集</returns>
         public DataSet ReadExcelToDataSet(FileStream fileStream, params int[] startRowNums)
         {
-            IWorkbook workbook = ReadExcelToWorkbook(fileStream);
+            var workbook = ReadExcelToWorkbook(fileStream);
             return WorkbookToDataSet(workbook, startRowNums);
         }
         /// <summary>
@@ -45,13 +44,10 @@ namespace MateralTools.MExcel
         /// <returns>工作簿对象</returns>
         public IWorkbook ReadExcelToWorkbook(string filePath)
         {
-            if (!File.Exists(filePath))
+            if (!File.Exists(filePath))throw new MException("文件不存在");
+            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
-                throw new MException("文件不存在");
-            }
-            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-            {
-                IWorkbook result = ReadExcelToWorkbook(fs);
+                var result = ReadExcelToWorkbook(fs);
                 return result;
             }
         }
@@ -87,7 +83,7 @@ namespace MateralTools.MExcel
         /// <returns>工作表组</returns>
         public List<ISheet> ReadExcelToSheets(string filePath)
         {
-            IWorkbook workbook = ReadExcelToWorkbook(filePath);
+            var workbook = ReadExcelToWorkbook(filePath);
             return GetAllSheets(workbook);
         }
         /// <summary>
@@ -97,7 +93,7 @@ namespace MateralTools.MExcel
         /// <returns>工作表组</returns>
         public List<ISheet> ReadExcelToSheets(FileStream fileStream)
         {
-            IWorkbook workbook = ReadExcelToWorkbook(fileStream);
+            var workbook = ReadExcelToWorkbook(fileStream);
             return GetAllSheets(workbook);
         }
         /// <summary>
@@ -107,8 +103,8 @@ namespace MateralTools.MExcel
         /// <returns>工作表对象</returns>
         public List<ISheet> GetAllSheets(IWorkbook workbook)
         {
-            List<ISheet> sheets = new List<ISheet>();
-            for (int i = 0; i < workbook.NumberOfSheets; i++)
+            var sheets = new List<ISheet>();
+            for (var i = 0; i < workbook.NumberOfSheets; i++)
             {
                 sheets.Add(workbook.GetSheetAt(i));
             }
@@ -122,24 +118,23 @@ namespace MateralTools.MExcel
         /// <returns>数据表</returns>
         public DataTable SheetToDataTable(ISheet sheet, int startRowNum = 0)
         {
-            DataTable result = new DataTable(sheet.SheetName);
-            ExcelRowModel excelRowModel = GetRows(sheet, startRowNum);
-            for (int i = 0; i < excelRowModel.MaxCellNum; i++)
+            var result = new DataTable(sheet.SheetName);
+            var excelRowModel = GetRows(sheet, startRowNum);
+            for (var i = 0; i < excelRowModel.MaxCellNum; i++)
             {
-                DataColumn dataColumn = new DataColumn(i.ToString(), typeof(string));
+                var dataColumn = new DataColumn(i.ToString(), typeof(string));
                 result.Columns.Add(dataColumn);
             }
-            foreach (IRow row in excelRowModel.Rows)
+
+            var dataRow = result.NewRow();
+            foreach (var row in excelRowModel.Rows)
             {
-                DataRow dataRow = result.NewRow();
-                bool isAdd = false;
-                for (int i = 0; i < row.LastCellNum; i++)
+                var isAdd = false;
+                for (var i = 0; i < row.LastCellNum; i++)
                 {
-                    if (!row.GetCell(i).MIsNullOrEmptyStr())
-                    {
-                        isAdd = true;
-                        dataRow[i] = row.GetCell(i).ToString();
-                    }
+                    if (row.GetCell(i).MIsNullOrEmptyStr()) continue;
+                    isAdd = true;
+                    dataRow[i] = row.GetCell(i).ToString();
                 }
                 if (isAdd)
                 {
@@ -156,15 +151,14 @@ namespace MateralTools.MExcel
         /// <returns>工作行</returns>
         public ExcelRowModel GetRows(ISheet sheet, int startRowNum = 0)
         {
-            ExcelRowModel result = new ExcelRowModel();
-            result.Rows = new List<IRow>();
+            var result = new ExcelRowModel {Rows = new List<IRow>()};
             if (sheet.LastRowNum < startRowNum)
             {
                 throw new MException($"表{sheet.SheetName}无数据");
             }
-            for (int i = startRowNum; i <= sheet.LastRowNum; i++)
+            for (var i = startRowNum; i <= sheet.LastRowNum; i++)
             {
-                IRow row = sheet.GetRow(i);
+                var row = sheet.GetRow(i);
                 result.Rows.Add(row);
             }
             return result;
@@ -194,10 +188,10 @@ namespace MateralTools.MExcel
                 startRowNums = GetStartRowNums(workbook.NumberOfSheets, 0);
             }
             #endregion
-            DataSet result = new DataSet();
-            for (int i = 0; i < workbook.NumberOfSheets; i++)
+            var result = new DataSet();
+            for (var i = 0; i < workbook.NumberOfSheets; i++)
             {
-                DataTable dataTable = SheetToDataTable(workbook.GetSheetAt(i), startRowNums[i]);
+                var dataTable = SheetToDataTable(workbook.GetSheetAt(i), startRowNums[i]);
                 result.Tables.Add(dataTable);
             }
             return result;
@@ -230,31 +224,33 @@ namespace MateralTools.MExcel
         /// <returns></returns>
         public IWorkbook DataSetToWorkbook<T>(DataSet dataSet, params Func<IWorkbook, ISheet, int>[] setTableHeads) where T:IWorkbook
         {
-            T workbook = default(T);
+            var workbook = default(T);
             workbook = workbook.MGetDefultObject<T>();
             #region 表头委托
             if (setTableHeads.Length != dataSet.Tables.Count)
             {
-                if (setTableHeads.Length == 0)
+                switch (setTableHeads.Length)
                 {
-                    setTableHeads = new Func<IWorkbook, ISheet, int>[dataSet.Tables.Count];
-                }
-                else if (setTableHeads.Length == 1)
-                {
-                    Func<IWorkbook, ISheet, int> temFunc = setTableHeads[0];
-                    setTableHeads = new Func<IWorkbook, ISheet, int>[dataSet.Tables.Count];
-                    for (int i = 0; i < dataSet.Tables.Count; i++)
+                    case 0:
+                        setTableHeads = new Func<IWorkbook, ISheet, int>[dataSet.Tables.Count];
+                        break;
+                    case 1:
                     {
-                        setTableHeads[i] = temFunc;
+                        var temFunc = setTableHeads[0];
+                        setTableHeads = new Func<IWorkbook, ISheet, int>[dataSet.Tables.Count];
+                        for (var i = 0; i < dataSet.Tables.Count; i++)
+                        {
+                            setTableHeads[i] = temFunc;
+                        }
+
+                        break;
                     }
-                }
-                else
-                {
-                    throw new MException("提供的设置表头委托与表数量不匹配");
+                    default:
+                        throw new MException("提供的设置表头委托与表数量不匹配");
                 }
             }
             #endregion
-            for (int i = 0; i < dataSet.Tables.Count; i++)
+            for (var i = 0; i < dataSet.Tables.Count; i++)
             {
                 DataTableToSheet(workbook, dataSet.Tables[i], setTableHeads[i]);
             }
@@ -269,27 +265,19 @@ namespace MateralTools.MExcel
         /// <returns></returns>
         public ISheet DataTableToSheet(IWorkbook workbook, DataTable dataTable, Func<IWorkbook, ISheet, int> setTableHead = null)
         {
-            ISheet sheet;
-            if (dataTable.TableName.MIsNullOrEmpty())
-            {
-                sheet = workbook.CreateSheet();
-            }
-            else
-            {
-                sheet = workbook.CreateSheet(dataTable.TableName);
-            }
-            int rowNum = 0;
+            var sheet = dataTable.TableName.MIsNullOrEmpty() ? workbook.CreateSheet() : workbook.CreateSheet(dataTable.TableName);
+            var rowNum = 0;
             if (setTableHead != null)
             {
                 rowNum = setTableHead(workbook, sheet);
             }
-            int ColumnNum = dataTable.Columns.Count;
+            var columnNum = dataTable.Columns.Count;
             foreach (DataRow dr in dataTable.Rows)
             {
-                IRow row = sheet.CreateRow(rowNum++);
-                for (int i = 0; i < ColumnNum; i++)
+                var row = sheet.CreateRow(rowNum++);
+                for (var i = 0; i < columnNum; i++)
                 {
-                    ICell cell = row.CreateCell(i);
+                    var cell = row.CreateCell(i);
                     cell.SetCellValue(dr[i].ToString());
                 }
             }

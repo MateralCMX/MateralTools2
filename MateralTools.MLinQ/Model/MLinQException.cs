@@ -1,8 +1,7 @@
-﻿using MateralTools.Base;
+﻿using MateralTools.Base.Model;
 using System;
-using MateralTools.Base.Model;
 
-namespace MateralTools.MLinQ
+namespace MateralTools.MLinQ.Model
 {
     public class MLinQException : MException
     {

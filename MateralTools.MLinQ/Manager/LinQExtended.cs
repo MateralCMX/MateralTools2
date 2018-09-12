@@ -1,13 +1,11 @@
-﻿using MateralTools.Base;
+﻿using MateralTools.Base.Model;
 using MateralTools.MResult;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using MateralTools.Base.Model;
 
-namespace MateralTools.MLinQ
+namespace MateralTools.MLinQ.Manager
 {
 
     /// <summary>
@@ -33,9 +31,9 @@ namespace MateralTools.MLinQ
         /// <returns>扩展后的数据源</returns>
         public static IQueryable<T> Where<T>(this IQueryable<T> source, FilterInfo<T>[] filters)
         {
-            ParameterExpression param = Expression.Parameter(typeof(T), "m");
+            var param = Expression.Parameter(typeof(T), "m");
             Expression be = null;
-            foreach (FilterInfo<T> filter in filters)
+            foreach (var filter in filters)
             {
                 if (be == null)
                 {
@@ -48,14 +46,13 @@ namespace MateralTools.MLinQ
                         case ConditionEnum.Or:
                             be = Expression.Or(be, GetWhere(filter, param));
                             break;
-                        case ConditionEnum.And:
                         default:
                             be = Expression.And(be, GetWhere(filter, param));
                             break;
                     }
                 }
             }
-            Expression<Func<T, bool>> func = True<T>();
+            var func = True<T>();
             if (be != null)
             {
                 func = Expression.Lambda<Func<T, bool>>(be, param);
@@ -92,8 +89,8 @@ namespace MateralTools.MLinQ
         public static Expression GetWhere<T>(FilterInfo<T> filter, ParameterExpression param)
         {
             Expression be;
-            MemberExpression left1 = Expression.Property(param, filter.PropertyInfo);
-            ConstantExpression right1 = Expression.Constant(filter.Value);
+            var left1 = Expression.Property(param, filter.PropertyInfo);
+            var right1 = Expression.Constant(filter.Value);
             switch (filter.Comparison)
             {
                 case ComparisonEnum.NotEqual:
@@ -114,7 +111,6 @@ namespace MateralTools.MLinQ
                 case ComparisonEnum.Contains:
                     be = GetContainsExpression(param, filter);
                     break;
-                case ComparisonEnum.Equal:
                 default:
                     be = Expression.Equal(left1, right1);
                     break;
@@ -130,7 +126,7 @@ namespace MateralTools.MLinQ
         /// <returns>模糊查询表达式</returns>
         public static Expression GetContainsExpression<T>(ParameterExpression param, FilterInfo<T> filter)
         {
-            MemberExpression left = Expression.Property(param, filter.PropertyInfo);
+            var left = Expression.Property(param, filter.PropertyInfo);
             return GetContainsExpression(left, filter);
         }
         /// <summary>
@@ -142,18 +138,11 @@ namespace MateralTools.MLinQ
         /// <returns>模糊查询表达式</returns>
         private static Expression GetContainsExpression<T>(MemberExpression left, FilterInfo<T> filter)
         {
-            MethodInfo method = filter.PropertyInfo.PropertyType.GetMethod("Contains", new[] { filter.PropertyInfo.PropertyType });
-            if (method != null)
-            {
-                ConstantExpression someValue = Expression.Constant(filter.Value, filter.PropertyInfo.PropertyType);
-                Expression be = Expression.Call(left, method, someValue);
-                return be;
-            }
-            else
-            {
-                string message = $"类型{filter.PropertyInfo.PropertyType.Name}未实现方法Contains({filter.PropertyInfo.PropertyType.Name} value)";
-                throw new ArgumentException(message);
-            }
+            var method = filter.PropertyInfo.PropertyType.GetMethod("Contains", new[] { filter.PropertyInfo.PropertyType });
+            var someValue = Expression.Constant(filter.Value, filter.PropertyInfo.PropertyType);
+            if (method == null)throw new ArgumentException($"类型{filter.PropertyInfo.PropertyType.Name}未实现方法Contains({filter.PropertyInfo.PropertyType.Name} value)");
+            Expression be = Expression.Call(left, method, someValue);
+            return be;
         }
         /// <summary>
         /// 初始化True条件
@@ -184,7 +173,7 @@ namespace MateralTools.MLinQ
         public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)
         {
             var map = first.Parameters.Select((f, i) => new { f, s = second.Parameters[i] }).ToDictionary(p => p.s, p => p.f);
-            Expression secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
+            var secondBody = ParameterRebinder.ReplaceParameters(map, second.Body);
             return Expression.Lambda<T>(merge(first.Body, secondBody), first.Parameters);
         }
         /// <summary>
@@ -209,26 +198,23 @@ namespace MateralTools.MLinQ
         {
             return first.Compose(second, Expression.Or);
         }
+
         /// <summary>
         /// 分页
         /// </summary>
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
-        /// <param name="index">第几页</param>
-        /// <param name="size">显示数量</param>
-        /// <param name="startIndex">开始的页数</param>
+        /// <param name="skip">跳过</param>
+        /// <param name="take">取多少</param>
         /// <returns></returns>
-        public static IEnumerable<T> Paging<T>(this IEnumerable<T> first, int skip, int take)
-        {
-            return first.Skip(skip).Take(take);
-        }
+        public static IEnumerable<T> Paging<T>(this IEnumerable<T> first, int skip, int take) => first.Skip(skip).Take(take);
+
         /// <summary>
         /// 分页
         /// </summary>
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
         /// <param name="pageM">分页对象</param>
-        /// <param name="startIndex">开始的页数</param>
         /// <returns></returns>
         public static IEnumerable<T> Paging<T>(this IEnumerable<T> first, MPageModel pageM)
         {
@@ -239,21 +225,20 @@ namespace MateralTools.MLinQ
         /// </summary>
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
-        /// <param name="index">第几页</param>
-        /// <param name="size">显示数量</param>
-        /// <param name="startIndex">开始的页数</param>
+        /// <param name="skip">跳过</param>
+        /// <param name="take">取多少</param>
         /// <returns></returns>
         public static IQueryable<T> Paging<T>(this IQueryable<T> first, int skip, int take)
         {
             return first.Skip(skip).Take(take);
         }
+
         /// <summary>
         /// 分页
         /// </summary>
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
         /// <param name="pageM">分页对象</param>
-        /// <param name="startIndex">开始的页数</param>
         /// <returns></returns>
         public static IQueryable<T> Paging<T>(this IQueryable<T> first, MPageModel pageM)
         {
@@ -264,9 +249,8 @@ namespace MateralTools.MLinQ
         /// </summary>
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
-        /// <param name="index">第几页</param>
-        /// <param name="size">显示数量</param>
-        /// <param name="startIndex">开始的页数</param>
+        /// <param name="skip">跳过</param>
+        /// <param name="take">取多少</param>
         /// <returns></returns>
         public static IAsyncEnumerable<T> PagingAsync<T>(this IEnumerable<T> first, int skip, int take)
         {
@@ -278,7 +262,6 @@ namespace MateralTools.MLinQ
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
         /// <param name="pageM">分页对象</param>
-        /// <param name="startIndex">开始的页数</param>
         /// <returns></returns>
         public static IAsyncEnumerable<T> PagingAsync<T>(this IEnumerable<T> first, MPageModel pageM)
         {
@@ -289,9 +272,8 @@ namespace MateralTools.MLinQ
         /// </summary>
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
-        /// <param name="index">第几页</param>
-        /// <param name="size">显示数量</param>
-        /// <param name="startIndex">开始的页数</param>
+        /// <param name="skip">跳过</param>
+        /// <param name="take">取多少</param>
         /// <returns></returns>
         public static IAsyncEnumerable<T> PagingAsync<T>(this IQueryable<T> first, int skip, int take)
         {
@@ -303,7 +285,6 @@ namespace MateralTools.MLinQ
         /// <typeparam name="T">对象</typeparam>
         /// <param name="first">LinQ对象</param>
         /// <param name="pageM">分页对象</param>
-        /// <param name="startIndex">开始的页数</param>
         /// <returns></returns>
         public static IAsyncEnumerable<T> PagingAsync<T>(this IQueryable<T> first, MPageModel pageM)
         {
@@ -315,14 +296,14 @@ namespace MateralTools.MLinQ
     /// </summary>
     public class ParameterRebinder : ExpressionVisitor
     {
-        private readonly Dictionary<ParameterExpression, ParameterExpression> map;
+        private readonly Dictionary<ParameterExpression, ParameterExpression> _map;
         /// <summary>
         /// 构造方法
         /// </summary>
         /// <param name="map"></param>
         public ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map)
         {
-            this.map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
+            _map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
         }
         /// <summary>
         /// 构造方法
@@ -341,7 +322,7 @@ namespace MateralTools.MLinQ
         /// <returns></returns>
         protected override Expression VisitParameter(ParameterExpression p)
         {
-            if (map.TryGetValue(p, out var replacement))
+            if (_map.TryGetValue(p, out var replacement))
             {
                 p = replacement;
             }

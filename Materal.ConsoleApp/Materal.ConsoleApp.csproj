@@ -6,6 +6,10 @@
     <StartupObject>Materal.ConsoleApp.Program</StartupObject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
   </ItemGroup>

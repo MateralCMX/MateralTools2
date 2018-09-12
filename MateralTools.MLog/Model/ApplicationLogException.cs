@@ -1,14 +1,14 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-namespace MateralTools.MLog
+
+namespace MateralTools.MLog.Model
 {
-    public class T_ApplicationLog_Exception
+    public class ApplicationLogException
     {
         /// <summary>
         /// 日志ID
         /// </summary>
         [Key]
-        public int FK_Log_ID { get; set; }
+        public int LogID { get; set; }
         /// <summary>
         /// 异常说明
         /// </summary>

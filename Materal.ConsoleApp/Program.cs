@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using MateralTools.MExcel.Manager;
 
 namespace Materal.ConsoleApp
 {
@@ -48,7 +49,13 @@ namespace Materal.ConsoleApp
                 //    streamWriter.Write(item.EventHandlerText);
                 //}
             }
+#if DEBUG
+            Console.WriteLine("Debug");
             Console.ReadKey();
+#else   
+            Console.WriteLine("Release");
+            Console.ReadKey();
+#endif
         }
     }
 

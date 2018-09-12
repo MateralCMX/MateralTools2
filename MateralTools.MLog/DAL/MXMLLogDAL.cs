@@ -1,23 +1,20 @@
-﻿using MateralTools.MConvert;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using System.Globalization;
 using System.Xml;
+using MateralTools.MLog.Model;
 
-namespace MateralTools.MLog
+namespace MateralTools.MLog.DAL
 {
-    public class MXMLLogDAL
+    public class MxmlLogDAL
     {
         /// <summary>
         /// XML文件地址
         /// </summary>
-        private readonly string _XMLFilePath;
+        private readonly string _xmlFilePath;
         /// <summary>
         /// XML文件对象
         /// </summary>
-        private XmlDocument _xmlDoc = null;
+        private XmlDocument _xmlDoc;
         /// <summary>
         /// Root上最后ID的名称
         /// </summary>
@@ -25,21 +22,21 @@ namespace MateralTools.MLog
         /// <summary>
         /// XML文件地址
         /// </summary>
-        /// <param name="XMLFilePath"></param>
-        public MXMLLogDAL(string XMLFilePath)
+        /// <param name="xmlFilePath"></param>
+        public MxmlLogDAL(string xmlFilePath)
         {
-            _XMLFilePath = XMLFilePath;
-            BindXMLDocument();
+            _xmlFilePath = xmlFilePath;
+            BindXmlDocument();
         }
         /// <summary>
         /// 绑定XMLDoc
         /// </summary>
-        private void BindXMLDocument()
+        private void BindXmlDocument()
         {
             _xmlDoc = new XmlDocument();
-            if (System.IO.File.Exists(_XMLFilePath))
+            if (System.IO.File.Exists(_xmlFilePath))
             {
-                _xmlDoc.Load(_XMLFilePath);
+                _xmlDoc.Load(_xmlFilePath);
             }
             else
             {
@@ -55,22 +52,23 @@ namespace MateralTools.MLog
         /// <summary>
         /// 构造方法
         /// </summary>
-        public MXMLLogDAL()
+        public MxmlLogDAL()
         {
-            BindXMLDocument();
+            BindXmlDocument();
         }
 
         /// <summary>
         /// 插入一个日志
         /// </summary>
         /// <param name="model">日志对象</param>
-        public int InsertLog(T_ApplicationLog model)
+        public int InsertLog(ApplicationLog model)
         {
             if (model.Types != (byte)ApplicationLogTypeEnum.Exception)
             {
                 XmlElement logXml = GetLogNode(model);
                 _xmlDoc.LastChild.AppendChild(logXml);
-                _xmlDoc.LastChild.Attributes[LastIDName].Value = logXml.Attributes[nameof(T_ApplicationLog.ID)].Value;
+                if (_xmlDoc.LastChild.Attributes != null)
+                    _xmlDoc.LastChild.Attributes[LastIDName].Value = logXml.Attributes[nameof(ApplicationLog.ID)].Value;
                 return model.ID;
             }
             else
@@ -83,18 +81,19 @@ namespace MateralTools.MLog
         /// </summary>
         /// <param name="model">日志对象</param>
         /// <param name="exceptionModel">异常日志对象</param>
-        public int InsertExceptionLog(T_ApplicationLog model, T_ApplicationLog_Exception exceptionModel)
+        public int InsertExceptionLog(ApplicationLog model, ApplicationLogException exceptionModel)
         {
             if (model.Types == (byte)ApplicationLogTypeEnum.Exception)
             {
-                exceptionModel.FK_Log_ID = model.ID;
+                exceptionModel.LogID = model.ID;
                 XmlElement logXml = GetLogNode(model);
                 XmlElement exceptionXml = _xmlDoc.CreateElement("Exception");
-                exceptionXml.SetAttribute(nameof(T_ApplicationLog_Exception.StackTrace), exceptionModel.StackTrace);
-                exceptionXml.SetAttribute(nameof(T_ApplicationLog_Exception.Types), exceptionModel.Types);
+                exceptionXml.SetAttribute(nameof(ApplicationLogException.StackTrace), exceptionModel.StackTrace);
+                exceptionXml.SetAttribute(nameof(ApplicationLogException.Types), exceptionModel.Types);
                 logXml.AppendChild(exceptionXml);
                 _xmlDoc.LastChild.AppendChild(logXml);
-                _xmlDoc.LastChild.Attributes[LastIDName].Value = logXml.Attributes[nameof(T_ApplicationLog.ID)].Value;
+                if (_xmlDoc.LastChild.Attributes != null)
+                    _xmlDoc.LastChild.Attributes[LastIDName].Value = logXml.Attributes[nameof(ApplicationLog.ID)].Value;
                 return model.ID;
             }
             else
@@ -107,17 +106,17 @@ namespace MateralTools.MLog
         /// </summary>
         /// <param name="model">Log模型</param>
         /// <returns>日志XML</returns>
-        private XmlElement GetLogNode(T_ApplicationLog model)
+        private XmlElement GetLogNode(ApplicationLog model)
         {
             XmlElement xmlNode = _xmlDoc.CreateElement("ApplicationLog");
-            int LastID = GetLastID();
-            model.ID = ++LastID;
-            xmlNode.SetAttribute(nameof(T_ApplicationLog.ID), model.ID.ToString());
-            xmlNode.SetAttribute(nameof(T_ApplicationLog.Title), model.Title);
-            xmlNode.SetAttribute(nameof(T_ApplicationLog.Message), model.Message);
-            xmlNode.SetAttribute(nameof(T_ApplicationLog.CreateTime), model.CreateTime.ToString());
-            xmlNode.SetAttribute(nameof(T_ApplicationLog.Types), model.Types.ToString());
-            xmlNode.SetAttribute(nameof(T_ApplicationLog.FK_Parent_ID), model.FK_Parent_ID == null ? "Null" : model.FK_Parent_ID.Value.ToString());
+            int lastID = GetLastID();
+            model.ID = ++lastID;
+            xmlNode.SetAttribute(nameof(ApplicationLog.ID), model.ID.ToString());
+            xmlNode.SetAttribute(nameof(ApplicationLog.Title), model.Title);
+            xmlNode.SetAttribute(nameof(ApplicationLog.Message), model.Message);
+            xmlNode.SetAttribute(nameof(ApplicationLog.CreateTime), model.CreateTime.ToString(CultureInfo.InvariantCulture));
+            xmlNode.SetAttribute(nameof(ApplicationLog.Types), model.Types.ToString());
+            xmlNode.SetAttribute(nameof(ApplicationLog.ParentID), model.ParentID == null ? "Null" : model.ParentID.Value.ToString());
             return xmlNode;
         }
         /// <summary>
@@ -126,7 +125,8 @@ namespace MateralTools.MLog
         /// <returns></returns>
         private int GetLastID()
         {
-            string lastID = _xmlDoc.LastChild.Attributes["LastID"].Value;
+            if (_xmlDoc.LastChild.Attributes == null) return 0;
+            var lastID = _xmlDoc.LastChild.Attributes["LastID"].Value;
             return Convert.ToInt32(lastID);
         }
         /// <summary>
@@ -134,7 +134,7 @@ namespace MateralTools.MLog
         /// </summary>
         public void SaveChange()
         {
-            _xmlDoc.Save(_XMLFilePath);
+            _xmlDoc.Save(_xmlFilePath);
         }
     }
 }

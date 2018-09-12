@@ -1,6 +1,6 @@
-﻿using MateralTools.Base;
-using MateralTools.MData;
-using MateralTools.MLinQ;
+﻿using MateralTools.Base.Model;
+using MateralTools.MData.Model;
+using MateralTools.MLinQ.Manager;
 using MateralTools.MVerify;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -10,8 +10,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using MateralTools.Base.Model;
-using MateralTools.MData.Model;
 
 namespace MateralTools.MMongoDB
 {

@@ -1,4 +1,6 @@
-﻿namespace MateralTools.MKeyWord
+﻿using MateralTools.MKeyWord.Model;
+
+namespace MateralTools.MKeyWord.Interface
 {
 
     /// <summary>

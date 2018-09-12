@@ -1,8 +1,7 @@
-﻿using MateralTools.Base;
-using System;
+﻿using System;
 using MateralTools.Base.Model;
 
-namespace MateralTools.MHttpRequest
+namespace MateralTools.MHttpRequest.Model
 {
     /// <summary>
     /// 

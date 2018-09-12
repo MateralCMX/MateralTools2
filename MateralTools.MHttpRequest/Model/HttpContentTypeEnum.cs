@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MateralTools.MHttpRequest
+﻿namespace MateralTools.MHttpRequest.Model
 {
     /// <summary>
     /// 类型枚举
@@ -18,6 +12,6 @@ namespace MateralTools.MHttpRequest
         /// <summary>
         /// application/xml
         /// </summary>
-        ApplicationXML
+        ApplicationXml
     }
 }

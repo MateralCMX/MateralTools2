@@ -2,6 +2,7 @@ using MateralTools.MHttpRequest;
 using MateralTools.MResult;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using MateralTools.MHttpRequest.Manager;
 
 namespace Materal.CoreToolsTest
 {

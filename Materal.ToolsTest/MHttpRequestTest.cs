@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MateralTools.MHttpRequest;
+using MateralTools.MHttpRequest.Manager;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Materal.ToolsTest

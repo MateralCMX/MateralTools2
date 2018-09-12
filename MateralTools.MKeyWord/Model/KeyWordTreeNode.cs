@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace MateralTools.MKeyWord
+namespace MateralTools.MKeyWord.Model
 {
     /// <summary>
     /// 关键词树节点
@@ -8,50 +8,35 @@ namespace MateralTools.MKeyWord
     public class KeyWordTreeNode
     {
         #region 成员属性
-        private char _char;
-        private KeyWordTreeNode _parent;
-        private KeyWordTreeNode _failure;
-        private ArrayList _results;
-        private KeyWordTreeNode[] _transitionsAr;
-        private string[] _resultsAr;
-        private Hashtable _transHash;
+
+        private readonly ArrayList _results;
+        private readonly Hashtable _transHash;
 
         /// <summary>
         /// 字符
         /// </summary>
-        public char Char
-        {
-            get { return _char; }
-        }
+        public char Char { get; }
+
         /// <summary>
         /// 父节点
         /// </summary>
-        public KeyWordTreeNode Parent
-        {
-            get { return _parent; }
-        }
+        public KeyWordTreeNode Parent { get; }
+
         /// <summary>
         /// 检测失败后获取的节点
         /// </summary>
-        public KeyWordTreeNode Failure
-        {
-            get { return _failure; }
-            set { _failure = value; }
-        }
+        public KeyWordTreeNode Failure { get; set; }
+
         /// <summary>
         /// 子节点
         /// </summary>
-        public KeyWordTreeNode[] Transitions
-        {
-            get { return _transitionsAr; }
-        }
+        public KeyWordTreeNode[] Transitions { get; private set; }
+
         /// <summary>
         /// 返回列表
         /// </summary>
-        public string[] Results
-        {
-            get { return _resultsAr; }
-        }
+        public string[] Results { get; private set; }
+
         #endregion
         #region 方法
         /// <summary>
@@ -61,10 +46,10 @@ namespace MateralTools.MKeyWord
         /// <param name="c">字符</param>
         public KeyWordTreeNode(KeyWordTreeNode parent, char c)
         {
-            _char = c; _parent = parent;
+            Char = c; Parent = parent;
             _results = new ArrayList();
-            _resultsAr = new string[] { };
-            _transitionsAr = new KeyWordTreeNode[] { };
+            Results = new string[] { };
+            Transitions = new KeyWordTreeNode[] { };
             _transHash = new Hashtable();
         }
         /// <summary>
@@ -75,7 +60,7 @@ namespace MateralTools.MKeyWord
         {
             if (_results.Contains(result)) return;
             _results.Add(result);
-            _resultsAr = (string[])_results.ToArray(typeof(string));
+            Results = (string[])_results.ToArray(typeof(string));
         }
         /// <summary>
         /// 添加节点
@@ -84,9 +69,9 @@ namespace MateralTools.MKeyWord
         public void AddTransition(KeyWordTreeNode node)
         {
             _transHash.Add(node.Char, node);
-            KeyWordTreeNode[] ar = new KeyWordTreeNode[_transHash.Values.Count];
+            var ar = new KeyWordTreeNode[_transHash.Values.Count];
             _transHash.Values.CopyTo(ar, 0);
-            _transitionsAr = ar;
+            Transitions = ar;
         }
         /// <summary>
         /// 获得节点

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MateralTools.MLog
+namespace MateralTools.MLog.Model
 {
     /// <summary>
     /// 日志类型枚举

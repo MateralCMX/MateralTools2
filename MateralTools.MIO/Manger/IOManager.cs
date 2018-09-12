@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace MateralTools.MIO
+namespace MateralTools.MIO.Manger
 {
 
     /// <summary>
@@ -18,16 +18,16 @@ namespace MateralTools.MIO
         public static void CopyDirectory(string sourceFolderName, string destFolderName, bool overwrite)
         {
             var sourceFilesPath = Directory.GetFileSystemEntries(sourceFolderName);
-            for (int i = 0; i < sourceFilesPath.Length; i++)
+            foreach (var sourceFilePath in sourceFilesPath)
             {
-                string sourceFilePath = sourceFilesPath[i];
-                string directoryName = Path.GetDirectoryName(sourceFilePath);
-                string[] forlders = directoryName.Split('\\');
-                string lastDirectory = forlders[forlders.Length - 1];
-                string dest = Path.Combine(destFolderName, lastDirectory);
+                var directoryName = Path.GetDirectoryName(sourceFilePath);
+                if (directoryName == null) continue;
+                var forlders = directoryName.Split('\\');
+                var lastDirectory = forlders[forlders.Length - 1];
+                var dest = Path.Combine(destFolderName, lastDirectory);
                 if (File.Exists(sourceFilePath))
                 {
-                    string sourceFileName = Path.GetFileName(sourceFilePath);
+                    var sourceFileName = Path.GetFileName(sourceFilePath);
                     if (!Directory.Exists(dest))
                     {
                         Directory.CreateDirectory(dest);
@@ -47,20 +47,20 @@ namespace MateralTools.MIO
         /// <param name="deleteSelf">是否删除自身</param>
         public static void DeleteDirectory(string targetPath, bool deleteSelf = false)
         {
-            DirectoryInfo dir = new DirectoryInfo(targetPath);
+            var dir = new DirectoryInfo(targetPath);
             if (!deleteSelf)
             {
-                FileSystemInfo[] fileinfo = dir.GetFileSystemInfos();
-                foreach (FileSystemInfo i in fileinfo)
+                var fileinfo = dir.GetFileSystemInfos();
+                foreach (var item in fileinfo)
                 {
-                    if (i is DirectoryInfo)
+                    var subdir = new DirectoryInfo(item.FullName);
+                    if (item is DirectoryInfo)
                     {
-                        DirectoryInfo subdir = new DirectoryInfo(i.FullName);
                         subdir.Delete(true);
                     }
                     else
                     {
-                        File.Delete(i.FullName);
+                        File.Delete(item.FullName);
                     }
                 }
             }
@@ -75,9 +75,7 @@ namespace MateralTools.MIO
         /// <param name="targetPath">目标文件夹目录</param>
         public static void OpenExplorer(string targetPath)
         {
-            Process proc = new Process();
-            proc.StartInfo.FileName = "explorer";
-            proc.StartInfo.Arguments = @"/select," + targetPath;
+            var proc = new Process {StartInfo = {FileName = "explorer", Arguments = @"/select," + targetPath}};
             proc.Start();
         }
     }

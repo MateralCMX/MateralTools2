@@ -2,6 +2,7 @@
 using MateralTools.MLinQ;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using MateralTools.MLog.BLL;
 
 namespace Materal.ToolsTest
 {
@@ -23,7 +24,7 @@ namespace Materal.ToolsTest
         public MLogTest()
         {
             sqliteLogBLL = new MSQLiteLogBLL();
-            xmlLogBLL = new MXMLLogBLL("./Data/");
+            xmlLogBLL = new MxmlLogBLL("./Data/");
         }
         [TestMethod]
         public void WriteOptionsLog()

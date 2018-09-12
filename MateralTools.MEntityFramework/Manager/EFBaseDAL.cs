@@ -1,7 +1,7 @@
-﻿using MateralTools.Base;
-using MateralTools.MConvert;
+﻿using MateralTools.Base.Model;
+using MateralTools.MConvert.Manager;
+using MateralTools.MLinQ.Manager;
 using MateralTools.MResult;
-using MateralTools.MLinQ;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using MateralTools.Base.Model;
-using MateralTools.MConvert.Manager;
 
 namespace MateralTools.MEntityFramework
 {

@@ -1,12 +1,11 @@
-﻿using System;
+﻿using MateralTools.MKeyWord.Interface;
+using MateralTools.MKeyWord.Model;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MateralTools.MKeyWord
+namespace MateralTools.MKeyWord.Manager
 {
+    /// <inheritdoc />
     /// <summary>
     /// 关键词管理器
     /// 实现思路：生成一个关键词树来进行筛选
@@ -17,57 +16,34 @@ namespace MateralTools.MKeyWord
         /// 关键词列表
         /// </summary>
         private string[] _keywords;
-        /// <summary>
-        /// 关键词列表
-        /// </summary>
         public string[] Keywords
         {
-            get { return _keywords; }
+            get => _keywords;
             set
             {
                 _keywords = value;
                 BuildTree();
             }
         }
+
         /// <summary>
         /// 关键词树根节点
         /// </summary>
-        private KeyWordTreeNode _root;
-        /// <summary>
-        /// 关键词树根节点
-        /// </summary>
-        public KeyWordTreeNode Root
-        {
-            get
-            {
-                return _root;
-            }
-            set
-            {
-                _root = value;
-            }
-        }
+        public KeyWordTreeNode Root { get; set; }
+
         /// <summary>
         /// 生成树
         /// </summary>
         private void BuildTree()
         {
-            _root = new KeyWordTreeNode(null, ' ');
+            Root = new KeyWordTreeNode(null, ' ');
             #region 生成树
-            foreach (string p in _keywords)
+            foreach (var p in _keywords)
             {
-                KeyWordTreeNode nd = _root;
-                foreach (char c in p)
+                var nd = Root;
+                foreach (var c in p)
                 {
-                    KeyWordTreeNode ndNew = null;
-                    foreach (KeyWordTreeNode trans in nd.Transitions)
-                    {
-                        if (trans.Char == c)
-                        {
-                            ndNew = trans;
-                            break;
-                        }
-                    }
+                    var ndNew = nd.Transitions.FirstOrDefault(trans => trans.Char == c);
                     if (ndNew == null)
                     {
                         ndNew = new KeyWordTreeNode(nd, c);
@@ -78,12 +54,12 @@ namespace MateralTools.MKeyWord
                 nd.AddResult(p);
             }
             #endregion
-            ArrayList nodes = new ArrayList();
+            var nodes = new ArrayList();
             //第一层失败节点
-            foreach (KeyWordTreeNode nd in _root.Transitions)
+            foreach (var nd in Root.Transitions)
             {
-                nd.Failure = _root;
-                foreach (KeyWordTreeNode trans in nd.Transitions)
+                nd.Failure = Root;
+                foreach (var trans in nd.Transitions)
                 {
                     nodes.Add(trans);
                 }
@@ -91,36 +67,36 @@ namespace MateralTools.MKeyWord
             //下级失败节点
             while (nodes.Count != 0)
             {
-                ArrayList newNodes = new ArrayList();
+                var newNodes = new ArrayList();
                 foreach (KeyWordTreeNode nd in nodes)
                 {
-                    KeyWordTreeNode r = nd.Parent.Failure;
-                    char c = nd.Char;
+                    var r = nd.Parent.Failure;
+                    var c = nd.Char;
                     while (r != null && !r.ContainsTransition(c))
                     {
                         r = r.Failure;
                     }
                     if (r == null)
                     {
-                        nd.Failure = _root;
+                        nd.Failure = Root;
                     }
                     else
                     {
                         nd.Failure = r.GetTransition(c);
-                        foreach (string result in nd.Failure.Results)
+                        foreach (var result in nd.Failure.Results)
                         {
                             nd.AddResult(result);
                         }
                     }
                     //添加子节点在失败节点中
-                    foreach (KeyWordTreeNode child in nd.Transitions)
+                    foreach (var child in nd.Transitions)
                     {
                         newNodes.Add(child);
                     }
                 }
                 nodes = newNodes;
             }
-            _root.Failure = _root;
+            Root.Failure = Root;
         }
         /// <summary>
         /// 搜索所有的关键词
@@ -129,15 +105,15 @@ namespace MateralTools.MKeyWord
         /// <returns>搜索到的对象</returns>
         public KeyWordModel[] FindAll(string text)
         {
-            ArrayList ret = new ArrayList();
-            KeyWordTreeNode ptr = _root;
-            for (int i = 0; i < text.Length; i++)
+            var ret = new ArrayList();
+            var ptr = Root;
+            for (var i = 0; i < text.Length; i++)
             {
                 KeyWordTreeNode trans = null;
                 while (trans == null)
                 {
                     trans = ptr.GetTransition(text[i]);
-                    if (ptr == _root)
+                    if (ptr == Root)
                     {
                         break;
                     }
@@ -146,13 +122,12 @@ namespace MateralTools.MKeyWord
                         ptr = ptr.Failure;
                     }
                 }
-                if (trans != null)
+
+                if (trans == null) continue;
+                ptr = trans;
+                foreach (var found in ptr.Results)
                 {
-                    ptr = trans;
-                    foreach (string found in ptr.Results)
-                    {
-                        ret.Add(new KeyWordModel(i - found.Length + 1, found));
-                    }
+                    ret.Add(new KeyWordModel(i - found.Length + 1, found));
                 }
             }
             return (KeyWordModel[])ret.ToArray(typeof(KeyWordModel));
@@ -164,15 +139,14 @@ namespace MateralTools.MKeyWord
         /// <returns>搜索到的对象</returns>
         public KeyWordModel FindFirst(string text)
         {
-            ArrayList ret = new ArrayList();
-            KeyWordTreeNode ptr = _root;
-            for (int i = 0; i < text.Length; i++)
+            var ptr = Root;
+            for (var i = 0; i < text.Length; i++)
             {
                 KeyWordTreeNode trans = null;
                 while (trans == null)
                 {
                     trans = ptr.GetTransition(text[i]);
-                    if (ptr == _root)
+                    if (ptr == Root)
                     {
                         break;
                     }
@@ -181,13 +155,11 @@ namespace MateralTools.MKeyWord
                         ptr = ptr.Failure;
                     }
                 }
-                if (trans != null)
+                if (trans == null) continue;
+                ptr = trans;
+                foreach (var found in ptr.Results)
                 {
-                    ptr = trans;
-                    foreach (string found in ptr.Results)
-                    {
-                        return new KeyWordModel(i - found.Length + 1, found);
-                    }
+                    return new KeyWordModel(i - found.Length + 1, found);
                 }
             }
             return KeyWordModel.Empty;
@@ -199,14 +171,14 @@ namespace MateralTools.MKeyWord
         /// <returns>是否包含关键词</returns>
         public bool ContainsAny(string text)
         {
-            KeyWordTreeNode ptr = _root;
-            for (int i = 0; i < text.Length; i++)
+            var ptr = Root;
+            foreach (var item in text)
             {
                 KeyWordTreeNode trans = null;
                 while (trans == null)
                 {
-                    trans = ptr.GetTransition(text[i]);
-                    if (ptr == _root)
+                    trans = ptr.GetTransition(item);
+                    if (ptr == Root)
                     {
                         break;
                     }
@@ -215,13 +187,11 @@ namespace MateralTools.MKeyWord
                         ptr = ptr.Failure;
                     }
                 }
-                if (trans != null)
+                if (trans == null) continue;
+                ptr = trans;
+                if (ptr.Results.Length > 0)
                 {
-                    ptr = trans;
-                    if (ptr.Results.Length > 0)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
