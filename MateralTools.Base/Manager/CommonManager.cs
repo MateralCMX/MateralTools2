@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MateralTools.Base.Model;
 
 namespace MateralTools.Base.Manager
@@ -112,6 +114,20 @@ namespace MateralTools.Base.Manager
                 str = str + ch.ToString();
             }
             return str;
+        }
+        /// <summary>
+        /// 列表比对
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list1">第一个列表</param>
+        /// <param name="list2">第二个列表</param>
+        /// <returns>比对结果</returns>
+        public static (ICollection<T> addList, ICollection<T> removeList) ListComparison<T>(ICollection<T> list1,
+            ICollection<T> list2)
+        {
+            ICollection<T> addList = list1.Where(m => !list2.Contains(m)).ToArray();
+            ICollection<T> removeList = list2.Where(m => !list1.Contains(m)).ToArray();
+            return (addList, removeList);
         }
     }
 }

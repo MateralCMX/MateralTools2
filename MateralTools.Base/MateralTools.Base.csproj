@@ -10,8 +10,8 @@
     <Description>这是MateralTools的基本库
 GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.7</Version>
-    <PackageReleaseNotes>FilterInfo新增转换</PackageReleaseNotes>
+    <Version>1.0.8</Version>
+    <PackageReleaseNotes>新增列表比对方法</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
