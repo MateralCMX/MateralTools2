@@ -208,7 +208,7 @@ namespace MateralTools.MConvert.Manager
             {
                 if (notCopyPropertieNames.Contains(prop.Name)) continue;
                 var tempProp = t2Props.FirstOrDefault(m => m.Name == prop.Name);
-                if (tempProp != null)
+                if (tempProp != null && tempProp.CanWrite)
                 {
                     tempProp.SetValue(targetM, prop.GetValue(sourceM, null), null);
                 }
@@ -224,8 +224,8 @@ namespace MateralTools.MConvert.Manager
         public static T MCopyProperties<T>(this object sourceM, params string[] notCopyPropertieNames)
         {
             if (sourceM == null) return default(T);
-            var targetM = ConvertManager.GetDefultObject<T>();
-            sourceM.MCopyProperties(targetM);
+            var targetM = MateralTools.MConvert.Manager.ConvertManager.GetDefultObject<T>();
+            sourceM.MCopyProperties(targetM, notCopyPropertieNames);
             return targetM;
         }
         /// <summary>

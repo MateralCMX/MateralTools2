@@ -1,5 +1,5 @@
 ﻿using MateralTools.Base.Model;
-using MateralTools.MResult;
+using MateralTools.MResult.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

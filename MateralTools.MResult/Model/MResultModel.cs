@@ -1,11 +1,7 @@
-﻿using System.ComponentModel;
-using MateralTools.MEnum;
-using MateralTools.MConvert;
-using MateralTools.Base;
-using MateralTools.Base.Manager;
-using MateralTools.MConvert.Manager;
+﻿using MateralTools.MConvert.Manager;
+using System.ComponentModel;
 
-namespace MateralTools.MResult
+namespace MateralTools.MResult.Model
 {
     /// <summary>
     /// 返回对象类型
@@ -32,16 +28,7 @@ namespace MateralTools.MResult
         /// 对象类型
         /// </summary>
         public MResultType ResultType { get; set; }
-        /// <summary>
-        /// 对象类型文本
-        /// </summary>
-        public string ResultTypeStr
-        {
-            get
-            {
-                return ResultType.MGetDescription();
-            }
-        }
+
         /// <summary>
         /// 返回消息
         /// </summary>
@@ -98,7 +85,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 构造函数
         /// </summary>
-        public DataResult():base()
+        public DataResult()
         {
         }
         /// <summary>
@@ -164,7 +151,7 @@ namespace MateralTools.MResult
         /// <summary>
         /// 构造函数
         /// </summary>
-        public PagedResult() : base()
+        public PagedResult()
         {
         }
         /// <summary>

@@ -9,8 +9,8 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
-    <Version>1.1.5</Version>
-    <PackageReleaseNotes>更新强制转换DataTable-&gt;List</PackageReleaseNotes>
+    <Version>1.1.6</Version>
+    <PackageReleaseNotes>修复复制属性</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">

@@ -1,9 +1,9 @@
-﻿using MateralTools.MEntityFramework;
+﻿using MateralTools.MEntityFramework.Manager;
+using MateralTools.MLog.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MateralTools.MLog.Model;
 
 namespace MateralTools.MLog.DAL
 {

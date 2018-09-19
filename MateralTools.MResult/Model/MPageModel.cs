@@ -1,4 +1,4 @@
-﻿namespace MateralTools.MResult
+﻿namespace MateralTools.MResult.Model
 {
     /// <summary>
     /// 分页请求模型

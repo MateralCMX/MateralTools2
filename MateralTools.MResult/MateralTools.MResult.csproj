@@ -10,7 +10,7 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <RepositoryUrl />
     <Copyright>©Materal</Copyright>
     <NeutralLanguage>中文(简体，中国)</NeutralLanguage>
-    <Version>1.3.1</Version>
+    <Version>1.3.2</Version>
     <PackageReleaseNotes>新增分页请求模型</PackageReleaseNotes>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
     <FileVersion>1.3.1.0</FileVersion>
@@ -25,9 +25,7 @@ GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MateralTools.Base\MateralTools.Base.csproj" />
     <ProjectReference Include="..\MateralTools.MConvert\MateralTools.MConvert.csproj" />
-    <ProjectReference Include="..\MateralTools.MEnum\MateralTools.MEnum.csproj" />
   </ItemGroup>
 
 </Project>
