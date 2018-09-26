@@ -71,7 +71,7 @@ namespace MateralTools.MRedisDBHelper
         public IDatabase GetDatabase(string configName = null, int defaultDb = 0)
         {
             IConfigurationSection redisConfig = CheckeConfig(configName);
-            var strDefalutDatabase = redisConfig["DefaultDatabase"];
+            var strDefalutDatabase = redisConfig["Connection"];
             if (!string.IsNullOrEmpty(strDefalutDatabase) && Int32.TryParse(strDefalutDatabase, out var intDefaultDatabase))
             {
                 defaultDb = intDefaultDatabase;
