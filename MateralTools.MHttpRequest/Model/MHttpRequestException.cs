@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using MateralTools.Base.Model;
 
 namespace MateralTools.MHttpRequest.Model
@@ -8,20 +9,34 @@ namespace MateralTools.MHttpRequest.Model
     /// </summary>
     public class MHttpRequestException : MException
     {
+        public HttpStatusCode StatusCode { get; }
+
         /// <summary>
         /// 
         /// </summary>
-        public MHttpRequestException() : base() { }
+        /// <param name="httpStatusCode"></param>
+        public MHttpRequestException(HttpStatusCode httpStatusCode) : base()
+        {
+            StatusCode = httpStatusCode;
+        }
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="httpStatusCode"></param>
         /// <param name="message"></param>
-        public MHttpRequestException(string message) : base(message) { }
+        public MHttpRequestException(HttpStatusCode httpStatusCode, string message) : base(message)
+        {
+            StatusCode = httpStatusCode;
+        }
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="httpStatusCode"></param>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        public MHttpRequestException(string message, Exception innerException) : base(message, innerException) { }
+        public MHttpRequestException(HttpStatusCode httpStatusCode, string message, Exception innerException) : base(message, innerException)
+        {
+            StatusCode = httpStatusCode;
+        }
     }
 }
