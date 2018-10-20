@@ -20,15 +20,15 @@
         /// <summary>
         /// 实数正则表达式
         /// </summary>
-        public const string REG_Number = @"-?\d+(\.?\d?)";
+        public const string REG_Number = @"-?\d+.?\d{0,}";
         /// <summary>
         /// 正实数正则表达式
         /// </summary>
-        public const string REG_Number_Positive = @"\d+(\.?\d?)";
+        public const string REG_Number_Positive = @"\d+.?\d{0,}";
         /// <summary>
         /// 负实数正则表达式
         /// </summary>
-        public const string REG_Number_Negative = @"-\d+(\.?\d?)";
+        public const string REG_Number_Negative = @"-\d+.?\d{0,}";
         /// <summary>
         /// 整数正则表达式
         /// </summary>
