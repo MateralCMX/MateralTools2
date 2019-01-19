@@ -7,7 +7,7 @@
     <Product>MateralTools</Product>
     <PackageReleaseNotes>这是MateralTools的邮件工具库
 GitHub地址：https://github.com/MateralCMX/MateralTools2</PackageReleaseNotes>
-    <Version>1.0.1</Version>
+    <Version>1.3.0</Version>
     <Description>这是MateralTools的LinQ工具库
 GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
   </PropertyGroup>

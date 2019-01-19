@@ -20,11 +20,11 @@ namespace MateralTools.Base.Manager
         /// <returns>描述</returns>
         public static string MGetDescription(this object inputObj)
         {
-            var name = string.Empty;
-            var objType = inputObj.GetType();
-            var fieldInfo = objType.GetField(inputObj.ToString());
+            string name = string.Empty;
+            Type objType = inputObj.GetType();
+            FieldInfo fieldInfo = objType.GetField(inputObj.ToString());
             if (fieldInfo == null)throw new MException("需要特性DescriptionAttribute");
-            var attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            object[] attrs = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
             foreach (DescriptionAttribute attr in attrs)
             {
                 name = attr.Description;

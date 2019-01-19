@@ -11,7 +11,7 @@ namespace Materal.CoreToolsTest
         [TestMethod]
         public void SendGetTest()
         {
-            //string url = "https://myqa.materalcmx.com/api/Bill/GetViewInfoByWhere";
+            ////string url = "https://myqa.materalcmx.com/api/Bill/GetViewInfoByWhere";
             //Dictionary<string, string> urlParams = new Dictionary<string, string>
             //{
             //    ["userID"] = "5fee0f0a-1e8e-4109-96b1-feec06d6d5b2",
@@ -23,19 +23,19 @@ namespace Materal.CoreToolsTest
             //    ["Token"] = "516dcf11722c417eb38bf29a4fb9cbe8"
             //};
             //string result = HttpRequestManager.SendGet(url, urlParams);
-            string url = "http://localhost:8901/api/Car/SynchronizationAllTTXCarInfo";
-            DataResult result = HttpRequestManager.SendGet<DataResult>(url);
+            //string url = "http://localhost:8901/api/Car/SynchronizationAllTTXCarInfo";
+            //DataResult result = HttpRequestManager.SendGet<DataResult>(url);
         }
         [TestMethod]
         public void SendPostTest()
         {
-            string url = "http://localhost:60647/api/User/Login";
-            Dictionary<string, string> urlParams = new Dictionary<string, string>
-            {
-                ["Account"] = "Admin",
-                ["Password"] = "12345",
-            };
-            string result = HttpRequestManager.SendPost(url, urlParams);
+            //string url = "http://localhost:60647/api/User/Login";
+            //Dictionary<string, string> urlParams = new Dictionary<string, string>
+            //{
+            //    ["Account"] = "Admin",
+            //    ["Password"] = "12345",
+            //};
+            //string result = HttpRequestManager.SendPost(url, urlParams);
         }
     }
 }

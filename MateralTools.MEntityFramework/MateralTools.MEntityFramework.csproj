@@ -8,7 +8,7 @@
 GitHub地址：https://github.com/MateralCMX/MateralTools2</Description>
     <Copyright>©Materal</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.6</Version>
+    <Version>1.3.0</Version>
     <PackageReleaseNotes>EFCore降级为2.0.1</PackageReleaseNotes>
   </PropertyGroup>
 
